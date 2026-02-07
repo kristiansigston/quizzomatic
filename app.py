@@ -2,6 +2,7 @@ import random
 import json
 import generate_qr
 import os
+import secrets
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit, join_room, leave_room
 import threading
@@ -37,6 +38,32 @@ def stop_timer_thread():
     if game_state.get('timer_thread'):
         game_state['timer_thread'].cancel()
         game_state['timer_thread'] = None
+
+
+def stop_host_ping_thread():
+    if game_state.get('host_ping_thread'):
+        game_state['host_ping_thread'].cancel()
+        game_state['host_ping_thread'] = None
+
+
+def ensure_host_token():
+    if not game_state.get('host_token'):
+        game_state['host_token'] = secrets.token_urlsafe(6)
+    return game_state['host_token']
+
+
+def broadcast_host_session():
+    socketio.emit('host_session', {'token': ensure_host_token()})
+
+
+def start_host_ping_thread():
+    def ping():
+        socketio.emit('host_ping', {'token': ensure_host_token()})
+        game_state['host_ping_thread'] = threading.Timer(5, ping)
+        game_state['host_ping_thread'].start()
+
+    if game_state.get('host_ping_thread') is None:
+        ping()
 
 
 def load_recent_question_times():
@@ -193,6 +220,7 @@ def auto_next_question(target_index):
 @socketio.on('connect')
 def test_connect():
     print('Client connected')
+    emit('host_session', {'token': ensure_host_token()})
     send_player_details()
 
 
@@ -205,6 +233,9 @@ def test_disconnect():
 def handle_join(data):
     username = data['username']
     client_ip = request.remote_addr
+    if data.get('host_token') != game_state.get('host_token'):
+        emit('error', {'message': 'Host session mismatch. Please rejoin.'})
+        return
 
     if username not in game_state['players']:
         is_first_player = len(game_state['players']) == 0
@@ -276,11 +307,15 @@ def reset_all():
         game_state = {}
 
     stop_timer_thread()
+    stop_host_ping_thread()
     # if 'players' not in game_state:
     game_state['players'] = {}
+    game_state['host_token'] = secrets.token_urlsafe(6)
 
     reset_game()
 
+    broadcast_host_session()
+    start_host_ping_thread()
     socketio.emit('game_reset')
     send_player_details()
     print('Game and players fully reset.')
