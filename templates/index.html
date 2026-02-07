@@ -308,7 +308,7 @@
         
         data.answers.forEach((ans, idx) => {
           const btn = document.createElement('button');
-          btn.className = 'btn answer-btn';
+          btn.className = 'answer-btn';
           const letter = String.fromCharCode(65 + idx);
           btn.textContent = `${letter}: ${ans}`;
           btn.onclick = () => {
