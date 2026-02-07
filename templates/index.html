@@ -1,80 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trivia Vibe</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
-  <link href="/static/host.css" rel="stylesheet">
-</head>
-<body>
-
-  <div id="banner"></div>
-
-  <!-- VIEW 1: SPECTATOR (Default) -->
-  <div id="spectator-view" class="container">
-    
-    <div id="join-section">
-       <h3>Join Game</h3>
-       <div class="join-input-group">
-         <input type="text" id="username-input" placeholder="Enter Nickname">
-         <button id="btn-confirm-join" class="btn btn-success">JOIN</button>
-       </div>
-    </div>
-
-    <div id="qr-container">
-      <img id="qr-code" src="/static/qr.png" alt="Scan to Join">
-      <p>Scan to play!</p>
-    </div>
-
-    <div id="spectator-timer"></div>
-    
-    <div id="game-board">
-      <h2 id="spectator-question">Waiting for players to join...</h2>
-      <ul id="spectator-answers" class="spectator-answers"></ul>
-    </div>
-
-    <div id="scoreboard">
-      <h3>Leaderboard</h3>
-      <div id="joining-players-container" style="color: #666; font-style: italic; text-align: center; margin-bottom: 10px;"></div>
-      <ul id="player-list"></ul>
-    </div>
-
-    <div class="host-controls" style="text-align: center;">
-      <button id="btn-start" class="btn">Start Game</button>
-      <button id="btn-next" class="btn hidden">Next Question</button>
-      <button id="btn-restart" class="btn btn-danger btn-mini">Reset All</button>
-    </div>
-  </div>
-
-  <!-- VIEW 3: PLAYER INTERFACE -->
-  <div id="player-view" class="container hidden">
-    <div id="my-player-name-container">
-      <h2 id="my-player-name">Player</h2>
-      <div id="my-player-score" style="font-size: 1.2em; font-weight: bold;">Score: 0</div>
-    </div>
-
-    <div id="player-status-area">
-      <div id="winning-banner" class="hidden">👑 WINNING! 👑</div>
-      <div id="participation-msg" class="hidden">Great Job!</div>
-    </div>
-
-    <div id="player-timer"></div>
-
-    <div id="player-question-area">
-      <h3 id="player-question-text">Waiting for game to start...</h3>
-      <div id="player-buttons"></div>
-      <div id="player-result-msg"></div>
-    </div>
-  </div>
-
-  <!-- Floating Action Button to Join -->
-  <button id="fab-join" title="Join Game" class="hidden">+</button>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js"></script>
-  <script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Trivia Vibe</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap"
+              rel="stylesheet">
+        <link href="/static/host.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="banner"></div>
+        <!-- VIEW 1: SPECTATOR (Default) -->
+        <div id="spectator-view" class="container">
+            <div id="join-section">
+                <h3>Join Game</h3>
+                <div class="join-input-group">
+                    <input type="text" id="username-input" placeholder="Enter Nickname">
+                    <button id="btn-confirm-join" class="btn btn-success">JOIN</button>
+                </div>
+            </div>
+            <div id="qr-container">
+                <img id="qr-code" src="/static/qr.png" alt="Scan to Join">
+                <p>Scan to play!</p>
+            </div>
+            <div id="spectator-timer"></div>
+            <div id="game-board">
+                <h2 id="spectator-question">Waiting for players to join...</h2>
+                <ul id="spectator-answers" class="spectator-answers">
+                </ul>
+            </div>
+            <div id="scoreboard">
+                <h3>Leaderboard</h3>
+                <div id="joining-players-container"
+                     style="color: #666;
+                            font-style: italic;
+                            text-align: center;
+                            margin-bottom: 10px"></div>
+                <ul id="player-list">
+                </ul>
+            </div>
+            <div class="host-controls" style="text-align: center;">
+                <button id="btn-start" class="btn">Start Game</button>
+                <button id="btn-next" class="btn hidden">Next Question</button>
+                <button id="btn-restart" class="btn btn-danger btn-mini">Reset All</button>
+            </div>
+        </div>
+        <!-- VIEW 3: PLAYER INTERFACE -->
+        <div id="player-view" class="container hidden">
+            <div id="my-player-name-container">
+                <h2 id="my-player-name">Player</h2>
+                <div id="my-player-score" style="font-size: 1.2em; font-weight: bold;">Score: 0</div>
+            </div>
+            <div id="player-status-area">
+                <div id="winning-banner" class="hidden">👑 WINNING! 👑</div>
+                <div id="participation-msg" class="hidden">Great Job!</div>
+            </div>
+            <div id="player-timer"></div>
+            <div id="player-question-area">
+                <h3 id="player-question-text">Waiting for game to start...</h3>
+                <div id="player-buttons"></div>
+                <div id="player-result-msg"></div>
+            </div>
+        </div>
+        <!-- Floating Action Button to Join -->
+        <button id="fab-join" title="Join Game" class="hidden">+</button>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js"></script>
+        <script>
     const socket = io();
     
     // State
@@ -150,9 +143,11 @@
       // Update Player Status (if playing)
       if (isPlayer) {
         const myStats = data.players[myUsername];
-        const hasScore = myStats && myStats.score > 0;
+        const myScore = myStats ? myStats.score : 0;
+        const hasScore = myScore > 0;
         const isWinning = hasScore && data.winning_players && data.winning_players.includes(myUsername);
         
+        document.getElementById('my-player-score').textContent = `Score: ${myScore}`;
         document.getElementById('winning-banner').classList.toggle('hidden', !isWinning);
         document.getElementById('participation-msg').classList.toggle('hidden', !hasScore || isWinning);
       }
@@ -330,6 +325,6 @@
       socket.emit('reset_all');
     };
 
-  </script>
-</body>
+        </script>
+    </body>
 </html>
