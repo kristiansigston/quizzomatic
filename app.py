@@ -1,6 +1,7 @@
 import random
 import json
 import generate_qr
+import os
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit, join_room, leave_room
 import threading
@@ -23,6 +24,8 @@ for q in all_questions:
     q['correct'] = 0
 
 questions = []  # This will hold the 5 questions for the current game
+QUESTIONS_LOG_PATH = 'questions_asked.jsonl'
+RECENT_WINDOW_SECONDS = 6 * 60 * 60
 
 
 @app.route('/')
@@ -34,6 +37,72 @@ def stop_timer_thread():
     if game_state.get('timer_thread'):
         game_state['timer_thread'].cancel()
         game_state['timer_thread'] = None
+
+
+def load_recent_question_times():
+    if not os.path.exists(QUESTIONS_LOG_PATH):
+        return {}
+    recent_times = {}
+    try:
+        with open(QUESTIONS_LOG_PATH, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    entry = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                question = entry.get('question')
+                timestamp = entry.get('timestamp')
+                if question and isinstance(timestamp, (int, float)):
+                    recent_times[question] = max(
+                        recent_times.get(question, 0), timestamp)
+    except OSError:
+        return {}
+    return recent_times
+
+
+def weighted_sample_without_replacement(items, weights, count):
+    chosen = []
+    pool = list(zip(items, weights))
+    for _ in range(min(count, len(pool))):
+        total = sum(w for _, w in pool)
+        if total <= 0:
+            picked_idx = random.randrange(len(pool))
+        else:
+            r = random.uniform(0, total)
+            upto = 0
+            picked_idx = 0
+            for i, (_item, w) in enumerate(pool):
+                upto += w
+                if upto >= r:
+                    picked_idx = i
+                    break
+        picked_item, _ = pool.pop(picked_idx)
+        chosen.append(picked_item)
+    return chosen
+
+
+def select_questions_for_game():
+    recent_times = load_recent_question_times()
+    now = time.time()
+    weights = []
+    for q in all_questions:
+        last_time = recent_times.get(q['question'], 0)
+        age = max(0, now - last_time)
+        weight = min(1.0, age / RECENT_WINDOW_SECONDS) if last_time else 1.0
+        weights.append(max(0.05, weight))
+    return weighted_sample_without_replacement(all_questions, weights, 5)
+
+
+def log_question_asked(question_text):
+    entry = {'question': question_text, 'timestamp': time.time()}
+    try:
+        with open(QUESTIONS_LOG_PATH, 'a') as f:
+            f.write(json.dumps(entry) + '\n')
+    except OSError:
+        pass
 
 
 def add_scores_for_correct_answers():
@@ -138,8 +207,9 @@ def handle_join(data):
     client_ip = request.remote_addr
 
     if username not in game_state['players']:
+        is_first_player = len(game_state['players']) == 0
         game_state['players'][username] = {
-            'score': 0,
+            'score': 3 if is_first_player else 0,
             'sid': request.sid,
             'ip': client_ip
         }
@@ -185,10 +255,8 @@ def reset_game():
     for player in game_state['players']:
         game_state['players'][player]['score'] = 0  # Reset scores
 
-    # Select 5 random questions for the game
-    random.shuffle(all_questions)
     global questions
-    questions = all_questions[:5]  # Take the first 5 questions
+    questions = select_questions_for_game()
 
 
 @socketio.on('start_game')
@@ -260,6 +328,7 @@ def next_question(question_index):
 
     if game_state['current_question_index'] < len(questions):
         question_data = questions[game_state['current_question_index']]
+        log_question_asked(question_data['question'])
 
         # Get correct answer text before mutation
         correct_answer_text = question_data['answers'][question_data['correct']]
