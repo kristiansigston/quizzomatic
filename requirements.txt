@@ -4,3 +4,4 @@ qrcode
 Pillow
 autopep8
 playwright
+djlint

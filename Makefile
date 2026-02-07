@@ -8,6 +8,13 @@ qr:
 
 format:
 	. v/bin/activate && autopep8 --in-place --aggressive --aggressive *.py
+	. v/bin/activate && djlint templates --reformat
+	@files=$$(find static templates -type f \( -name "*.js" -o -name "*.ts" \)); \
+	if [ -n "$$files" ]; then \
+		npx prettier --write $$files; \
+	else \
+		echo "No JS/TS files to format."; \
+	fi
 
 setup:
 	python3 -m venv v
