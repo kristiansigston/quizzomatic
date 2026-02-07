@@ -1,5 +1,5 @@
 
-
+# this is the script part of package json
 run:
 	. v/bin/activate && python app.py
 
@@ -15,6 +15,9 @@ format:
 	else \
 		echo "No JS/TS files to format."; \
 	fi
+
+test:
+	. v/bin/activate && pytest -q
 
 setup:
 	python3 -m venv v
