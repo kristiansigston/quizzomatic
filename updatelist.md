@@ -36,7 +36,11 @@ Great job is not for wrongers - done
 Timer should stop counting down when you answer
 time until next question on the client
 TRHere extra shaing around queations after correct.
+We don't to wait to end the game
 
+We should show the time until next queastion on the client
+
+Client should also show leaderboard at the end
 
 What does the player see
 What does the main screen see
