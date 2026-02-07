@@ -40,8 +40,8 @@ def add_scores_for_correct_answers():
     current_q = questions[game_state['current_question_index']]
     correct_answer_index = current_q['correct']
 
-    # Set intermission duration: 5s if 1 player, else 20s
-    intermission_duration = 5 if len(game_state['players']) == 1 else 20
+    # Set intermission duration: 5s if 1 player, else 10s
+    intermission_duration = 5 if len(game_state['players']) == 1 else 10
     game_state['intermission_duration'] = intermission_duration
 
     # Prepare results for host screen
