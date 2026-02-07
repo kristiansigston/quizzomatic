@@ -31,15 +31,21 @@ Start game needs a loading indicator and it needs idemptotnet
 
 Restart Game is for debugging
 
+Add countdown on client
+Great job is not for wrongers - done
+Timer should stop counting down when you answer
+time until next question on the client
+TRHere extra shaing around queations after correct.
+
 
 What does the player see
 What does the main screen see
 Who is the mian screeen for?>
 
-Store nickname in localstorage and have as default
-I do not want tune left before the question starts
+Store nickname in localstorage and have as default - done
+I do not want time left before the question starts
 
-Reset button needs to get name form localstorage
+Reset button needs to get name form localstorage - done
 Points are not working
 Oplayers cannot see their own pointsa
 Main screen is for and is a spectator - is oroibalby what a user sees on their phone at the end
