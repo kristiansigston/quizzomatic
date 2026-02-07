@@ -211,16 +211,6 @@
       ]
     },
     {
-      "question": "Fish\u2019s worst enemy?",
-      "answers": [
-        "Dryness",
-        "Fire",
-        "Bubbles",
-        "Shrimp",
-        "Napkins"
-      ]
-    },
-    {
       "question": "Atomic number of O?",
       "answers": [
         "8",
@@ -899,6 +889,106 @@
         "North",
         "South",
         "Up"
+      ]
+    },
+    {
+      "question": "Harry Potter's owl is named?",
+      "answers": [
+        "Hedwig",
+        "Errol",
+        "Crookshanks",
+        "Scabbers",
+        "Pigwidgeon"
+      ]
+    },
+    {
+      "question": "House known for bravery?",
+      "answers": [
+        "Gryffindor",
+        "Slytherin",
+        "Ravenclaw",
+        "Hufflepuff",
+        "Ilvermorny"
+      ]
+    },
+    {
+      "question": "Sport played on broomsticks?",
+      "answers": [
+        "Quidditch",
+        "Gobstones",
+        "Exploding Snap",
+        "Wizards Chess",
+        "Quodpot"
+      ]
+    },
+    {
+      "question": "Hermione's middle name?",
+      "answers": [
+        "Jean",
+        "Lily",
+        "Rose",
+        "Marie",
+        "Jane"
+      ]
+    },
+    {
+      "question": "Wizarding school in Scotland?",
+      "answers": [
+        "Hogwarts",
+        "Beauxbatons",
+        "Durmstrang",
+        "Ilvermorny",
+        "Uagadou"
+      ]
+    },
+    {
+      "question": "Platform to catch Hogwarts Express?",
+      "answers": [
+        "9 3/4",
+        "9 1/2",
+        "10",
+        "7",
+        "8 1/4"
+      ]
+    },
+    {
+      "question": "Potion that brings good luck?",
+      "answers": [
+        "Felix Felicis",
+        "Polyjuice",
+        "Amortentia",
+        "Veritaserum",
+        "Wolfsbane"
+      ]
+    },
+    {
+      "question": "Spell to disarm an opponent?",
+      "answers": [
+        "Expelliarmus",
+        "Stupefy",
+        "Accio",
+        "Lumos",
+        "Protego"
+      ]
+    },
+    {
+      "question": "Headmaster after Dumbledore?",
+      "answers": [
+        "Snape",
+        "McGonagall",
+        "Flitwick",
+        "Sprout",
+        "Slughorn"
+      ]
+    },
+    {
+      "question": "Bank run by goblins?",
+      "answers": [
+        "Gringotts",
+        "Galleons",
+        "Ollivanders",
+        "Honeydukes",
+        "Flourish & Blotts"
       ]
     }
   ]
