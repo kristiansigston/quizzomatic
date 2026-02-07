@@ -2,164 +2,904 @@
   "questions": [
     {
       "question": "Best pet for coding?",
-      "answers": ["Rubber duck", "Cat", "Dog", "Llama", "Snail"]
+      "answers": [
+        "Rubber duck",
+        "Cat",
+        "Dog",
+        "Llama",
+        "Snail"
+      ]
     },
     {
       "question": "Alien's fav snack?",
-      "answers": ["Moon pie", "Space chips", "Martian mints", "Astro jelly", "Venus bars"]
+      "answers": [
+        "Moon pie",
+        "Space chips",
+        "Martian mints",
+        "Astro jelly",
+        "Venus bars"
+      ]
     },
     {
       "question": "Most sus cheese?",
-      "answers": ["Camembert", "Cheddar", "Mozzarella", "Brie", "Gouda"]
+      "answers": [
+        "Camembert",
+        "Cheddar",
+        "Mozzarella",
+        "Brie",
+        "Gouda"
+      ]
     },
     {
       "question": "Toilet paper goes?",
-      "answers": ["Over", "Under", "Sideways", "Folded", "In drawer"]
+      "answers": [
+        "Over",
+        "Under",
+        "Sideways",
+        "Folded",
+        "In drawer"
+      ]
     },
     {
       "question": "Light year is?",
-      "answers": ["Distance", "Time", "Mass", "Energy", "Speed"]
+      "answers": [
+        "Distance",
+        "Time",
+        "Mass",
+        "Energy",
+        "Speed"
+      ]
     },
     {
       "question": "Human cell has how many chromosomes?",
-      "answers": ["46", "44", "23", "48", "50"]
+      "answers": [
+        "46",
+        "44",
+        "23",
+        "48",
+        "50"
+      ]
     },
     {
       "question": "Currency of UK?",
-      "answers": ["Pound", "Euro", "Dollar", "Franc", "Lira"]
+      "answers": [
+        "Pound",
+        "Euro",
+        "Dollar",
+        "Franc",
+        "Lira"
+      ]
     },
     {
       "question": "Smartest fruit?",
-      "answers": ["Grapes", "Banana", "Apple", "Peach", "Lime"]
+      "answers": [
+        "Grapes",
+        "Banana",
+        "Apple",
+        "Peach",
+        "Lime"
+      ]
     },
     {
       "question": "Python is a?",
-      "answers": ["Language", "Snake", "Bird", "Fruit", "Drink"]
+      "answers": [
+        "Language",
+        "Snake",
+        "Bird",
+        "Fruit",
+        "Drink"
+      ]
     },
     {
       "question": "Unicorns eat?",
-      "answers": ["Rainbows", "Hay", "Clouds", "Dreams", "Tacos"]
+      "answers": [
+        "Rainbows",
+        "Hay",
+        "Clouds",
+        "Dreams",
+        "Tacos"
+      ]
     },
     {
       "question": "Speed of light (m/s)?",
-      "answers": ["299792458", "150000000", "100000000", "30000000", "186000"]
+      "answers": [
+        "299792458",
+        "150000000",
+        "100000000",
+        "30000000",
+        "186000"
+      ]
     },
     {
       "question": "AI's fav joke?",
-      "answers": ["Binary pun", "Dad joke", "Knock knock", "Why chicken?", "404"]
+      "answers": [
+        "Binary pun",
+        "Dad joke",
+        "Knock knock",
+        "Why chicken?",
+        "404"
+      ]
     },
     {
       "question": "Metal in hemoglobin?",
-      "answers": ["Iron", "Copper", "Zinc", "Calcium", "Magnesium"]
+      "answers": [
+        "Iron",
+        "Copper",
+        "Zinc",
+        "Calcium",
+        "Magnesium"
+      ]
     },
     {
       "question": "Biggest internet fear?",
-      "answers": ["404", "200", "500", "302", "403"]
+      "answers": [
+        "404",
+        "200",
+        "500",
+        "302",
+        "403"
+      ]
     },
     {
       "question": "Plants rebel when?",
-      "answers": ["Unwatered", "Loud music", "Insults", "TV off", "No WiFi"]
+      "answers": [
+        "Unwatered",
+        "Loud music",
+        "Insults",
+        "TV off",
+        "No WiFi"
+      ]
     },
     {
       "question": "Sun is a?",
-      "answers": ["Star", "Planet", "Comet", "Asteroid", "Galaxy"]
+      "answers": [
+        "Star",
+        "Planet",
+        "Comet",
+        "Asteroid",
+        "Galaxy"
+      ]
     },
     {
       "question": "Elves fear?",
-      "answers": ["Deadlines", "Sun", "Cookies", "Rain", "High heels"]
+      "answers": [
+        "Deadlines",
+        "Sun",
+        "Cookies",
+        "Rain",
+        "High heels"
+      ]
     },
     {
       "question": "Best time to panic?",
-      "answers": ["Now", "Later", "Never", "Yesterday", "Mid-lunch"]
+      "answers": [
+        "Now",
+        "Later",
+        "Never",
+        "Yesterday",
+        "Mid-lunch"
+      ]
     },
     {
       "question": "Mona Lisa painted by?",
-      "answers": ["Da Vinci", "Van Gogh", "Picasso", "Michelangelo", "Rembrandt"]
+      "answers": [
+        "Da Vinci",
+        "Van Gogh",
+        "Picasso",
+        "Michelangelo",
+        "Rembrandt"
+      ]
     },
     {
       "question": "Pi starts with?",
-      "answers": ["3.14", "2.71", "1.61", "3.33", "1.41"]
+      "answers": [
+        "3.14",
+        "2.71",
+        "1.61",
+        "3.33",
+        "1.41"
+      ]
     },
     {
       "question": "Einstein's famous equation?",
-      "answers": ["E=mc^2", "F=ma", "a^2 + b^2 = c^2", "PV=nRT", "x=vt"]
+      "answers": [
+        "E=mc^2",
+        "F=ma",
+        "a^2 + b^2 = c^2",
+        "PV=nRT",
+        "x=vt"
+      ]
     },
     {
-      "question": "Fish’s worst enemy?",
-      "answers": ["Dryness", "Fire", "Bubbles", "Shrimp", "Napkins"]
+      "question": "Fish\u2019s worst enemy?",
+      "answers": [
+        "Dryness",
+        "Fire",
+        "Bubbles",
+        "Shrimp",
+        "Napkins"
+      ]
     },
     {
       "question": "Atomic number of O?",
-      "answers": ["8", "6", "10", "2", "12"]
+      "answers": [
+        "8",
+        "6",
+        "10",
+        "2",
+        "12"
+      ]
     },
     {
       "question": "Taj Mahal built in?",
-      "answers": ["India", "Pakistan", "Iran", "Bangladesh", "Nepal"]
+      "answers": [
+        "India",
+        "Pakistan",
+        "Iran",
+        "Bangladesh",
+        "Nepal"
+      ]
     },
     {
       "question": "Best dinosaur name?",
-      "answers": ["Thesaurus", "Writosaurus", "Grammarex", "Punctuaptor", "Commasaur"]
+      "answers": [
+        "Thesaurus",
+        "Writosaurus",
+        "Grammarex",
+        "Punctuaptor",
+        "Commasaur"
+      ]
     },
     {
       "question": "First US president?",
-      "answers": ["George Washington", "Lincoln", "Jefferson", "Adams", "Roosevelt"]
+      "answers": [
+        "George Washington",
+        "Lincoln",
+        "Jefferson",
+        "Adams",
+        "Roosevelt"
+      ]
     },
     {
       "question": "Most evil shape?",
-      "answers": ["Triangle", "Circle", "Square", "Rhombus", "Octagon"]
+      "answers": [
+        "Pentagon",
+        "Triangle",
+        "Circle",
+        "Square",
+        "Rhombus",
+        "Octagon"
+      ]
     },
     {
       "question": "DNA stands for?",
-      "answers": ["Deoxyribonucleic Acid", "Dynamic Neural Analysis", "Digital Numeric Array", "Data Network Access", "Double Nucleic Agent"]
+      "answers": [
+        "Deoxyribonucleic Acid",
+        "Dynamic Neural Analysis",
+        "Digital Numeric Array",
+        "Data Network Access",
+        "Double Nucleic Agent"
+      ]
     },
     {
       "question": "Who wrote Hamlet?",
-      "answers": ["Shakespeare", "Dickens", "Homer", "Orwell", "Joyce"]
+      "answers": [
+        "Shakespeare",
+        "Dickens",
+        "Homer",
+        "Orwell",
+        "Joyce"
+      ]
     },
     {
       "question": "What ruins stealth?",
-      "answers": ["Flip-flops", "Cloak", "Sneakers", "Slippers", "Silence"]
+      "answers": [
+        "Flip-flops",
+        "Cloak",
+        "Sneakers",
+        "Slippers",
+        "Silence"
+      ]
     },
     {
       "question": "Best password?",
-      "answers": ["1234", "qwerty", "letmein", "password", "admin"]
+      "answers": [
+        "1234",
+        "qwerty",
+        "letmein",
+        "password",
+        "admin"
+      ]
     },
     {
       "question": "Smallest unit of matter?",
-      "answers": ["Atom", "Molecule", "Quark", "Proton", "Neutron"]
+      "answers": [
+        "Atom",
+        "Molecule",
+        "Quark",
+        "Proton",
+        "Neutron"
+      ]
     },
     {
       "question": "Dinosaur's worst habit?",
-      "answers": ["Extinction", "Snoring", "Loud stomping", "Tail whips", "Overeating"]
+      "answers": [
+        "Extinction",
+        "Snoring",
+        "Loud stomping",
+        "Tail whips",
+        "Overeating"
+      ]
     },
     {
       "question": "Fastest ninja?",
-      "answers": ["One you don't see", "Naruto", "Bruce Lee", "Shadow", "Flash"]
+      "answers": [
+        "One you don't see",
+        "Naruto",
+        "Bruce Lee",
+        "Shadow",
+        "Flash"
+      ]
     },
     {
       "question": "Penguins wear?",
-      "answers": ["Tuxedos", "Suits", "Robes", "Jeans", "Kilts"]
+      "answers": [
+        "Tuxedos",
+        "Suits",
+        "Robes",
+        "Jeans",
+        "Kilts"
+      ]
     },
     {
       "question": "H2O is?",
-      "answers": ["Water", "Hydrogen", "Oxygen", "Helium", "Salt"]
+      "answers": [
+        "Water",
+        "Hydrogen",
+        "Oxygen",
+        "Helium",
+        "Salt"
+      ]
     },
     {
       "question": "Biggest planet?",
-      "answers": ["Jupiter", "Saturn", "Earth", "Mars", "Neptune"]
+      "answers": [
+        "Jupiter",
+        "Saturn",
+        "Earth",
+        "Mars",
+        "Neptune"
+      ]
     },
     {
       "question": "Socks vanish where?",
-      "answers": ["Wormhole", "Dryer", "Drawer", "Backyard", "Moon"]
+      "answers": [
+        "Wormhole",
+        "Dryer",
+        "Drawer",
+        "Backyard",
+        "Moon"
+      ]
     },
     {
       "question": "Best tool vs zombies?",
-      "answers": ["Spoon", "Fork", "Ruler", "Laser", "Marker"]
+      "answers": [
+        "Spoon",
+        "Fork",
+        "Ruler",
+        "Laser",
+        "Marker"
+      ]
     },
     {
-      "question": "Earth’s only natural satellite?",
-      "answers": ["Moon", "Sun", "Mars", "Europa", "Venus"]
+      "question": "Earth\u2019s only natural satellite?",
+      "answers": [
+        "Moon",
+        "Sun",
+        "Mars",
+        "Europa",
+        "Venus"
+      ]
+    },
+    {
+      "question": "Planet known as Red Planet?",
+      "answers": [
+        "Mars",
+        "Jupiter",
+        "Venus",
+        "Saturn",
+        "Neptune"
+      ]
+    },
+    {
+      "question": "Largest ocean on Earth?",
+      "answers": [
+        "Pacific",
+        "Atlantic",
+        "Indian",
+        "Arctic",
+        "Southern"
+      ]
+    },
+    {
+      "question": "Fastest land animal?",
+      "answers": [
+        "Cheetah",
+        "Lion",
+        "Horse",
+        "Gazelle",
+        "Ostrich"
+      ]
+    },
+    {
+      "question": "Chemical symbol for water?",
+      "answers": [
+        "H2O",
+        "CO2",
+        "O2",
+        "NaCl",
+        "He"
+      ]
+    },
+    {
+      "question": "Opposite of north?",
+      "answers": [
+        "South",
+        "East",
+        "West",
+        "Up",
+        "Down"
+      ]
+    },
+    {
+      "question": "Main gas in Earth's atmosphere?",
+      "answers": [
+        "Nitrogen",
+        "Oxygen",
+        "Carbon dioxide",
+        "Argon",
+        "Hydrogen"
+      ]
+    },
+    {
+      "question": "Largest planet?",
+      "answers": [
+        "Jupiter",
+        "Saturn",
+        "Earth",
+        "Mars",
+        "Neptune"
+      ]
+    },
+    {
+      "question": "Primary color not in RGB?",
+      "answers": [
+        "Yellow",
+        "Red",
+        "Green",
+        "Blue",
+        "White"
+      ]
+    },
+    {
+      "question": "Famous leaning tower?",
+      "answers": [
+        "Pisa",
+        "Paris",
+        "Rome",
+        "London",
+        "Athens"
+      ]
+    },
+    {
+      "question": "Instrument with keys and pedals?",
+      "answers": [
+        "Piano",
+        "Guitar",
+        "Drums",
+        "Violin",
+        "Flute"
+      ]
+    },
+    {
+      "question": "Smallest prime number?",
+      "answers": [
+        "2",
+        "1",
+        "3",
+        "5",
+        "7"
+      ]
+    },
+    {
+      "question": "Largest mammal?",
+      "answers": [
+        "Blue whale",
+        "Elephant",
+        "Giraffe",
+        "Hippo",
+        "Orca"
+      ]
+    },
+    {
+      "question": "Bird that cannot fly?",
+      "answers": [
+        "Ostrich",
+        "Eagle",
+        "Sparrow",
+        "Falcon",
+        "Hawk"
+      ]
+    },
+    {
+      "question": "Capital of Japan?",
+      "answers": [
+        "Tokyo",
+        "Osaka",
+        "Kyoto",
+        "Seoul",
+        "Beijing"
+      ]
+    },
+    {
+      "question": "Currency of Japan?",
+      "answers": [
+        "Yen",
+        "Won",
+        "Yuan",
+        "Dollar",
+        "Euro"
+      ]
+    },
+    {
+      "question": "Language of Brazil?",
+      "answers": [
+        "Portuguese",
+        "Spanish",
+        "French",
+        "English",
+        "Italian"
+      ]
+    },
+    {
+      "question": "Tallest land animal?",
+      "answers": [
+        "Giraffe",
+        "Elephant",
+        "Moose",
+        "Camel",
+        "Rhino"
+      ]
+    },
+    {
+      "question": "Largest desert?",
+      "answers": [
+        "Sahara",
+        "Gobi",
+        "Kalahari",
+        "Mojave",
+        "Atacama"
+      ]
+    },
+    {
+      "question": "Fastest bird?",
+      "answers": [
+        "Peregrine falcon",
+        "Eagle",
+        "Hawk",
+        "Swift",
+        "Albatross"
+      ]
+    },
+    {
+      "question": "Metal attracted to magnets?",
+      "answers": [
+        "Iron",
+        "Gold",
+        "Aluminum",
+        "Copper",
+        "Silver"
+      ]
+    },
+    {
+      "question": "Hardest natural substance?",
+      "answers": [
+        "Diamond",
+        "Gold",
+        "Quartz",
+        "Iron",
+        "Granite"
+      ]
+    },
+    {
+      "question": "Largest continent?",
+      "answers": [
+        "Asia",
+        "Africa",
+        "Europe",
+        "North America",
+        "South America"
+      ]
+    },
+    {
+      "question": "Longest river?",
+      "answers": [
+        "Nile",
+        "Amazon",
+        "Yangtze",
+        "Mississippi",
+        "Danube"
+      ]
+    },
+    {
+      "question": "Primary gas plants breathe in?",
+      "answers": [
+        "Carbon dioxide",
+        "Oxygen",
+        "Nitrogen",
+        "Helium",
+        "Methane"
+      ]
+    },
+    {
+      "question": "Which planet has rings?",
+      "answers": [
+        "Saturn",
+        "Mars",
+        "Mercury",
+        "Venus",
+        "Earth"
+      ]
+    },
+    {
+      "question": "Frozen water is called?",
+      "answers": [
+        "Ice",
+        "Steam",
+        "Vapor",
+        "Mist",
+        "Cloud"
+      ]
+    },
+    {
+      "question": "Shape with 3 sides?",
+      "answers": [
+        "Triangle",
+        "Square",
+        "Circle",
+        "Pentagon",
+        "Hexagon"
+      ]
+    },
+    {
+      "question": "Number of continents?",
+      "answers": [
+        "7",
+        "5",
+        "6",
+        "8",
+        "9"
+      ]
+    },
+    {
+      "question": "Primary color of bananas?",
+      "answers": [
+        "Yellow",
+        "Blue",
+        "Red",
+        "Green",
+        "Purple"
+      ]
+    },
+    {
+      "question": "Device to measure temperature?",
+      "answers": [
+        "Thermometer",
+        "Barometer",
+        "Hygrometer",
+        "Altimeter",
+        "Seismograph"
+      ]
+    },
+    {
+      "question": "Largest bone in body?",
+      "answers": [
+        "Femur",
+        "Humerus",
+        "Tibia",
+        "Skull",
+        "Rib"
+      ]
+    },
+    {
+      "question": "Planet closest to Sun?",
+      "answers": [
+        "Mercury",
+        "Venus",
+        "Earth",
+        "Mars",
+        "Jupiter"
+      ]
+    },
+    {
+      "question": "Author of Romeo and Juliet?",
+      "answers": [
+        "Shakespeare",
+        "Hemingway",
+        "Austen",
+        "Twain",
+        "Orwell"
+      ]
+    },
+    {
+      "question": "Ocean between Africa and Australia?",
+      "answers": [
+        "Indian",
+        "Pacific",
+        "Atlantic",
+        "Arctic",
+        "Southern"
+      ]
+    },
+    {
+      "question": "Largest island?",
+      "answers": [
+        "Greenland",
+        "Australia",
+        "Madagascar",
+        "Borneo",
+        "Iceland"
+      ]
+    },
+    {
+      "question": "Famous detective with pipe?",
+      "answers": [
+        "Sherlock Holmes",
+        "Poirot",
+        "Columbo",
+        "Marple",
+        "Nancy Drew"
+      ]
+    },
+    {
+      "question": "Which one is a mammal?",
+      "answers": [
+        "Dolphin",
+        "Shark",
+        "Trout",
+        "Octopus",
+        "Lobster"
+      ]
+    },
+    {
+      "question": "Tool for tightening screws?",
+      "answers": [
+        "Screwdriver",
+        "Hammer",
+        "Wrench",
+        "Pliers",
+        "Saw"
+      ]
+    },
+    {
+      "question": "Fastest way to boil water?",
+      "answers": [
+        "Electric kettle",
+        "Microwave",
+        "Stove",
+        "Campfire",
+        "Sun"
+      ]
+    },
+    {
+      "question": "Smallest continent?",
+      "answers": [
+        "Australia",
+        "Europe",
+        "Antarctica",
+        "South America",
+        "Africa"
+      ]
+    },
+    {
+      "question": "Color of emerald?",
+      "answers": [
+        "Green",
+        "Red",
+        "Blue",
+        "Yellow",
+        "Purple"
+      ]
+    },
+    {
+      "question": "Planet with Great Red Spot?",
+      "answers": [
+        "Jupiter",
+        "Mars",
+        "Venus",
+        "Saturn",
+        "Neptune"
+      ]
+    },
+    {
+      "question": "Primary ingredient in bread?",
+      "answers": [
+        "Flour",
+        "Sugar",
+        "Salt",
+        "Butter",
+        "Milk"
+      ]
+    },
+    {
+      "question": "Which is a web browser?",
+      "answers": [
+        "Firefox",
+        "Photoshop",
+        "Excel",
+        "Slack",
+        "Zoom"
+      ]
+    },
+    {
+      "question": "Largest bird by wingspan?",
+      "answers": [
+        "Albatross",
+        "Eagle",
+        "Swan",
+        "Pelican",
+        "Condor"
+      ]
+    },
+    {
+      "question": "Tool to measure angles?",
+      "answers": [
+        "Protractor",
+        "Ruler",
+        "Compass",
+        "Scale",
+        "Caliper"
+      ]
+    },
+    {
+      "question": "Animal known for stripes?",
+      "answers": [
+        "Zebra",
+        "Giraffe",
+        "Leopard",
+        "Cheetah",
+        "Moose"
+      ]
+    },
+    {
+      "question": "Closest star to Earth?",
+      "answers": [
+        "Sun",
+        "Sirius",
+        "Polaris",
+        "Vega",
+        "Betelgeuse"
+      ]
+    },
+    {
+      "question": "Largest organ in body?",
+      "answers": [
+        "Skin",
+        "Heart",
+        "Lung",
+        "Liver",
+        "Brain"
+      ]
+    },
+    {
+      "question": "Direction sun rises?",
+      "answers": [
+        "East",
+        "West",
+        "North",
+        "South",
+        "Up"
+      ]
     }
   ]
 }
-
