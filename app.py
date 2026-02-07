@@ -75,10 +75,14 @@ def add_scores_for_correct_answers():
 
 
 def process_answers():
+    if game_state.get('answers_processed'):
+        return
+    game_state['answers_processed'] = True
     stop_timer_thread()
 
     # Calculate scores first to set intermission_duration
     add_scores_for_correct_answers()
+    game_state['current_answers'] = {}
 
     # Start intermission timer
     duration = game_state.get('intermission_duration', 20)
@@ -252,6 +256,7 @@ def next_question(question_index):
 
     game_state['current_question_index'] = question_index
     game_state['current_answers'] = {}  # Clear answers for new question
+    game_state['answers_processed'] = False
 
     if game_state['current_question_index'] < len(questions):
         question_data = questions[game_state['current_question_index']]
