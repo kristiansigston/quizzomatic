@@ -416,6 +416,14 @@
 
     socket.on('error', (err) => alert(err.message));
 
+    // --- QR Toggle ---
+    const qrContainer = document.getElementById('qr-container');
+    if (qrContainer) {
+      qrContainer.addEventListener('click', () => {
+        qrContainer.classList.toggle('qr-large');
+      });
+    }
+
 
     // --- Spectator BUTTONS ---
     document.getElementById('btn-start').onclick = () => socket.emit('start_game');
