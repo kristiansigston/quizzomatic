@@ -1,4 +1,17 @@
-Make Sure can answer quetion
+Backlog:
+
+* Improve the background image - replace with dynamic CSS?
+* Improve title banner
+
+
+
+
+
+============
+
+
+
+Make Sure can answer question
 Question box desgin better
 
 Should be able to change answer before time but time penalty
