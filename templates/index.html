@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trivia Vibe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+  <link href="/static/host.css" rel="stylesheet">
+</head>
+<body>
+
+  <div id="banner"></div>
+
+  <!-- VIEW 1: SPECTATOR (Default) -->
+  <div id="spectator-view" class="container">
+    
+    <div id="join-section">
+       <h3>Join Game</h3>
+       <div class="join-input-group">
+         <input type="text" id="username-input" placeholder="Enter Nickname">
+         <button id="btn-confirm-join" class="btn btn-success">JOIN</button>
+       </div>
+    </div>
+
+    <div id="qr-container">
+      <img id="qr-code" src="/static/qr.png" alt="Scan to Join">
+      <p>Scan to play!</p>
+    </div>
+
+    <div id="spectator-timer"></div>
+    
+    <div id="game-board">
+      <h2 id="spectator-question">Waiting for players to join...</h2>
+      <ul id="spectator-answers" class="spectator-answers"></ul>
+    </div>
+
+    <div id="scoreboard">
+      <h3>Leaderboard</h3>
+      <div id="joining-players-container" style="color: #666; font-style: italic; text-align: center; margin-bottom: 10px;"></div>
+      <ul id="player-list"></ul>
+    </div>
+
+    <div class="host-controls" style="text-align: center;">
+      <button id="btn-start" class="btn">Start Game</button>
+      <button id="btn-next" class="btn hidden">Next Question</button>
+      <button id="btn-restart" class="btn btn-danger btn-mini">Reset All</button>
+    </div>
+  </div>
+
+  <!-- VIEW 3: PLAYER INTERFACE -->
+  <div id="player-view" class="container hidden">
+    <div id="my-player-name-container">
+      <h2 id="my-player-name">Player</h2>
+      <div id="my-player-score" style="font-size: 1.2em; font-weight: bold;">Score: 0</div>
+    </div>
+
+    <div id="player-status-area">
+      <div id="winning-banner" class="hidden">👑 WINNING! 👑</div>
+      <div id="participation-msg" class="hidden">Great Job!</div>
+    </div>
+
+    <div id="player-timer"></div>
+
+    <div id="player-question-area">
+      <h3 id="player-question-text">Waiting for game to start...</h3>
+      <div id="player-buttons"></div>
+      <div id="player-result-msg"></div>
+    </div>
+  </div>
+
+  <!-- Floating Action Button to Join -->
+  <button id="fab-join" title="Join Game" class="hidden">+</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js"></script>
+  <script>
+    const socket = io();
+    
+    // State
+    let myUsername = localStorage.getItem('triviaUsername') || '';
+    let isPlayer = false;
+    let intermissionInterval;
+    let timerInterval;
+    let current_question_index = -1;
+
+    // Elements
+    const views = {
+      spectator: document.getElementById('spectator-view'),
+      player: document.getElementById('player-view')
+    };
+    
+    const fabJoin = document.getElementById('fab-join');
+    const inputUsername = document.getElementById('username-input');
+
+    // --- NAVIGATION LOGIC ---
+    function showView(viewName) {
+      Object.values(views).forEach(el => el.classList.add('hidden'));
+      views[viewName].classList.remove('hidden');
+    }
+
+    // Initial Load
+    showView('spectator');
+    if (myUsername) inputUsername.value = myUsername;
+
+    // Join Flow
+    // Removed separate join view logic
+
+    document.getElementById('btn-confirm-join').onclick = () => {
+      const name = inputUsername.value.trim();
+      if (!name) return alert('Please enter a name');
+      
+      myUsername = name;
+      localStorage.setItem('triviaUsername', name);
+      socket.emit('join', { username: name });
+    };
+    
+    socket.on('joined', (data) => {
+      if (data.username === myUsername) {
+        // Update UI
+        isPlayer = true;
+        document.getElementById('my-player-name').textContent = myUsername;
+        showView('player');
+      }
+    });
+
+    // --- REAL-TIME TYPING ---
+    inputUsername.oninput = (e) => {
+      socket.emit('typing_username', { username: e.target.value });
+    };
+
+
+    // --- SOCKET HANDLERS ---
+
+    // 1. Player List & Leaderboard
+    socket.on('player_list', (data) => {
+      const list = document.getElementById('player-list');
+      list.innerHTML = '';
+      
+      // Update Spectator Board
+      for (const [name, stats] of Object.entries(data.players)) {
+        const li = document.createElement('li');
+        let nameHtml = `<span class="player-name">${name}</span>`;
+        if (data.winning_players && data.winning_players.includes(name) && stats.score > 0) nameHtml += ' 👑';
+        
+        li.innerHTML = `${nameHtml} <span class="player-score">${stats.score}</span>`;
+        list.appendChild(li);
+      }
+
+      // Update Player Status (if playing)
+      if (isPlayer) {
+        const myStats = data.players[myUsername];
+        const hasScore = myStats && myStats.score > 0;
+        const isWinning = hasScore && data.winning_players && data.winning_players.includes(myUsername);
+        
+        document.getElementById('winning-banner').classList.toggle('hidden', !isWinning);
+        document.getElementById('participation-msg').classList.toggle('hidden', !hasScore || isWinning);
+      }
+    });
+
+    socket.on('update_joining_players', (names) => {
+        const container = document.getElementById('joining-players-container');
+        // Filter out self
+        const others = names.filter(n => n !== inputUsername.value);
+        if (others.length > 0) {
+            container.textContent = `Joining: ${others.join(', ')}...`;
+        } else {
+            container.textContent = '';
+        }
+    });
+
+
+    // 2. Game Flow: Timer
+    socket.on('timer', (endTime) => {
+      if (timerInterval) clearInterval(timerInterval);
+
+      const updateTimer = () => {
+        const now = Date.now() / 1000;
+        const remaining = Math.max(0, Math.ceil(endTime - now));
+        
+        const specQuestion = document.getElementById('spectator-question').textContent;
+        if (specQuestion.includes("Waiting for")) {
+          document.getElementById('spectator-timer').textContent = "";
+          document.getElementById('player-timer').textContent = "";
+          clearInterval(timerInterval);
+          return;
+        }
+
+        const text = remaining > 0 ? `Time Left: ${remaining}s` : "Time's Up!";
+        document.getElementById('spectator-timer').textContent = text;
+        document.getElementById('player-timer').textContent = text;
+        
+        if (remaining <= 0) {
+          clearInterval(timerInterval);
+          if (isPlayer) {
+            document.querySelectorAll('.answer-btn').forEach(b => b.disabled = true);
+          }
+        }
+      };
+
+      updateTimer(); // Initial call
+      timerInterval = setInterval(updateTimer, 1000);
+    });
+
+
+    // 3. Game Flow: Question
+    socket.on('question', (data) => {
+      if (intermissionInterval) clearInterval(intermissionInterval);
+      current_question_index = data.index;
+      
+      // Spectator View
+      document.getElementById('spectator-question').textContent = data.question;
+      const specList = document.getElementById('spectator-answers');
+      specList.innerHTML = '';
+      data.answers.forEach((ans, idx) => {
+        const li = document.createElement('li');
+        const letter = String.fromCharCode(65 + idx);
+        li.textContent = `${letter}: ${ans}`;
+        specList.appendChild(li);
+      });
+      
+      // Update Button Text
+//      document.getElementById('btn-next').textContent = "Stop Timer";
+
+      // Player View
+      if (isPlayer) {
+        document.getElementById('player-question-text').textContent = data.question;
+        document.getElementById('player-result-msg').textContent = '';
+        const btnContainer = document.getElementById('player-buttons');
+        btnContainer.innerHTML = '';
+        
+        data.answers.forEach((ans, idx) => {
+          const btn = document.createElement('button');
+          btn.className = 'btn answer-btn';
+          const letter = String.fromCharCode(65 + idx);
+          btn.textContent = `${letter}: ${ans}`;
+          btn.onclick = () => {
+            socket.emit('answer', { username: myUsername, answer_index: idx });
+            document.getElementById('player-result-msg').textContent = "Answer Submitted!";
+            document.querySelectorAll('.answer-btn').forEach(b => b.disabled = true);
+            btn.classList.add('selected');
+          };
+          btnContainer.appendChild(btn);
+        });
+      }
+    });
+
+
+    // 4. Game Flow: Results
+    socket.on('round_results', (data) => {
+      // Clear timer display when results are shown
+      if (timerInterval) clearInterval(timerInterval);
+      document.getElementById('spectator-timer').textContent = "";
+      document.getElementById('player-timer').textContent = "";
+
+      const correctText = data.answers[data.correct_index];
+      const correctLetter = String.fromCharCode(65 + data.correct_index);
+      const fullCorrectText = `${correctLetter}: ${correctText}`;
+      
+      // Show next button when results are displayed
+      const btnNext = document.getElementById('btn-next');
+      btnNext.classList.remove('hidden');
+      btnNext.onclick = () => socket.emit('next_question', current_question_index + 1);
+      
+      if (data.next_question_time) {
+          const updateCountdown = () => {
+              const secondsLeft = Math.ceil(data.next_question_time - Date.now() / 1000);
+              if (secondsLeft > 0) {
+                  btnNext.textContent = `Next Question in ${secondsLeft}`;
+              } else {
+                  btnNext.textContent = "Loading Next Question...";
+                  if (intermissionInterval) clearInterval(intermissionInterval);
+              }
+          };
+          updateCountdown();
+          intermissionInterval = setInterval(updateCountdown, 1000);
+      } else {
+          btnNext.textContent = "Next Question";
+      }
+      
+      // Spectator: Show detailed results
+      const specList = document.getElementById('spectator-answers');
+      specList.innerHTML = `<li>Correct Answer: <strong>${fullCorrectText}</strong></li>`;
+      
+      // Player: Show personal result
+      if (isPlayer && data.player_answers[myUsername]) {
+         const myResult = data.player_answers[myUsername];
+         const msg = myResult.is_correct ? "✅ Correct!" : `❌ Wrong! It was: ${fullCorrectText}`;
+         document.getElementById('player-result-msg').textContent = msg;
+      } else if (isPlayer) {
+         document.getElementById('player-result-msg').textContent = `Time's up! Answer: ${fullCorrectText}`;
+      }
+    });
+
+    socket.on('game_started', () => {
+      document.getElementById('btn-start').classList.add('hidden');
+      document.getElementById('btn-next').classList.add('hidden');
+    });
+
+    socket.on('game_reset', () => {
+      window.location.reload();
+    });
+
+    socket.on('game_over', (finalScores) => {
+       alert("Game Over! Check leaderboard for final scores.");
+       if (timerInterval) clearInterval(timerInterval);
+       document.getElementById('btn-next').classList.add('hidden');
+       document.getElementById('btn-start').classList.remove('hidden');
+       document.getElementById('spectator-timer').textContent = "";
+       document.getElementById('player-timer').textContent = "";
+    });
+
+    socket.on('clear_question', () => {
+      if (timerInterval) clearInterval(timerInterval);
+      document.getElementById('spectator-question').textContent = "Waiting for game to start...";
+      document.getElementById('spectator-answers').innerHTML = "";
+      document.getElementById('spectator-timer').textContent = "";
+      document.getElementById('player-question-text').textContent = "Waiting for game to start...";
+      document.getElementById('player-buttons').innerHTML = "";
+      document.getElementById('player-timer').textContent = "";
+    });
+
+    socket.on('error', (err) => alert(err.message));
+
+
+    // --- Spectator BUTTONS ---
+    document.getElementById('btn-start').onclick = () => socket.emit('start_game');
+    document.getElementById('btn-next').onclick = () => socket.emit('next_question', current_question_index + 1);
+    document.getElementById('btn-restart').onclick = () => {
+      socket.emit('reset_all');
+    };
+
+  </script>
+</body>
+</html>

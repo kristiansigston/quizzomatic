@@ -1,0 +1,165 @@
+{
+  "questions": [
+    {
+      "question": "Best pet for coding?",
+      "answers": ["Rubber duck", "Cat", "Dog", "Llama", "Snail"]
+    },
+    {
+      "question": "Alien's fav snack?",
+      "answers": ["Moon pie", "Space chips", "Martian mints", "Astro jelly", "Venus bars"]
+    },
+    {
+      "question": "Most sus cheese?",
+      "answers": ["Camembert", "Cheddar", "Mozzarella", "Brie", "Gouda"]
+    },
+    {
+      "question": "Toilet paper goes?",
+      "answers": ["Over", "Under", "Sideways", "Folded", "In drawer"]
+    },
+    {
+      "question": "Light year is?",
+      "answers": ["Distance", "Time", "Mass", "Energy", "Speed"]
+    },
+    {
+      "question": "Human cell has how many chromosomes?",
+      "answers": ["46", "44", "23", "48", "50"]
+    },
+    {
+      "question": "Currency of UK?",
+      "answers": ["Pound", "Euro", "Dollar", "Franc", "Lira"]
+    },
+    {
+      "question": "Smartest fruit?",
+      "answers": ["Grapes", "Banana", "Apple", "Peach", "Lime"]
+    },
+    {
+      "question": "Python is a?",
+      "answers": ["Language", "Snake", "Bird", "Fruit", "Drink"]
+    },
+    {
+      "question": "Unicorns eat?",
+      "answers": ["Rainbows", "Hay", "Clouds", "Dreams", "Tacos"]
+    },
+    {
+      "question": "Speed of light (m/s)?",
+      "answers": ["299792458", "150000000", "100000000", "30000000", "186000"]
+    },
+    {
+      "question": "AI's fav joke?",
+      "answers": ["Binary pun", "Dad joke", "Knock knock", "Why chicken?", "404"]
+    },
+    {
+      "question": "Metal in hemoglobin?",
+      "answers": ["Iron", "Copper", "Zinc", "Calcium", "Magnesium"]
+    },
+    {
+      "question": "Biggest internet fear?",
+      "answers": ["404", "200", "500", "302", "403"]
+    },
+    {
+      "question": "Plants rebel when?",
+      "answers": ["Unwatered", "Loud music", "Insults", "TV off", "No WiFi"]
+    },
+    {
+      "question": "Sun is a?",
+      "answers": ["Star", "Planet", "Comet", "Asteroid", "Galaxy"]
+    },
+    {
+      "question": "Elves fear?",
+      "answers": ["Deadlines", "Sun", "Cookies", "Rain", "High heels"]
+    },
+    {
+      "question": "Best time to panic?",
+      "answers": ["Now", "Later", "Never", "Yesterday", "Mid-lunch"]
+    },
+    {
+      "question": "Mona Lisa painted by?",
+      "answers": ["Da Vinci", "Van Gogh", "Picasso", "Michelangelo", "Rembrandt"]
+    },
+    {
+      "question": "Pi starts with?",
+      "answers": ["3.14", "2.71", "1.61", "3.33", "1.41"]
+    },
+    {
+      "question": "Einstein's famous equation?",
+      "answers": ["E=mc^2", "F=ma", "a^2 + b^2 = c^2", "PV=nRT", "x=vt"]
+    },
+    {
+      "question": "Fish’s worst enemy?",
+      "answers": ["Dryness", "Fire", "Bubbles", "Shrimp", "Napkins"]
+    },
+    {
+      "question": "Atomic number of O?",
+      "answers": ["8", "6", "10", "2", "12"]
+    },
+    {
+      "question": "Taj Mahal built in?",
+      "answers": ["India", "Pakistan", "Iran", "Bangladesh", "Nepal"]
+    },
+    {
+      "question": "Best dinosaur name?",
+      "answers": ["Thesaurus", "Writosaurus", "Grammarex", "Punctuaptor", "Commasaur"]
+    },
+    {
+      "question": "First US president?",
+      "answers": ["George Washington", "Lincoln", "Jefferson", "Adams", "Roosevelt"]
+    },
+    {
+      "question": "Most evil shape?",
+      "answers": ["Triangle", "Circle", "Square", "Rhombus", "Octagon"]
+    },
+    {
+      "question": "DNA stands for?",
+      "answers": ["Deoxyribonucleic Acid", "Dynamic Neural Analysis", "Digital Numeric Array", "Data Network Access", "Double Nucleic Agent"]
+    },
+    {
+      "question": "Who wrote Hamlet?",
+      "answers": ["Shakespeare", "Dickens", "Homer", "Orwell", "Joyce"]
+    },
+    {
+      "question": "What ruins stealth?",
+      "answers": ["Flip-flops", "Cloak", "Sneakers", "Slippers", "Silence"]
+    },
+    {
+      "question": "Best password?",
+      "answers": ["1234", "qwerty", "letmein", "password", "admin"]
+    },
+    {
+      "question": "Smallest unit of matter?",
+      "answers": ["Atom", "Molecule", "Quark", "Proton", "Neutron"]
+    },
+    {
+      "question": "Dinosaur's worst habit?",
+      "answers": ["Extinction", "Snoring", "Loud stomping", "Tail whips", "Overeating"]
+    },
+    {
+      "question": "Fastest ninja?",
+      "answers": ["One you don't see", "Naruto", "Bruce Lee", "Shadow", "Flash"]
+    },
+    {
+      "question": "Penguins wear?",
+      "answers": ["Tuxedos", "Suits", "Robes", "Jeans", "Kilts"]
+    },
+    {
+      "question": "H2O is?",
+      "answers": ["Water", "Hydrogen", "Oxygen", "Helium", "Salt"]
+    },
+    {
+      "question": "Biggest planet?",
+      "answers": ["Jupiter", "Saturn", "Earth", "Mars", "Neptune"]
+    },
+    {
+      "question": "Socks vanish where?",
+      "answers": ["Wormhole", "Dryer", "Drawer", "Backyard", "Moon"]
+    },
+    {
+      "question": "Best tool vs zombies?",
+      "answers": ["Spoon", "Fork", "Ruler", "Laser", "Marker"]
+    },
+    {
+      "question": "Earth’s only natural satellite?",
+      "answers": ["Moon", "Sun", "Mars", "Europa", "Venus"]
+    }
+  ]
+}
+

@@ -1,0 +1,6 @@
+Flask
+flask-socketio
+qrcode
+Pillow
+autopep8
+playwright
