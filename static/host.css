@@ -12,6 +12,14 @@ body {
   line-height: 1.6;
   color: #333;
   min-height: 100vh;
+  height: 100vh;
+  padding-top: 12vh;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 body::before {
@@ -32,17 +40,22 @@ body::before {
 }
 
 #banner {
-  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 20vh;
+  width: 100%;
   background: url('/static/banner.webp') no-repeat center center;
   background-size: contain;
-  display: block;
+  z-index: 50;
+  pointer-events: none;
 }
 
 /* Common Components */
 .container {
   max-width: 800px;
-  margin: -20px auto 20px; /* Offset to overlap banner slightly or sit below */
+  margin: 0 auto;
   position: relative;
   z-index: 10;
   padding: 20px;
@@ -102,7 +115,15 @@ h1 { color: var(--primary); }
   border-bottom: 1px dashed #eee;
 }
 .player-name { font-weight: bold; }
-.player-score { font-weight: bold; color: var(--success); }
+.player-score {
+  font-weight: 800;
+  font-size: 3em;
+  color: #24e3a7;
+  letter-spacing: 0.5px;
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.2),
+    0 6px 12px rgba(0, 0, 0, 0.25);
+}
 
 /* QR Code Overlay */
 #qr-container {
@@ -145,8 +166,8 @@ h1 { color: var(--primary); }
 /* Retro Timer Clock */
 .timer-clock {
   position: relative;
-  width: 180px;
-  height: 180px;
+  width: 90px;
+  height: 90px;
   margin: 10px auto 16px;
   display: grid;
   place-items: center;
@@ -196,7 +217,7 @@ h1 { color: var(--primary); }
 
 .timer-center {
   font-family: "Bungee", system-ui, sans-serif;
-  font-size: 2.2rem;
+  font-size: 1.1rem;
   color: #ffffff;
   text-shadow:
     0 2px 0 rgba(0, 0, 0, 0.35),
@@ -217,6 +238,22 @@ h1 { color: var(--primary); }
 
 #spectator-question { font-size: 1.5rem; text-align: center; margin: 20px 0; }
 .spectator-answers li { font-size: 1.2rem; padding: 5px 0; list-style: none; text-align: center;}
+
+#spectator-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 10px 0 16px;
+}
+
+#spectator-top-row #spectator-timer {
+  flex: 0 0 auto;
+}
+
+#spectator-top-row #scoreboard {
+  flex: 1 1 auto;
+}
 
 /* Player View Styles */
 .answer-btn {

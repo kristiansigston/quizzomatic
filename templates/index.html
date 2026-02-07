@@ -25,35 +25,37 @@
                 <img id="qr-code" src="/static/qr.png" alt="Scan to Join">
                 <p>Scan to play!</p>
             </div>
-            <div id="spectator-timer" class="timer-clock hidden">
-                <svg class="timer-svg" viewBox="0 0 120 120" aria-hidden="true">
-                    <defs>
-                    <linearGradient id="timer-grad-spec" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#ff6ad5"></stop>
-                    <stop offset="50%" stop-color="#ffd36a"></stop>
-                    <stop offset="100%" stop-color="#6af3ff"></stop>
-                    </linearGradient>
-                    </defs>
-                    <circle class="timer-track" cx="60" cy="60" r="52"></circle>
-                    <circle class="timer-ring" id="spectator-ring" cx="60" cy="60" r="52" stroke="url(#timer-grad-spec)"></circle>
-                </svg>
-                <div class="timer-center" id="spectator-time">
-                    <span class="timer-int">30</span><span class="timer-dec">.0</span>
+            <div id="spectator-top-row">
+                <div id="spectator-timer" class="timer-clock hidden">
+                    <svg class="timer-svg" viewBox="0 0 120 120" aria-hidden="true">
+                        <defs>
+                        <linearGradient id="timer-grad-spec" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#ff6ad5"></stop>
+                        <stop offset="50%" stop-color="#ffd36a"></stop>
+                        <stop offset="100%" stop-color="#6af3ff"></stop>
+                        </linearGradient>
+                        </defs>
+                        <circle class="timer-track" cx="60" cy="60" r="52"></circle>
+                        <circle class="timer-ring" id="spectator-ring" cx="60" cy="60" r="52" stroke="url(#timer-grad-spec)"></circle>
+                    </svg>
+                    <div class="timer-center" id="spectator-time">
+                        <span class="timer-int">30</span><span class="timer-dec">.0</span>
+                    </div>
+                </div>
+                <div id="scoreboard">
+                    <h3>Leaderboard</h3>
+                    <div id="joining-players-container"
+                         style="color: #666;
+                                font-style: italic;
+                                text-align: center;
+                                margin-bottom: 10px"></div>
+                    <ul id="player-list">
+                    </ul>
                 </div>
             </div>
             <div id="game-board">
                 <h2 id="spectator-question">Waiting for players to join...</h2>
                 <ul id="spectator-answers" class="spectator-answers">
-                </ul>
-            </div>
-            <div id="scoreboard">
-                <h3>Leaderboard</h3>
-                <div id="joining-players-container"
-                     style="color: #666;
-                            font-style: italic;
-                            text-align: center;
-                            margin-bottom: 10px"></div>
-                <ul id="player-list">
                 </ul>
             </div>
             <div class="host-controls" style="text-align: center;">
@@ -64,13 +66,13 @@
         </div>
         <!-- VIEW 3: PLAYER INTERFACE -->
         <div id="player-view" class="container hidden">
-            <div id="my-player-name-container">
-                <h2 id="my-player-name">Player</h2>
-                <div id="my-player-score" style="font-size: 1.2em; font-weight: bold;">Score: 0</div>
-            </div>
             <div id="player-status-area">
                 <div id="winning-banner" class="hidden">👑 WINNING! 👑</div>
                 <div id="participation-msg" class="hidden">Great Job!</div>
+            </div>
+            <div id="my-player-name-container">
+                <h2 id="my-player-name">Player</h2>
+                <div id="my-player-score" style="font-size: 1.2em; font-weight: bold;">Score: 0</div>
             </div>
             <div id="player-timer" class="timer-clock hidden">
                 <svg class="timer-svg" viewBox="0 0 120 120" aria-hidden="true">
@@ -92,6 +94,7 @@
                 <h3 id="player-question-text">Waiting for game to start...</h3>
                 <div id="player-buttons"></div>
                 <div id="player-result-msg"></div>
+                <button id="player-next-countdown" class="btn hidden" disabled>Next Question in 3</button>
             </div>
         </div>
         <!-- Floating Action Button to Join -->
@@ -108,6 +111,7 @@
     let current_question_index = -1;
     let myScoreDisplayed = 0;
     let lastAnswerCorrect = null;
+    let lastRoundByPlayer = {};
     let playerAnswered = false;
     let timerTotalSeconds = 30;
     let specRingLength = 0;
@@ -171,6 +175,8 @@
         const li = document.createElement('li');
         let nameHtml = `<span class="player-name">${name}</span>`;
         if (data.winning_players && data.winning_players.includes(name) && stats.score > 0) nameHtml += ' 👑';
+        if (lastRoundByPlayer[name] === true) nameHtml += ' ✅';
+        if (lastRoundByPlayer[name] === false) nameHtml += ' ❌';
         
         li.innerHTML = `${nameHtml} <span class="player-score">${stats.score}</span>`;
         list.appendChild(li);
@@ -284,6 +290,7 @@
       if (intermissionInterval) clearInterval(intermissionInterval);
       playerAnswered = false;
       current_question_index = data.index;
+      document.getElementById('scoreboard').classList.add('hidden');
       
       // Spectator View
       document.getElementById('spectator-question').textContent = data.question;
@@ -326,6 +333,7 @@
 
     // 4. Game Flow: Results
     socket.on('round_results', (data) => {
+      document.getElementById('scoreboard').classList.remove('hidden');
       // Clear timer display when results are shown
       if (timerInterval) clearInterval(timerInterval);
       document.getElementById('spectator-time').textContent = "";
@@ -343,14 +351,22 @@
       const btnNext = document.getElementById('btn-next');
       btnNext.classList.remove('hidden');
       btnNext.onclick = () => socket.emit('next_question', current_question_index + 1);
+      const playerCountdown = document.getElementById('player-next-countdown');
+      if (playerCountdown) playerCountdown.classList.remove('hidden');
       
       if (data.next_question_time) {
           const updateCountdown = () => {
               const secondsLeft = Math.ceil(data.next_question_time - Date.now() / 1000);
               if (secondsLeft > 0) {
                   btnNext.textContent = `Next Question in ${secondsLeft}`;
+                  if (playerCountdown) {
+                    playerCountdown.textContent = `Next Question in ${secondsLeft}`;
+                  }
               } else {
                   btnNext.textContent = "Loading Next Question...";
+                  if (playerCountdown) {
+                    playerCountdown.textContent = "Loading Next Question...";
+                  }
                   if (intermissionInterval) clearInterval(intermissionInterval);
               }
           };
@@ -358,6 +374,9 @@
           intermissionInterval = setInterval(updateCountdown, 1000);
       } else {
           btnNext.textContent = "Next Question";
+          if (playerCountdown) {
+            playerCountdown.textContent = "Next Question";
+          }
       }
       
       // Spectator: Show detailed results
@@ -376,11 +395,20 @@
          lastAnswerCorrect = false;
          document.getElementById('participation-msg').classList.add('hidden');
       }
+
+      lastRoundByPlayer = {};
+      for (const [name, result] of Object.entries(data.player_answers || {})) {
+        lastRoundByPlayer[name] = !!result.is_correct;
+      }
     });
 
     socket.on('game_started', () => {
       document.getElementById('btn-start').classList.add('hidden');
       document.getElementById('btn-next').classList.add('hidden');
+      lastRoundByPlayer = {};
+      const playerCountdown = document.getElementById('player-next-countdown');
+      if (playerCountdown) playerCountdown.classList.add('hidden');
+      document.getElementById('scoreboard').classList.add('hidden');
     });
 
     socket.on('game_reset', () => {
@@ -398,6 +426,9 @@
        setRingProgress('player-ring', playerRingLength, 0);
        document.getElementById('spectator-timer').classList.add('hidden');
        document.getElementById('player-timer').classList.add('hidden');
+       const playerCountdown = document.getElementById('player-next-countdown');
+       if (playerCountdown) playerCountdown.classList.add('hidden');
+       document.getElementById('scoreboard').classList.remove('hidden');
     });
 
     socket.on('clear_question', () => {
@@ -412,6 +443,10 @@
       setRingProgress('player-ring', playerRingLength, 0);
       document.getElementById('spectator-timer').classList.add('hidden');
       document.getElementById('player-timer').classList.add('hidden');
+      const playerCountdown = document.getElementById('player-next-countdown');
+      if (playerCountdown) playerCountdown.classList.add('hidden');
+      lastRoundByPlayer = {};
+      document.getElementById('scoreboard').classList.remove('hidden');
     });
 
     socket.on('error', (err) => alert(err.message));
