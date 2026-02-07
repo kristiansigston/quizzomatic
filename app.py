@@ -255,32 +255,36 @@ def next_question(question_index):
 
     if game_state['current_question_index'] < len(questions):
         question_data = questions[game_state['current_question_index']]
-        
+
         # Get correct answer text before mutation
         correct_answer_text = question_data['answers'][question_data['correct']]
-        
+
         # Separate correct and incorrect
-        incorrect_answers = [a for i, a in enumerate(question_data['answers']) if i != question_data['correct']]
-        
+        incorrect_answers = [
+            a for i, a in enumerate(
+                question_data['answers']) if i != question_data['correct']]
+
         # Limit to 3 random incorrect answers if there are more
         if len(incorrect_answers) > 3:
             incorrect_answers = random.sample(incorrect_answers, 3)
-            
+
         # Combine and shuffle
         new_answers = [correct_answer_text] + incorrect_answers
         random.shuffle(new_answers)
-        
+
         # Update the question object directly
         question_data['answers'] = new_answers
         question_data['correct'] = new_answers.index(correct_answer_text)
 
         # Include index in payload
-        socketio.emit('question', {**question_data, 'index': game_state['current_question_index']})
+        socketio.emit(
+            'question', {
+                **question_data, 'index': game_state['current_question_index']})
 
         game_state['end_time'] = time.time() + 30
         game_state['timer_thread'] = threading.Timer(30, process_answers)
         game_state['timer_thread'].start()
-        socketio.emit('timer', game_state['end_time']) 
+        socketio.emit('timer', game_state['end_time'])
         print(f'Question {game_state["current_question_index"] + 1} started.')
     else:
         game_state['game_started'] = False  # End game
@@ -291,4 +295,9 @@ def next_question(question_index):
 if __name__ == '__main__':
     generate_qr.generate_qr()
     reset_all()
-    socketio.run(app, debug=True, host='0.0.0.0', port=9145, allow_unsafe_werkzeug=True)
+    socketio.run(
+        app,
+        debug=True,
+        host='0.0.0.0',
+        port=9145,
+        allow_unsafe_werkzeug=True)
