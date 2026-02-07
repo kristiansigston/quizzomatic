@@ -2,6 +2,9 @@ Backlog:
 
 * Improve the background image - replace with dynamic CSS?
 * Improve title banner
+* Add sounds
+* Host it on the internet so don't need to be on same wi-fi
+* detect network changes and regenerate qr code
 
 
 
