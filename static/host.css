@@ -132,12 +132,77 @@ h1 { color: var(--primary); }
   display: block;
 }
 
-#spectator-timer {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: var(--danger);
-  text-align: center;
-  margin: 10px 0;
+/* Retro Timer Clock */
+.timer-clock {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 10px auto 16px;
+  display: grid;
+  place-items: center;
+  background: url('/static/clock_frame.webp') no-repeat center center;
+  background-size: contain;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35));
+}
+
+.timer-svg {
+  position: absolute;
+  width: 68%;
+  height: 68%;
+  transform: rotate(-90deg);
+}
+
+.timer-track {
+  fill: none;
+  stroke: rgba(90, 60, 200, 0.35);
+  stroke-width: 10;
+}
+
+.timer-ring {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 10px rgba(255, 210, 120, 0.6));
+}
+
+.timer-clock.urgent .timer-ring {
+  stroke: #ff3b30;
+  filter: drop-shadow(0 0 12px rgba(255, 60, 60, 0.9));
+  animation: ring-pulse 0.8s ease-in-out infinite;
+}
+
+.timer-clock.urgent .timer-center {
+  color: #ffefe0;
+  text-shadow:
+    0 2px 0 rgba(120, 0, 0, 0.6),
+    0 6px 14px rgba(255, 40, 40, 0.85);
+}
+
+@keyframes ring-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+
+.timer-center {
+  font-family: "Bungee", system-ui, sans-serif;
+  font-size: 2.2rem;
+  color: #ffffff;
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.35),
+    0 6px 12px rgba(0, 0, 0, 0.45);
+}
+
+.timer-int {
+  font-size: 1em;
+}
+
+.timer-dec {
+  font-size: 0.3em;
+  vertical-align: baseline;
+  margin-left: 2px;
+  position: relative;
+  top: 0.55em;
 }
 
 #spectator-question { font-size: 1.5rem; text-align: center; margin: 20px 0; }
@@ -253,11 +318,7 @@ h1 { color: var(--primary); }
 }
 
 #player-timer {
-  text-align: center;
-  font-size: 1.5rem;
-  color: var(--danger);
-  font-weight: bold;
-  margin: 10px 0;
+  margin-top: 6px;
 }
 
 #player-question-text {

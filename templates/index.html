@@ -25,7 +25,22 @@
                 <img id="qr-code" src="/static/qr.png" alt="Scan to Join">
                 <p>Scan to play!</p>
             </div>
-            <div id="spectator-timer"></div>
+            <div id="spectator-timer" class="timer-clock hidden">
+                <svg class="timer-svg" viewBox="0 0 120 120" aria-hidden="true">
+                    <defs>
+                    <linearGradient id="timer-grad-spec" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#ff6ad5"></stop>
+                    <stop offset="50%" stop-color="#ffd36a"></stop>
+                    <stop offset="100%" stop-color="#6af3ff"></stop>
+                    </linearGradient>
+                    </defs>
+                    <circle class="timer-track" cx="60" cy="60" r="52"></circle>
+                    <circle class="timer-ring" id="spectator-ring" cx="60" cy="60" r="52" stroke="url(#timer-grad-spec)"></circle>
+                </svg>
+                <div class="timer-center" id="spectator-time">
+                    <span class="timer-int">30</span><span class="timer-dec">.0</span>
+                </div>
+            </div>
             <div id="game-board">
                 <h2 id="spectator-question">Waiting for players to join...</h2>
                 <ul id="spectator-answers" class="spectator-answers">
@@ -57,7 +72,22 @@
                 <div id="winning-banner" class="hidden">👑 WINNING! 👑</div>
                 <div id="participation-msg" class="hidden">Great Job!</div>
             </div>
-            <div id="player-timer"></div>
+            <div id="player-timer" class="timer-clock hidden">
+                <svg class="timer-svg" viewBox="0 0 120 120" aria-hidden="true">
+                    <defs>
+                    <linearGradient id="timer-grad-player" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#ff6ad5"></stop>
+                    <stop offset="50%" stop-color="#ffd36a"></stop>
+                    <stop offset="100%" stop-color="#6af3ff"></stop>
+                    </linearGradient>
+                    </defs>
+                    <circle class="timer-track" cx="60" cy="60" r="52"></circle>
+                    <circle class="timer-ring" id="player-ring" cx="60" cy="60" r="52" stroke="url(#timer-grad-player)"></circle>
+                </svg>
+                <div class="timer-center" id="player-time">
+                    <span class="timer-int">30</span><span class="timer-dec">.0</span>
+                </div>
+            </div>
             <div id="player-question-area">
                 <h3 id="player-question-text">Waiting for game to start...</h3>
                 <div id="player-buttons"></div>
@@ -76,6 +106,10 @@
     let intermissionInterval;
     let timerInterval;
     let current_question_index = -1;
+    let myScoreDisplayed = 0;
+    let timerTotalSeconds = 30;
+    let specRingLength = 0;
+    let playerRingLength = 0;
 
     // Elements
     const views = {
@@ -146,8 +180,31 @@
         const myScore = myStats ? myStats.score : 0;
         const hasScore = myScore > 0;
         const isWinning = hasScore && data.winning_players && data.winning_players.includes(myUsername);
-        
-        document.getElementById('my-player-score').textContent = `Score: ${myScore}`;
+
+        const scoreEl = document.getElementById('my-player-score');
+        const startScore = myScoreDisplayed;
+        const endScore = myScore;
+
+        const animateScore = (from, to, durationMs) => {
+          const start = performance.now();
+          const step = (now) => {
+            const progress = Math.min(1, (now - start) / durationMs);
+            const value = Math.round(from + (to - from) * progress);
+            scoreEl.textContent = `Score: ${value}`;
+            if (progress < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        };
+
+        if (endScore !== startScore) {
+          const delta = Math.abs(endScore - startScore);
+          const duration = Math.min(1200, Math.max(300, delta * 30));
+          animateScore(startScore, endScore, duration);
+          myScoreDisplayed = endScore;
+        } else {
+          scoreEl.textContent = `Score: ${endScore}`;
+        }
+
         document.getElementById('winning-banner').classList.toggle('hidden', !isWinning);
         document.getElementById('participation-msg').classList.toggle('hidden', !hasScore || isWinning);
       }
@@ -168,6 +225,9 @@
     // 2. Game Flow: Timer
     socket.on('timer', (endTime) => {
       if (timerInterval) clearInterval(timerInterval);
+      timerTotalSeconds = Math.max(1, Math.round(endTime - Date.now() / 1000));
+      document.getElementById('spectator-timer').classList.remove('hidden');
+      document.getElementById('player-timer').classList.remove('hidden');
 
       const updateTimer = () => {
         const now = Date.now() / 1000;
@@ -175,26 +235,39 @@
         
         const specQuestion = document.getElementById('spectator-question').textContent;
         if (specQuestion.includes("Waiting for")) {
-          document.getElementById('spectator-timer').textContent = "";
-          document.getElementById('player-timer').textContent = "";
+          document.getElementById('spectator-time').textContent = "";
+          document.getElementById('player-time').textContent = "";
+          setRingProgress('spectator-ring', specRingLength, 0);
+          setRingProgress('player-ring', playerRingLength, 0);
+          document.getElementById('spectator-timer').classList.add('hidden');
+          document.getElementById('player-timer').classList.add('hidden');
           clearInterval(timerInterval);
           return;
         }
 
-        const text = remaining > 0 ? `Time Left: ${remaining}s` : "Time's Up!";
-        document.getElementById('spectator-timer').textContent = text;
-        document.getElementById('player-timer').textContent = text;
-        
         if (remaining <= 0) {
           clearInterval(timerInterval);
           if (isPlayer) {
             document.querySelectorAll('.answer-btn').forEach(b => b.disabled = true);
           }
         }
+
+        const ratio = Math.max(0, Math.min(1, (endTime - now) / timerTotalSeconds));
+        setRingProgress('spectator-ring', specRingLength, ratio);
+        setRingProgress('player-ring', playerRingLength, ratio);
+        const urgent = remaining > 0 && remaining <= 5;
+        document.getElementById('spectator-timer').classList.toggle('urgent', urgent);
+        document.getElementById('player-timer').classList.toggle('urgent', urgent);
+
+        const decimalRemaining = Math.max(0, endTime - now);
+        const intPart = Math.max(0, Math.floor(decimalRemaining));
+        const decPart = Math.floor((decimalRemaining - intPart) * 10);
+        document.getElementById('spectator-time').innerHTML = `<span class="timer-int">${intPart}</span><span class="timer-dec">.${decPart}</span>`;
+        document.getElementById('player-time').innerHTML = `<span class="timer-int">${intPart}</span><span class="timer-dec">.${decPart}</span>`;
       };
 
       updateTimer(); // Initial call
-      timerInterval = setInterval(updateTimer, 1000);
+      timerInterval = setInterval(updateTimer, 100);
     });
 
 
@@ -245,8 +318,12 @@
     socket.on('round_results', (data) => {
       // Clear timer display when results are shown
       if (timerInterval) clearInterval(timerInterval);
-      document.getElementById('spectator-timer').textContent = "";
-      document.getElementById('player-timer').textContent = "";
+      document.getElementById('spectator-time').textContent = "";
+      document.getElementById('player-time').textContent = "";
+      setRingProgress('spectator-ring', specRingLength, 0);
+      setRingProgress('player-ring', playerRingLength, 0);
+      document.getElementById('spectator-timer').classList.add('hidden');
+      document.getElementById('player-timer').classList.add('hidden');
 
       const correctText = data.answers[data.correct_index];
       const correctLetter = String.fromCharCode(65 + data.correct_index);
@@ -301,18 +378,26 @@
        if (timerInterval) clearInterval(timerInterval);
        document.getElementById('btn-next').classList.add('hidden');
        document.getElementById('btn-start').classList.remove('hidden');
-       document.getElementById('spectator-timer').textContent = "";
-       document.getElementById('player-timer').textContent = "";
+       document.getElementById('spectator-time').textContent = "";
+       document.getElementById('player-time').textContent = "";
+       setRingProgress('spectator-ring', specRingLength, 0);
+       setRingProgress('player-ring', playerRingLength, 0);
+       document.getElementById('spectator-timer').classList.add('hidden');
+       document.getElementById('player-timer').classList.add('hidden');
     });
 
     socket.on('clear_question', () => {
       if (timerInterval) clearInterval(timerInterval);
       document.getElementById('spectator-question').textContent = "Waiting for game to start...";
       document.getElementById('spectator-answers').innerHTML = "";
-      document.getElementById('spectator-timer').textContent = "";
+      document.getElementById('spectator-time').textContent = "";
       document.getElementById('player-question-text').textContent = "Waiting for game to start...";
       document.getElementById('player-buttons').innerHTML = "";
-      document.getElementById('player-timer').textContent = "";
+      document.getElementById('player-time').textContent = "";
+      setRingProgress('spectator-ring', specRingLength, 0);
+      setRingProgress('player-ring', playerRingLength, 0);
+      document.getElementById('spectator-timer').classList.add('hidden');
+      document.getElementById('player-timer').classList.add('hidden');
     });
 
     socket.on('error', (err) => alert(err.message));
@@ -324,6 +409,30 @@
     document.getElementById('btn-restart').onclick = () => {
       socket.emit('reset_all');
     };
+
+    const setRingProgress = (ringId, length, ratio) => {
+      const ring = document.getElementById(ringId);
+      if (!ring || length === 0) return;
+      const clamped = Math.max(0, Math.min(1, ratio));
+      ring.style.strokeDashoffset = `${length * (1 - clamped)}`;
+    };
+
+    const initRings = () => {
+      const specRing = document.getElementById('spectator-ring');
+      const playerRing = document.getElementById('player-ring');
+      if (specRing) {
+        specRingLength = 2 * Math.PI * specRing.r.baseVal.value;
+        specRing.style.strokeDasharray = `${specRingLength}`;
+        specRing.style.strokeDashoffset = `${specRingLength}`;
+      }
+      if (playerRing) {
+        playerRingLength = 2 * Math.PI * playerRing.r.baseVal.value;
+        playerRing.style.strokeDasharray = `${playerRingLength}`;
+        playerRing.style.strokeDashoffset = `${playerRingLength}`;
+      }
+    };
+
+    initRings();
 
         </script>
     </body>
