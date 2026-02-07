@@ -99,6 +99,21 @@
         </div>
         <!-- Floating Action Button to Join -->
         <button id="fab-join" title="Join Game" class="hidden">+</button>
+        <div id="game-over-overlay" class="hidden">
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="game-over-card">
+                <h2>Game Over</h2>
+                <p class="game-over-subtitle">Final Leaderboard</p>
+                <ul id="final-leaderboard">
+                </ul>
+                <button id="btn-new-game" class="btn">Start New Game</button>
+            </div>
+        </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js"></script>
         <script>
     const socket = io();
@@ -125,6 +140,9 @@
     
     const fabJoin = document.getElementById('fab-join');
     const inputUsername = document.getElementById('username-input');
+    const gameOverOverlay = document.getElementById('game-over-overlay');
+    const finalLeaderboard = document.getElementById('final-leaderboard');
+    const btnNewGame = document.getElementById('btn-new-game');
 
     // --- NAVIGATION LOGIC ---
     function showView(viewName) {
@@ -409,6 +427,7 @@
       const playerCountdown = document.getElementById('player-next-countdown');
       if (playerCountdown) playerCountdown.classList.add('hidden');
       document.getElementById('scoreboard').classList.add('hidden');
+      if (gameOverOverlay) gameOverOverlay.classList.add('hidden');
     });
 
     socket.on('game_reset', () => {
@@ -416,7 +435,6 @@
     });
 
     socket.on('game_over', (finalScores) => {
-       alert("Game Over! Check leaderboard for final scores.");
        if (timerInterval) clearInterval(timerInterval);
        document.getElementById('btn-next').classList.add('hidden');
        document.getElementById('btn-start').classList.remove('hidden');
@@ -429,6 +447,22 @@
        const playerCountdown = document.getElementById('player-next-countdown');
        if (playerCountdown) playerCountdown.classList.add('hidden');
        document.getElementById('scoreboard').classList.remove('hidden');
+
+       if (gameOverOverlay && finalLeaderboard) {
+         finalLeaderboard.innerHTML = '';
+         const entries = Object.entries(finalScores || {}).sort((a, b) => b[1].score - a[1].score);
+         entries.forEach(([name, stats], idx) => {
+           const li = document.createElement('li');
+           const rank = idx + 1;
+           li.innerHTML = `<span class="final-rank">#${rank}</span><span class="final-name">${name}</span><span class="final-score">${stats.score}</span>`;
+           finalLeaderboard.appendChild(li);
+         });
+         gameOverOverlay.classList.remove('hidden');
+       }
+
+       if (btnNewGame) {
+         btnNewGame.classList.toggle('hidden', isPlayer);
+       }
     });
 
     socket.on('clear_question', () => {
@@ -447,6 +481,7 @@
       if (playerCountdown) playerCountdown.classList.add('hidden');
       lastRoundByPlayer = {};
       document.getElementById('scoreboard').classList.remove('hidden');
+      if (gameOverOverlay) gameOverOverlay.classList.add('hidden');
     });
 
     socket.on('error', (err) => alert(err.message));
@@ -466,6 +501,9 @@
     document.getElementById('btn-restart').onclick = () => {
       socket.emit('reset_all');
     };
+    if (btnNewGame) {
+      btnNewGame.onclick = () => socket.emit('reset_all');
+    }
 
     const setRingProgress = (ringId, length, ratio) => {
       const ring = document.getElementById(ringId);
