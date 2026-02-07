@@ -60,9 +60,9 @@ body::before {
   position: relative;
   z-index: 10;
   padding: 20px;
-  background: var(--bg-overlay);
+  background: rgba(255, 255, 255, 0.3);
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 h1, h2, h3 { text-align: center; margin-top: 0; }
@@ -248,12 +248,20 @@ h1 { color: var(--primary); }
   margin: 10px 0 16px;
 }
 
-#spectator-top-row #spectator-timer {
-  flex: 0 0 auto;
+#scoreboard {
+  flex: 1 1 auto;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
 }
 
-#spectator-top-row #scoreboard {
-  flex: 1 1 auto;
+#spectator-timer {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 60;
+  margin: 0;
 }
 
 /* Player View Styles */
@@ -502,6 +510,17 @@ h1 { color: var(--primary); }
   width: auto;
 }
 
+#join-status {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  color: #2a2a2a;
+  opacity: 0.9;
+}
+
+#join-status.join-status-error {
+  color: #b00020;
+}
+
 #my-player-name-container {
   display: flex;
   flex-direction: column;
@@ -509,8 +528,30 @@ h1 { color: var(--primary); }
   align-items: center;
 }
 
+.player-score-floating {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 60;
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: rgba(20, 12, 40, 0.78);
+  color: #6af3ff;
+  font-family: "Bungee", system-ui, sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 1px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.35),
+    0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
 #player-timer {
-  margin-top: 6px;
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 60;
+  margin: 0;
 }
 
 #player-question-text {

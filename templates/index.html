@@ -20,28 +20,13 @@
                     <input type="text" id="username-input" placeholder="Enter Nickname">
                     <button id="btn-confirm-join" class="btn btn-success">JOIN</button>
                 </div>
+                <div id="join-status" class="hidden"></div>
             </div>
             <div id="qr-container">
                 <img id="qr-code" src="/static/qr.png" alt="Scan to Join">
                 <p>Scan to play!</p>
             </div>
             <div id="spectator-top-row">
-                <div id="spectator-timer" class="timer-clock hidden">
-                    <svg class="timer-svg" viewBox="0 0 120 120" aria-hidden="true">
-                        <defs>
-                        <linearGradient id="timer-grad-spec" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stop-color="#ff6ad5"></stop>
-                        <stop offset="50%" stop-color="#ffd36a"></stop>
-                        <stop offset="100%" stop-color="#6af3ff"></stop>
-                        </linearGradient>
-                        </defs>
-                        <circle class="timer-track" cx="60" cy="60" r="52"></circle>
-                        <circle class="timer-ring" id="spectator-ring" cx="60" cy="60" r="52" stroke="url(#timer-grad-spec)"></circle>
-                    </svg>
-                    <div class="timer-center" id="spectator-time">
-                        <span class="timer-int">30</span><span class="timer-dec">.0</span>
-                    </div>
-                </div>
                 <div id="scoreboard">
                     <h3>Leaderboard</h3>
                     <div id="joining-players-container"
@@ -51,6 +36,22 @@
                                 margin-bottom: 10px"></div>
                     <ul id="player-list">
                     </ul>
+                </div>
+            </div>
+            <div id="spectator-timer" class="timer-clock hidden">
+                <svg class="timer-svg" viewBox="0 0 120 120" aria-hidden="true">
+                    <defs>
+                    <linearGradient id="timer-grad-spec" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#ff6ad5"></stop>
+                    <stop offset="50%" stop-color="#ffd36a"></stop>
+                    <stop offset="100%" stop-color="#6af3ff"></stop>
+                    </linearGradient>
+                    </defs>
+                    <circle class="timer-track" cx="60" cy="60" r="52"></circle>
+                    <circle class="timer-ring" id="spectator-ring" cx="60" cy="60" r="52" stroke="url(#timer-grad-spec)"></circle>
+                </svg>
+                <div class="timer-center" id="spectator-time">
+                    <span class="timer-int">30</span><span class="timer-dec">.0</span>
                 </div>
             </div>
             <div id="game-board">
@@ -72,7 +73,7 @@
             </div>
             <div id="my-player-name-container">
                 <h2 id="my-player-name">Player</h2>
-                <div id="my-player-score" style="font-size: 1.2em; font-weight: bold;">Score: 0</div>
+                <div id="my-player-score" class="player-score-floating">Score: 0</div>
             </div>
             <div id="player-timer" class="timer-clock hidden">
                 <svg class="timer-svg" viewBox="0 0 120 120" aria-hidden="true">
@@ -128,6 +129,8 @@
     let lastAnswerCorrect = null;
     let lastRoundByPlayer = {};
     let playerAnswered = false;
+    let hostToken = null;
+    let lastHostPingAt = 0;
     let timerTotalSeconds = 30;
     let specRingLength = 0;
     let playerRingLength = 0;
@@ -140,6 +143,7 @@
     
     const fabJoin = document.getElementById('fab-join');
     const inputUsername = document.getElementById('username-input');
+    const joinStatus = document.getElementById('join-status');
     const gameOverOverlay = document.getElementById('game-over-overlay');
     const finalLeaderboard = document.getElementById('final-leaderboard');
     const btnNewGame = document.getElementById('btn-new-game');
@@ -157,13 +161,31 @@
     // Join Flow
     // Removed separate join view logic
 
+    const setJoinStatus = (message, isError = false) => {
+      if (!joinStatus) return;
+      if (!message) {
+        joinStatus.classList.add('hidden');
+        joinStatus.textContent = '';
+        return;
+      }
+      joinStatus.textContent = message;
+      joinStatus.classList.toggle('join-status-error', isError);
+      joinStatus.classList.remove('hidden');
+    };
+
+    let pendingJoinName = null;
+
     document.getElementById('btn-confirm-join').onclick = () => {
       const name = inputUsername.value.trim();
-      if (!name) return alert('Please enter a name');
+      if (!name) return setJoinStatus('Please enter a name.', true);
+      if (!hostToken) {
+        pendingJoinName = name;
+        return setJoinStatus('Waiting for host session...', false);
+      }
       
       myUsername = name;
       localStorage.setItem('triviaUsername', name);
-      socket.emit('join', { username: name });
+      socket.emit('join', { username: name, host_token: hostToken });
     };
     
     socket.on('joined', (data) => {
@@ -174,6 +196,45 @@
         showView('player');
       }
     });
+
+    if (joinStatus) {
+      setJoinStatus('Waiting for host session...', false);
+    }
+
+    const tryPendingJoin = () => {
+      if (pendingJoinName && hostToken) {
+        const name = pendingJoinName;
+        pendingJoinName = null;
+        myUsername = name;
+        localStorage.setItem('triviaUsername', name);
+        socket.emit('join', { username: name, host_token: hostToken });
+        setJoinStatus('', false);
+      }
+    };
+
+    socket.on('host_session', (data) => {
+      hostToken = data.token || null;
+      lastHostPingAt = Date.now();
+      if (hostToken) setJoinStatus('', false);
+      tryPendingJoin();
+    });
+
+    socket.on('host_ping', (data) => {
+      if (!hostToken || data.token === hostToken) {
+        hostToken = data.token || hostToken;
+        lastHostPingAt = Date.now();
+        if (hostToken) setJoinStatus('', false);
+        tryPendingJoin();
+      }
+    });
+
+    setInterval(() => {
+      if (!hostToken) return;
+      if (Date.now() - lastHostPingAt > 180000) {
+        hostToken = null;
+        setJoinStatus('Waiting for host session...', false);
+      }
+    }, 3000);
 
     // --- REAL-TIME TYPING ---
     inputUsername.oninput = (e) => {
@@ -484,7 +545,7 @@
       if (gameOverOverlay) gameOverOverlay.classList.add('hidden');
     });
 
-    socket.on('error', (err) => alert(err.message));
+    socket.on('error', (err) => setJoinStatus(err.message || 'Connection error', true));
 
     // --- QR Toggle ---
     const qrContainer = document.getElementById('qr-container');
