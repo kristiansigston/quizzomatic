@@ -107,6 +107,8 @@
     let timerInterval;
     let current_question_index = -1;
     let myScoreDisplayed = 0;
+    let lastAnswerCorrect = null;
+    let playerAnswered = false;
     let timerTotalSeconds = 30;
     let specRingLength = 0;
     let playerRingLength = 0;
@@ -206,7 +208,9 @@
         }
 
         document.getElementById('winning-banner').classList.toggle('hidden', !isWinning);
-        document.getElementById('participation-msg').classList.toggle('hidden', !hasScore || isWinning);
+        if (lastAnswerCorrect !== true) {
+          document.getElementById('participation-msg').classList.add('hidden');
+        }
       }
     });
 
@@ -254,7 +258,9 @@
 
         const ratio = Math.max(0, Math.min(1, (endTime - now) / timerTotalSeconds));
         setRingProgress('spectator-ring', specRingLength, ratio);
-        setRingProgress('player-ring', playerRingLength, ratio);
+        if (!playerAnswered) {
+          setRingProgress('player-ring', playerRingLength, ratio);
+        }
         const urgent = remaining > 0 && remaining <= 5;
         document.getElementById('spectator-timer').classList.toggle('urgent', urgent);
         document.getElementById('player-timer').classList.toggle('urgent', urgent);
@@ -263,7 +269,9 @@
         const intPart = Math.max(0, Math.floor(decimalRemaining));
         const decPart = Math.floor((decimalRemaining - intPart) * 10);
         document.getElementById('spectator-time').innerHTML = `<span class="timer-int">${intPart}</span><span class="timer-dec">.${decPart}</span>`;
-        document.getElementById('player-time').innerHTML = `<span class="timer-int">${intPart}</span><span class="timer-dec">.${decPart}</span>`;
+        if (!playerAnswered) {
+          document.getElementById('player-time').innerHTML = `<span class="timer-int">${intPart}</span><span class="timer-dec">.${decPart}</span>`;
+        }
       };
 
       updateTimer(); // Initial call
@@ -274,6 +282,7 @@
     // 3. Game Flow: Question
     socket.on('question', (data) => {
       if (intermissionInterval) clearInterval(intermissionInterval);
+      playerAnswered = false;
       current_question_index = data.index;
       
       // Spectator View
@@ -307,6 +316,7 @@
             document.getElementById('player-result-msg').textContent = "Answer Submitted!";
             document.querySelectorAll('.answer-btn').forEach(b => b.disabled = true);
             btn.classList.add('selected');
+            playerAnswered = true;
           };
           btnContainer.appendChild(btn);
         });
@@ -359,8 +369,12 @@
          const myResult = data.player_answers[myUsername];
          const msg = myResult.is_correct ? "✅ Correct!" : `❌ Wrong! It was: ${fullCorrectText}`;
          document.getElementById('player-result-msg').textContent = msg;
+         lastAnswerCorrect = myResult.is_correct;
+         document.getElementById('participation-msg').classList.toggle('hidden', !myResult.is_correct);
       } else if (isPlayer) {
          document.getElementById('player-result-msg').textContent = `Time's up! Answer: ${fullCorrectText}`;
+         lastAnswerCorrect = false;
+         document.getElementById('participation-msg').classList.add('hidden');
       }
     });
 
