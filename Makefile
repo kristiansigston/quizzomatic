@@ -18,4 +18,4 @@ playwright-install:
 	. v/bin/activate && python -m playwright install
 
 screenshot:
-	. v/bin/activate && python scripts/take_screenshot.py --url http://localhost:5000 --out /tmp/screenshot.png
+	. v/bin/activate && python scripts/take_screenshot.py --url http://localhost:9145 --out /tmp/screenshot.png

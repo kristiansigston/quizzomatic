@@ -18,7 +18,7 @@ def get_ip():
 
 def generate_qr():
     ip = get_ip()
-    url = f"http://{ip}:5001"
+    url = f"http://{ip}:9145"
     print(f"Generating QR code for: {url}")
 
     qr = qrcode.QRCode(

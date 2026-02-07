@@ -1,5 +1,6 @@
 import random
 import json
+import generate_qr
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit, join_room, leave_room
 import threading
@@ -288,5 +289,6 @@ def next_question(question_index):
 
 
 if __name__ == '__main__':
+    generate_qr.generate_qr()
     reset_all()
-    socketio.run(app, debug=True, host='0.0.0.0', port=5000, allow_unsafe_werkzeug=True)
+    socketio.run(app, debug=True, host='0.0.0.0', port=9145, allow_unsafe_werkzeug=True)
