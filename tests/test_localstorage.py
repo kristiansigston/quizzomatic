@@ -182,9 +182,9 @@ def test_player_score_includes_rank_for_three_players():
             p3.click("#btn-confirm-join")
             expect(p3.locator("#player-view")).to_be_visible()
 
-            expect(p1.locator("#my-player-score")).to_contain_text("#1")
-            expect(p2.locator("#my-player-score")).to_contain_text("#2")
-            expect(p3.locator("#my-player-score")).to_contain_text("#2")
+            expect(p1.locator("#my-player-name")).to_contain_text("#1")
+            expect(p2.locator("#my-player-name")).to_contain_text("#2")
+            expect(p3.locator("#my-player-name")).to_contain_text("#2")
 
             browser.close()
     finally:
