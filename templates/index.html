@@ -70,12 +70,10 @@
         </div>
         <!-- VIEW 3: PLAYER INTERFACE -->
         <div id="player-view" class="container hidden">
-            <div id="player-status-area">
-                <div id="winning-banner" class="hidden">👑 WINNING! 👑</div>
-            </div>
-            <div id="my-player-name-container">
+            <div id="player-status-area"></div>
+            <div id="my-player-name-container" class="player-info-floating">
                 <h2 id="my-player-name">Player</h2>
-                <div id="my-player-score" class="player-score-floating">Score: 0</div>
+                <div id="my-player-score">0</div>
                 <div id="player-result-msg"></div>
             </div>
             <div id="player-timer" class="timer-clock">
@@ -335,11 +333,11 @@
         const myStats = data.players[myUsername];
         const myScore = myStats ? myStats.score : 0;
         const myRank = rankMap[myUsername];
-        const rankLabel = Number.isFinite(myRank) ? ` · #${myRank}` : '';
+        const rankLabel = Number.isFinite(myRank) ? `#${myRank}` : '';
         const hasScore = myScore > 0;
         const isWinning = hasScore && data.winning_players && data.winning_players.includes(myUsername);
 
-        const scoreEl = document.getElementById('my-player-score');
+            const scoreEl = document.getElementById('my-player-score');
         const startScore = myScoreDisplayed;
         const endScore = myScore;
 
@@ -348,7 +346,7 @@
           const step = (now) => {
             const progress = Math.min(1, (now - start) / durationMs);
             const value = Math.round(from + (to - from) * progress);
-            scoreEl.textContent = `Score: ${value}${rankLabel}`;
+            scoreEl.innerHTML = rankLabel ? `${value}<br>${rankLabel}` : `${value}`;
             if (progress < 1) requestAnimationFrame(step);
           };
           requestAnimationFrame(step);
@@ -360,10 +358,13 @@
           animateScore(startScore, endScore, duration);
           myScoreDisplayed = endScore;
         } else {
-          scoreEl.textContent = `Score: ${endScore}${rankLabel}`;
+          scoreEl.innerHTML = rankLabel ? `${endScore}<br>${rankLabel}` : `${endScore}`;
         }
 
-        document.getElementById('winning-banner').classList.toggle('hidden', !isWinning);
+        const nameEl = document.getElementById('my-player-name');
+        if (nameEl) {
+          nameEl.textContent = `${myUsername}${isWinning ? ' 👑' : ''}`;
+        }
       }
     });
 

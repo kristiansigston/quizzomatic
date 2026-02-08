@@ -445,7 +445,7 @@ h1 { color: var(--primary); }
 }
 
 .answer-btn > span {
-  font: 800 30px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font: 800 30px/1 "Bungee", system-ui, sans-serif;
   color: #ffffff;
   letter-spacing: 0.2px;
   text-shadow:
@@ -534,7 +534,6 @@ h1 { color: var(--primary); }
     inset 0 0 0 5px rgba(0, 0, 0, 0.25);
 }
 
-#winning-banner { color: gold; font-size: 2rem; text-align: center; text-shadow: 1px 1px 2px black; }
 
 /* Floating Join Button */
 #fab-join {
@@ -755,24 +754,39 @@ h1 { color: var(--primary); }
 #my-player-name-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
-.player-score-floating {
-  position: relative;
-  margin-top: 8px;
-  padding: 8px 14px;
+.player-info-floating {
+  position: fixed;
+  left: 16px;
+  top: 16px;
+  z-index: 60;
+  padding: 10px 14px;
   border-radius: 14px;
   background: rgba(20, 12, 40, 0.78);
-  color: #6af3ff;
+  color: #ffffff;
   font-family: "Bungee", system-ui, sans-serif;
-  font-size: 1.6rem;
-  letter-spacing: 1px;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
   text-shadow:
     0 2px 0 rgba(0, 0, 0, 0.35),
     0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.player-info-floating #my-player-name {
+  margin: 0;
+  font-size: 1.4rem;
+  line-height: 1.1;
+}
+
+.player-info-floating #my-player-score {
+  font-size: 2.2rem;
+  line-height: 1.1;
+  color: #ffffff;
+  text-shadow:
+    0 3px 0 rgba(0, 0, 0, 0.55),
+    0 6px 12px rgba(0, 0, 0, 0.6);
 }
 
 #player-timer {
