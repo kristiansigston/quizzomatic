@@ -8,7 +8,8 @@
         "Dollar",
         "Franc",
         "Lira"
-      ]
+      ],
+      "iq": 72
     },
     {
       "question": "Metal in hemoglobin?",
@@ -18,7 +19,8 @@
         "Zinc",
         "Calcium",
         "Magnesium"
-      ]
+      ],
+      "iq": 96
     },
     {
       "question": "Sun is a?",
@@ -28,7 +30,8 @@
         "Comet",
         "Asteroid",
         "Galaxy"
-      ]
+      ],
+      "iq": 84
     },
     {
       "question": "Mona Lisa painted by?",
@@ -38,7 +41,8 @@
         "Picasso",
         "Michelangelo",
         "Rembrandt"
-      ]
+      ],
+      "iq": 93
     },
     {
       "question": "Pi starts with?",
@@ -48,7 +52,8 @@
         "1.61",
         "3.33",
         "1.41"
-      ]
+      ],
+      "iq": 74
     },
     {
       "question": "Einstein's famous equation?",
@@ -58,7 +63,8 @@
         "a^2 + b^2 = c^2",
         "PV=nRT",
         "x=vt"
-      ]
+      ],
+      "iq": 95
     },
     {
       "question": "Taj Mahal built in?",
@@ -68,7 +74,8 @@
         "Iran",
         "Bangladesh",
         "Nepal"
-      ]
+      ],
+      "iq": 103
     },
     {
       "question": "First US president?",
@@ -78,7 +85,8 @@
         "Jefferson",
         "Adams",
         "Roosevelt"
-      ]
+      ],
+      "iq": 93
     },
     {
       "question": "Most evil shape?",
@@ -89,7 +97,8 @@
         "Square",
         "Rhombus",
         "Octagon"
-      ]
+      ],
+      "iq": 88
     },
     {
       "question": "DNA stands for?",
@@ -99,7 +108,8 @@
         "Digital Numeric Array",
         "Data Network Access",
         "Double Nucleic Agent"
-      ]
+      ],
+      "iq": 78
     },
     {
       "question": "Who wrote Hamlet?",
@@ -109,7 +119,8 @@
         "Homer",
         "Orwell",
         "Joyce"
-      ]
+      ],
+      "iq": 73
     },
     {
       "question": "H2O is?",
@@ -119,7 +130,8 @@
         "Oxygen",
         "Helium",
         "Salt"
-      ]
+      ],
+      "iq": 74
     },
     {
       "question": "Biggest planet?",
@@ -129,7 +141,8 @@
         "Earth",
         "Mars",
         "Neptune"
-      ]
+      ],
+      "iq": 85
     },
     {
       "question": "Planet known as Red Planet?",
@@ -139,7 +152,8 @@
         "Venus",
         "Saturn",
         "Neptune"
-      ]
+      ],
+      "iq": 105
     },
     {
       "question": "Largest ocean on Earth?",
@@ -149,7 +163,8 @@
         "Indian",
         "Arctic",
         "Southern"
-      ]
+      ],
+      "iq": 104
     },
     {
       "question": "Fastest land animal?",
@@ -159,7 +174,8 @@
         "Horse",
         "Gazelle",
         "Ostrich"
-      ]
+      ],
+      "iq": 109
     },
     {
       "question": "Chemical symbol for water?",
@@ -169,7 +185,8 @@
         "O2",
         "NaCl",
         "He"
-      ]
+      ],
+      "iq": 104
     },
     {
       "question": "Opposite of north?",
@@ -179,7 +196,8 @@
         "West",
         "Up",
         "Down"
-      ]
+      ],
+      "iq": 105
     },
     {
       "question": "Main gas in Earth's atmosphere?",
@@ -189,7 +207,8 @@
         "Carbon dioxide",
         "Argon",
         "Hydrogen"
-      ]
+      ],
+      "iq": 108
     },
     {
       "question": "Largest planet?",
@@ -199,7 +218,8 @@
         "Earth",
         "Mars",
         "Neptune"
-      ]
+      ],
+      "iq": 105
     },
     {
       "question": "Famous leaning tower?",
@@ -209,7 +229,8 @@
         "Rome",
         "London",
         "Athens"
-      ]
+      ],
+      "iq": 99
     },
     {
       "question": "Instrument with keys and pedals?",
@@ -219,7 +240,8 @@
         "Drums",
         "Violin",
         "Flute"
-      ]
+      ],
+      "iq": 108
     },
     {
       "question": "Smallest prime number?",
@@ -229,7 +251,8 @@
         "3",
         "5",
         "7"
-      ]
+      ],
+      "iq": 114
     },
     {
       "question": "Largest mammal?",
@@ -239,7 +262,8 @@
         "Giraffe",
         "Hippo",
         "Orca"
-      ]
+      ],
+      "iq": 103
     },
     {
       "question": "Bird that cannot fly?",
@@ -249,7 +273,8 @@
         "Sparrow",
         "Falcon",
         "Hawk"
-      ]
+      ],
+      "iq": 99
     },
     {
       "question": "Capital of Japan?",
@@ -259,7 +284,8 @@
         "Kyoto",
         "Seoul",
         "Beijing"
-      ]
+      ],
+      "iq": 103
     },
     {
       "question": "Currency of Japan?",
@@ -269,7 +295,8 @@
         "Yuan",
         "Dollar",
         "Euro"
-      ]
+      ],
+      "iq": 66
     },
     {
       "question": "Language of Brazil?",
@@ -279,7 +306,8 @@
         "French",
         "English",
         "Italian"
-      ]
+      ],
+      "iq": 111
     },
     {
       "question": "Tallest land animal?",
@@ -289,7 +317,8 @@
         "Moose",
         "Camel",
         "Rhino"
-      ]
+      ],
+      "iq": 105
     },
     {
       "question": "Largest desert?",
@@ -299,7 +328,8 @@
         "Kalahari",
         "Mojave",
         "Atacama"
-      ]
+      ],
+      "iq": 106
     },
     {
       "question": "Fastest bird?",
@@ -309,7 +339,8 @@
         "Hawk",
         "Swift",
         "Albatross"
-      ]
+      ],
+      "iq": 105
     },
     {
       "question": "Metal attracted to magnets?",
@@ -319,7 +350,8 @@
         "Aluminum",
         "Copper",
         "Silver"
-      ]
+      ],
+      "iq": 111
     },
     {
       "question": "Hardest natural substance?",
@@ -329,7 +361,8 @@
         "Quartz",
         "Iron",
         "Granite"
-      ]
+      ],
+      "iq": 107
     },
     {
       "question": "Largest continent?",
@@ -339,7 +372,8 @@
         "Europe",
         "North America",
         "South America"
-      ]
+      ],
+      "iq": 105
     },
     {
       "question": "Longest river?",
@@ -349,7 +383,8 @@
         "Yangtze",
         "Mississippi",
         "Danube"
-      ]
+      ],
+      "iq": 108
     },
     {
       "question": "Primary gas plants breathe in?",
@@ -359,7 +394,8 @@
         "Nitrogen",
         "Helium",
         "Methane"
-      ]
+      ],
+      "iq": 118
     },
     {
       "question": "Which planet has rings?",
@@ -369,7 +405,8 @@
         "Mercury",
         "Venus",
         "Earth"
-      ]
+      ],
+      "iq": 95
     },
     {
       "question": "Frozen water is called?",
@@ -379,7 +416,8 @@
         "Vapor",
         "Mist",
         "Cloud"
-      ]
+      ],
+      "iq": 15
     },
     {
       "question": "Shape with 3 sides?",
@@ -389,7 +427,8 @@
         "Circle",
         "Pentagon",
         "Hexagon"
-      ]
+      ],
+      "iq": 94
     },
     {
       "question": "Primary color of bananas?",
@@ -399,7 +438,8 @@
         "Red",
         "Green",
         "Purple"
-      ]
+      ],
+      "iq": 15
     },
     {
       "question": "Device to measure temperature?",
@@ -409,7 +449,8 @@
         "Hygrometer",
         "Altimeter",
         "Seismograph"
-      ]
+      ],
+      "iq": 108
     },
     {
       "question": "Largest bone in body?",
@@ -419,7 +460,8 @@
         "Tibia",
         "Skull",
         "Rib"
-      ]
+      ],
+      "iq": 108
     },
     {
       "question": "Planet closest to Sun?",
@@ -429,7 +471,8 @@
         "Earth",
         "Mars",
         "Jupiter"
-      ]
+      ],
+      "iq": 77
     },
     {
       "question": "Author of Romeo and Juliet?",
@@ -439,7 +482,8 @@
         "Austen",
         "Twain",
         "Orwell"
-      ]
+      ],
+      "iq": 105
     },
     {
       "question": "Ocean between Africa and Australia?",
@@ -449,7 +493,8 @@
         "Atlantic",
         "Arctic",
         "Southern"
-      ]
+      ],
+      "iq": 117
     },
     {
       "question": "Largest island?",
@@ -459,7 +504,8 @@
         "Madagascar",
         "Borneo",
         "Iceland"
-      ]
+      ],
+      "iq": 116
     },
     {
       "question": "Famous detective with pipe?",
@@ -469,7 +515,8 @@
         "Columbo",
         "Marple",
         "Nancy Drew"
-      ]
+      ],
+      "iq": 106
     },
     {
       "question": "Which one is a mammal?",
@@ -479,7 +526,8 @@
         "Trout",
         "Octopus",
         "Lobster"
-      ]
+      ],
+      "iq": 103
     },
     {
       "question": "Tool for tightening screws?",
@@ -489,7 +537,8 @@
         "Wrench",
         "Pliers",
         "Saw"
-      ]
+      ],
+      "iq": 101
     },
     {
       "question": "Fastest way to boil water?",
@@ -499,7 +548,8 @@
         "Stove",
         "Campfire",
         "Sun"
-      ]
+      ],
+      "iq": 109
     },
     {
       "question": "Smallest continent?",
@@ -509,7 +559,8 @@
         "Antarctica",
         "South America",
         "Africa"
-      ]
+      ],
+      "iq": 97
     },
     {
       "question": "Color of emerald?",
@@ -519,7 +570,8 @@
         "Blue",
         "Yellow",
         "Purple"
-      ]
+      ],
+      "iq": 15
     },
     {
       "question": "Planet with Great Red Spot?",
@@ -529,7 +581,8 @@
         "Venus",
         "Saturn",
         "Neptune"
-      ]
+      ],
+      "iq": 99
     },
     {
       "question": "Primary ingredient in bread?",
@@ -539,7 +592,8 @@
         "Salt",
         "Butter",
         "Milk"
-      ]
+      ],
+      "iq": 94
     },
     {
       "question": "Which is a web browser?",
@@ -549,7 +603,8 @@
         "Excel",
         "Slack",
         "Zoom"
-      ]
+      ],
+      "iq": 101
     },
     {
       "question": "Largest bird by wingspan?",
@@ -559,7 +614,8 @@
         "Swan",
         "Pelican",
         "Condor"
-      ]
+      ],
+      "iq": 118
     },
     {
       "question": "Tool to measure angles?",
@@ -569,7 +625,8 @@
         "Compass",
         "Scale",
         "Caliper"
-      ]
+      ],
+      "iq": 107
     },
     {
       "question": "Animal known for stripes?",
@@ -579,7 +636,8 @@
         "Leopard",
         "Cheetah",
         "Moose"
-      ]
+      ],
+      "iq": 102
     },
     {
       "question": "Closest star to Earth?",
@@ -589,7 +647,8 @@
         "Polaris",
         "Vega",
         "Betelgeuse"
-      ]
+      ],
+      "iq": 76
     },
     {
       "question": "Largest organ in body?",
@@ -599,7 +658,8 @@
         "Lung",
         "Liver",
         "Brain"
-      ]
+      ],
+      "iq": 111
     },
     {
       "question": "Direction sun rises?",
@@ -609,7 +669,8 @@
         "North",
         "South",
         "Up"
-      ]
+      ],
+      "iq": 15
     },
     {
       "question": "Harry Potter's owl is named?",
@@ -619,7 +680,8 @@
         "Crookshanks",
         "Scabbers",
         "Pigwidgeon"
-      ]
+      ],
+      "iq": 64
     },
     {
       "question": "House known for bravery?",
@@ -629,7 +691,8 @@
         "Ravenclaw",
         "Hufflepuff",
         "Ilvermorny"
-      ]
+      ],
+      "iq": 95
     },
     {
       "question": "Sport played on broomsticks?",
@@ -639,7 +702,8 @@
         "Exploding Snap",
         "Wizards Chess",
         "Quodpot"
-      ]
+      ],
+      "iq": 108
     },
     {
       "question": "Hermione's middle name?",
@@ -649,7 +713,8 @@
         "Rose",
         "Marie",
         "Jane"
-      ]
+      ],
+      "iq": 105
     },
     {
       "question": "Wizarding school in Scotland?",
@@ -659,7 +724,8 @@
         "Durmstrang",
         "Ilvermorny",
         "Uagadou"
-      ]
+      ],
+      "iq": 97
     },
     {
       "question": "Platform to catch Hogwarts Express?",
@@ -669,7 +735,8 @@
         "10",
         "7",
         "8 1/4"
-      ]
+      ],
+      "iq": 72
     },
     {
       "question": "Potion that brings good luck?",
@@ -679,7 +746,8 @@
         "Amortentia",
         "Veritaserum",
         "Wolfsbane"
-      ]
+      ],
+      "iq": 96
     },
     {
       "question": "Spell to disarm an opponent?",
@@ -689,7 +757,8 @@
         "Accio",
         "Lumos",
         "Protego"
-      ]
+      ],
+      "iq": 107
     },
     {
       "question": "Headmaster after Dumbledore?",
@@ -699,7 +768,8 @@
         "Flitwick",
         "Sprout",
         "Slughorn"
-      ]
+      ],
+      "iq": 105
     },
     {
       "question": "Bank run by goblins?",
@@ -709,7 +779,569 @@
         "Ollivanders",
         "Honeydukes",
         "Flourish & Blotts"
-      ]
+      ],
+      "iq": 93
+    },
+    {
+      "question": "What is the value of the golden ratio (approx.)?",
+      "answers": [
+        "1.618",
+        "1.414",
+        "2.718",
+        "1.732",
+        "3.142"
+      ],
+      "iq": 134
+    },
+    {
+      "question": "In base-2, 101101 equals what in base-10?",
+      "answers": [
+        "45",
+        "41",
+        "37",
+        "53",
+        "29"
+      ],
+      "iq": 117
+    },
+    {
+      "question": "Which number is a Mersenne prime?",
+      "answers": [
+        "31",
+        "27",
+        "35",
+        "39",
+        "45"
+      ],
+      "iq": 142
+    },
+    {
+      "question": "If f(x)=2x+3, what is f(f(2))?",
+      "answers": [
+        "11",
+        "9",
+        "13",
+        "7",
+        "15"
+      ],
+      "iq": 118
+    },
+    {
+      "question": "What is the sum of interior angles of a hexagon?",
+      "answers": [
+        "720",
+        "540",
+        "360",
+        "900",
+        "1080"
+      ],
+      "iq": 122
+    },
+    {
+      "question": "Which is a prime number?",
+      "answers": [
+        "97",
+        "99",
+        "91",
+        "93",
+        "95"
+      ],
+      "iq": 116
+    },
+    {
+      "question": "Derivative of x^3?",
+      "answers": [
+        "3x^2",
+        "x^2",
+        "2x",
+        "3x",
+        "x^3"
+      ],
+      "iq": 134
+    },
+    {
+      "question": "Integral of 2x dx?",
+      "answers": [
+        "x^2 + C",
+        "2x + C",
+        "x + C",
+        "2x^2 + C",
+        "ln x + C"
+      ],
+      "iq": 134
+    },
+    {
+      "question": "If A\u2282B and B\u2282C, then A\u2282?",
+      "answers": [
+        "C",
+        "B",
+        "A",
+        "A\u2229B",
+        "A\u222aB"
+      ],
+      "iq": 100
+    },
+    {
+      "question": "Binary of decimal 13?",
+      "answers": [
+        "1101",
+        "1011",
+        "1110",
+        "1001",
+        "1100"
+      ],
+      "iq": 77
+    },
+    {
+      "question": "What is 7! ?",
+      "answers": [
+        "5040",
+        "720",
+        "840",
+        "40320",
+        "560"
+      ],
+      "iq": 74
+    },
+    {
+      "question": "How many permutations of 4 items?",
+      "answers": [
+        "24",
+        "12",
+        "16",
+        "8",
+        "32"
+      ],
+      "iq": 133
+    },
+    {
+      "question": "Matrix 2x2 identity trace?",
+      "answers": [
+        "2",
+        "1",
+        "0",
+        "4",
+        "-1"
+      ],
+      "iq": 141
+    },
+    {
+      "question": "Log10(1000) equals?",
+      "answers": [
+        "3",
+        "2",
+        "4",
+        "1",
+        "10"
+      ],
+      "iq": 116
+    },
+    {
+      "question": "If p\u2192q is false, p is?",
+      "answers": [
+        "True",
+        "False",
+        "Either",
+        "Both",
+        "Undetermined"
+      ],
+      "iq": 101
+    },
+    {
+      "question": "Number of subsets of a 5-element set?",
+      "answers": [
+        "32",
+        "16",
+        "20",
+        "25",
+        "30"
+      ],
+      "iq": 144
+    },
+    {
+      "question": "Which is a Fibonacci number?",
+      "answers": [
+        "55",
+        "54",
+        "56",
+        "58",
+        "57"
+      ],
+      "iq": 113
+    },
+    {
+      "question": "Solve: 3x-7=11",
+      "answers": [
+        "6",
+        "5",
+        "7",
+        "4",
+        "8"
+      ],
+      "iq": 72
+    },
+    {
+      "question": "If angles are 30-60-90, hypotenuse relative to short side?",
+      "answers": [
+        "2x",
+        "\u221a2 x",
+        "3x",
+        "1.5x",
+        "\u221a3 x"
+      ],
+      "iq": 121
+    },
+    {
+      "question": "What is 2^10?",
+      "answers": [
+        "1024",
+        "512",
+        "2048",
+        "256",
+        "4096"
+      ],
+      "iq": 83
+    },
+    {
+      "question": "Sum of first 10 positive integers?",
+      "answers": [
+        "55",
+        "45",
+        "50",
+        "60",
+        "40"
+      ],
+      "iq": 112
+    },
+    {
+      "question": "If x/y=2 and y=3, x=?",
+      "answers": [
+        "6",
+        "5",
+        "4",
+        "3",
+        "2"
+      ],
+      "iq": 95
+    },
+    {
+      "question": "What is the determinant of [[1,2],[3,4]]?",
+      "answers": [
+        "-2",
+        "2",
+        "-1",
+        "1",
+        "0"
+      ],
+      "iq": 147
+    },
+    {
+      "question": "What is 0.125 as a fraction?",
+      "answers": [
+        "1/8",
+        "1/4",
+        "1/16",
+        "3/8",
+        "1/6"
+      ],
+      "iq": 93
+    },
+    {
+      "question": "Which is an irrational number?",
+      "answers": [
+        "\u221a2",
+        "3/4",
+        "1.5",
+        "2",
+        "5/3"
+      ],
+      "iq": 113
+    },
+    {
+      "question": "Solve: 2x^2=8",
+      "answers": [
+        "\u00b12",
+        "\u00b14",
+        "2",
+        "-2",
+        "\u00b1\u221a2"
+      ],
+      "iq": 81
+    },
+    {
+      "question": "What is the slope of y=3x+1?",
+      "answers": [
+        "3",
+        "1",
+        "0",
+        "-3",
+        "1/3"
+      ],
+      "iq": 106
+    },
+    {
+      "question": "Convert 0.2 to fraction",
+      "answers": [
+        "1/5",
+        "1/4",
+        "1/3",
+        "2/5",
+        "1/2"
+      ],
+      "iq": 99
+    },
+    {
+      "question": "If a triangle has sides 3,4,5 it is?",
+      "answers": [
+        "Right",
+        "Acute",
+        "Obtuse",
+        "Equilateral",
+        "Isosceles"
+      ],
+      "iq": 15
+    },
+    {
+      "question": "What is 15% of 200?",
+      "answers": [
+        "30",
+        "20",
+        "25",
+        "35",
+        "40"
+      ],
+      "iq": 104
+    },
+    {
+      "question": "Number of degrees in a radian?",
+      "answers": [
+        "~57.3",
+        "~90",
+        "~45",
+        "~180",
+        "~30"
+      ],
+      "iq": 144
+    },
+    {
+      "question": "Solve: x^2-9=0",
+      "answers": [
+        "\u00b13",
+        "3",
+        "-3",
+        "\u00b19",
+        "9"
+      ],
+      "iq": 87
+    },
+    {
+      "question": "If P(A)=0.2, odds against A?",
+      "answers": [
+        "4:1",
+        "1:4",
+        "2:1",
+        "3:2",
+        "5:1"
+      ],
+      "iq": 134
+    },
+    {
+      "question": "What is the mean of 2,4,8,16?",
+      "answers": [
+        "7.5",
+        "6",
+        "8",
+        "9",
+        "10"
+      ],
+      "iq": 97
+    },
+    {
+      "question": "How many edges does a cube have?",
+      "answers": [
+        "12",
+        "8",
+        "6",
+        "10",
+        "14"
+      ],
+      "iq": 121
+    },
+    {
+      "question": "What is 1/3 as a decimal (2 dp)?",
+      "answers": [
+        "0.33",
+        "0.30",
+        "0.34",
+        "0.35",
+        "0.36"
+      ],
+      "iq": 119
+    },
+    {
+      "question": "If sin(30\u00b0)=?",
+      "answers": [
+        "0.5",
+        "0.866",
+        "1",
+        "0",
+        "0.707"
+      ],
+      "iq": 110
+    },
+    {
+      "question": "What is the next prime after 47?",
+      "answers": [
+        "53",
+        "49",
+        "51",
+        "55",
+        "57"
+      ],
+      "iq": 111
+    },
+    {
+      "question": "Value of log2(8)?",
+      "answers": [
+        "3",
+        "2",
+        "4",
+        "1",
+        "5"
+      ],
+      "iq": 145
+    },
+    {
+      "question": "Simplify: (x^2)(x^3)",
+      "answers": [
+        "x^5",
+        "x^6",
+        "x^9",
+        "x^3",
+        "x^2"
+      ],
+      "iq": 100
+    },
+    {
+      "question": "What is 1001 in binary?",
+      "answers": [
+        "1111101001",
+        "1111100101",
+        "1111101101",
+        "1111100001",
+        "1111110001"
+      ],
+      "iq": 145
+    },
+    {
+      "question": "How many diagonals in a pentagon?",
+      "answers": [
+        "5",
+        "4",
+        "6",
+        "7",
+        "8"
+      ],
+      "iq": 143
+    },
+    {
+      "question": "What is the median of 1,2,100,101,102?",
+      "answers": [
+        "100",
+        "2",
+        "101",
+        "1",
+        "102"
+      ],
+      "iq": 144
+    },
+    {
+      "question": "If x=2, evaluate 3x^2+2x+1",
+      "answers": [
+        "17",
+        "13",
+        "15",
+        "19",
+        "21"
+      ],
+      "iq": 99
+    },
+    {
+      "question": "What is the mode of 1,2,2,3,3,3,4?",
+      "answers": [
+        "3",
+        "2",
+        "1",
+        "4",
+        "No mode"
+      ],
+      "iq": 136
+    },
+    {
+      "question": "If a circle radius is 3, area?",
+      "answers": [
+        "9\u03c0",
+        "6\u03c0",
+        "12\u03c0",
+        "3\u03c0",
+        "18\u03c0"
+      ],
+      "iq": 109
+    },
+    {
+      "question": "What is the probability of heads on fair coin?",
+      "answers": [
+        "1/2",
+        "1/3",
+        "1/4",
+        "2/3",
+        "3/4"
+      ],
+      "iq": 67
+    },
+    {
+      "question": "Solve: 5x=25",
+      "answers": [
+        "5",
+        "4",
+        "6",
+        "3",
+        "7"
+      ],
+      "iq": 66
+    },
+    {
+      "question": "What is the GCD of 24 and 36?",
+      "answers": [
+        "12",
+        "6",
+        "18",
+        "24",
+        "36"
+      ],
+      "iq": 109
+    },
+    {
+      "question": "If 2^x=32, x=?",
+      "answers": [
+        "5",
+        "4",
+        "6",
+        "3",
+        "8"
+      ],
+      "iq": 79
+    },
+    {
+      "question": "What is the next term: 2,4,8,16,?",
+      "answers": [
+        "32",
+        "24",
+        "28",
+        "30",
+        "36"
+      ],
+      "iq": 107
     }
   ]
 }
