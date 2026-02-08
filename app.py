@@ -78,6 +78,16 @@ def set_gamestate(state, broadcast=True):
         socketio.emit('gamestate', {'state': state})
 
 
+def ensure_fake_players():
+    if game_state.get('players'):
+        return
+    game_state['players'] = {
+        'Alice': {'score': 10, 'sid': None, 'ip': 'debug'},
+        'Bob': {'score': 20, 'sid': None, 'ip': 'debug'},
+        'Charle': {'score': 30, 'sid': None, 'ip': 'debug'},
+    }
+
+
 def broadcast_host_session():
     socketio.emit('host_session', {'token': ensure_host_token()})
 
@@ -357,18 +367,23 @@ def handle_set_gamestate(data):
         socketio.emit('clear_question')
         return
     if state == 'question':
+        ensure_fake_players()
         if not is_game_started():
             start_game()
         else:
             set_gamestate('question', broadcast=True)
         return
     if state == 'answer':
+        ensure_fake_players()
         if game_state.get('current_question') and not game_state.get('answers_processed'):
             process_answers()
         else:
             set_gamestate('answer', broadcast=True)
         return
+    if state in GAMESTATES and state != 'lobby':
+        ensure_fake_players()
     set_gamestate(state, broadcast=True)
+    send_player_details()
 
 
 @socketio.on('typing_username')
