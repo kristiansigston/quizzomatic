@@ -13,7 +13,7 @@ socketio = SocketIO(app)
 
 
 def is_game_started():
-    return 0 <= game_state['current_question_index'] < len(questions)
+    return game_state.get('current_question') is not None
 
 
 # Load questions from JSON file
@@ -24,9 +24,7 @@ with open('questions.json', 'r') as f:
 for q in all_questions:
     q['correct'] = 0
 
-questions = []  # This will hold the 5 questions for the current game
 QUESTIONS_LOG_PATH = 'questions_asked.jsonl'
-RECENT_WINDOW_SECONDS = 6 * 60 * 60
 
 
 @app.route('/')
@@ -90,37 +88,34 @@ def load_recent_question_times():
     return recent_times
 
 
-def weighted_sample_without_replacement(items, weights, count):
-    chosen = []
+def weighted_sample(items, weights):
     pool = list(zip(items, weights))
-    for _ in range(min(count, len(pool))):
-        total = sum(w for _, w in pool)
-        if total <= 0:
-            picked_idx = random.randrange(len(pool))
-        else:
-            r = random.uniform(0, total)
-            upto = 0
-            picked_idx = 0
-            for i, (_item, w) in enumerate(pool):
-                upto += w
-                if upto >= r:
-                    picked_idx = i
-                    break
-        picked_item, _ = pool.pop(picked_idx)
-        chosen.append(picked_item)
-    return chosen
+    total = sum(w for _, w in pool)
+    r = random.uniform(0, total)
+    upto = 0
+    picked_idx = 0
+    for i, (_item, w) in enumerate(pool):
+        upto += w
+        if upto >= r:
+            picked_idx = i
+            break
+    picked_item, _ = pool.pop(picked_idx)
+    return picked_item
 
 
-def select_questions_for_game():
+def select_single_question():
     recent_times = load_recent_question_times()
     now = time.time()
+    items = []
     weights = []
     for q in all_questions:
         last_time = recent_times.get(q['question'], 0)
         age = max(0, now - last_time)
-        weight = min(1.0, age / RECENT_WINDOW_SECONDS) if last_time else 1.0
-        weights.append(max(0.05, weight))
-    return weighted_sample_without_replacement(all_questions, weights, 5)
+        RECENT_HALF_LIFE_SECONDS = 60 * 60  # 1 hour
+        weight = 1.0 - pow(2.718281828, -age / RECENT_HALF_LIFE_SECONDS)
+        items.append(q)
+        weights.append(weight)
+    return weighted_sample(items, weights)
 
 
 def log_question_asked(question_text):
@@ -133,7 +128,9 @@ def log_question_asked(question_text):
 
 
 def add_scores_for_correct_answers():
-    current_q = questions[game_state['current_question_index']]
+    current_q = game_state.get('current_question')
+    if not current_q:
+        return
     correct_answer_index = current_q['correct']
 
     # Set intermission duration: 5s if 1 player, else 10s
@@ -271,7 +268,7 @@ def handle_join(data):
 
     if is_game_started():
         index = game_state['current_question_index']
-        question_data = questions[index]
+        question_data = game_state.get('current_question')
         # Send index to allow frontend to track it
         emit('question', {**question_data, 'index': index})
     if game_state.get('end_time') and game_state['end_time'] > time.time():
@@ -295,11 +292,12 @@ def handle_typing(data):
 def reset_game():
     game_state['current_question_index'] = -1  # Reset for first question
     game_state['current_answers'] = {}
+    game_state['current_question'] = None
     for player in game_state['players']:
         game_state['players'][player]['score'] = 0  # Reset scores
 
     global questions
-    questions = select_questions_for_game()
+    questions = []
 
 
 @socketio.on('start_game')
@@ -373,49 +371,53 @@ def next_question(question_index):
     game_state['current_answers'] = {}  # Clear answers for new question
     game_state['answers_processed'] = False
 
-    if game_state['current_question_index'] < len(questions):
-        question_data = questions[game_state['current_question_index']]
-        log_question_asked(question_data['question'])
+    next_q = select_single_question()
 
-        # Get correct answer text before mutation
-        correct_answer_text = question_data['answers'][question_data['correct']]
-
-        # Separate correct and incorrect
-        incorrect_answers = [
-            a for i, a in enumerate(
-                question_data['answers']) if i != question_data['correct']]
-
-        # Limit to 3 random incorrect answers if there are more
-        if len(incorrect_answers) > 3:
-            incorrect_answers = random.sample(incorrect_answers, 3)
-
-        # Combine and shuffle
-        new_answers = [correct_answer_text] + incorrect_answers
-        random.shuffle(new_answers)
-
-        # Update the question object directly
-        question_data['answers'] = new_answers
-        question_data['correct'] = new_answers.index(correct_answer_text)
-
-        # Include index in payload
-        socketio.emit(
-            'question', {
-                **question_data, 'index': game_state['current_question_index']})
-
-        duration = 30
-        game_state['duration'] = duration
-        game_state['end_time'] = time.time() + duration
-        game_state['timer_thread'] = threading.Timer(duration, process_answers)
-        game_state['timer_thread'].start()
-        socketio.emit('timer', {
-            'end_time': game_state['end_time'],
-            'duration': duration
-        })
-        print(f'Question {game_state["current_question_index"] + 1} started.')
-    else:
-        game_state['game_started'] = False  # End game
+    if next_q is None:
+        game_state['game_started'] = False
         socketio.emit('game_over', game_state['players'])
         print('Game over!')
+        return
+
+    game_state['current_question'] = next_q
+    question_data = game_state['current_question']
+    log_question_asked(question_data['question'])
+
+    # Get correct answer text before mutation
+    correct_answer_text = question_data['answers'][question_data['correct']]
+
+    # Separate correct and incorrect
+    incorrect_answers = [
+        a for i, a in enumerate(
+            question_data['answers']) if i != question_data['correct']]
+
+    # Limit to 3 random incorrect answers if there are more
+    if len(incorrect_answers) > 3:
+        incorrect_answers = random.sample(incorrect_answers, 3)
+
+    # Combine and shuffle
+    new_answers = [correct_answer_text] + incorrect_answers
+    random.shuffle(new_answers)
+
+    # Update the question object directly
+    question_data['answers'] = new_answers
+    question_data['correct'] = new_answers.index(correct_answer_text)
+
+    # Include index in payload
+    socketio.emit(
+        'question', {
+            **question_data, 'index': game_state['current_question_index']})
+
+    duration = 30
+    game_state['duration'] = duration
+    game_state['end_time'] = time.time() + duration
+    game_state['timer_thread'] = threading.Timer(duration, process_answers)
+    game_state['timer_thread'].start()
+    socketio.emit('timer', {
+        'end_time': game_state['end_time'],
+        'duration': duration
+    })
+    print(f'Question {game_state["current_question_index"] + 1} started.')
 
 
 if __name__ == '__main__':
