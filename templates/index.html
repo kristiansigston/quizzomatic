@@ -766,9 +766,10 @@
 
     // --- QR Toggle ---
     const qrContainer = document.getElementById('qr-container');
+    const qrCode = document.getElementById('qr-code');
     const qrToggle = document.getElementById('qr-toggle');
-    if (qrContainer) {
-      qrContainer.addEventListener('click', () => {
+    if (qrCode && qrContainer) {
+      qrCode.addEventListener('click', () => {
         qrContainer.classList.toggle('qr-large');
       });
     }

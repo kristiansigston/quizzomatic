@@ -146,7 +146,7 @@ body[data-gamestate="leaderboard"] #game-over-overlay {
   max-width: 140px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   transform-origin: bottom left;
-  cursor: pointer;
+  cursor: default;
 }
 
 #debug-panel {
@@ -232,6 +232,7 @@ body[data-gamestate="leaderboard"] #game-over-overlay {
   height: auto;
   border-radius: 4px;
   display: block;
+  cursor: pointer;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }
