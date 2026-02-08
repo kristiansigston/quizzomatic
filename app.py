@@ -58,6 +58,12 @@ def stop_host_ping_thread():
         game_state['host_ping_thread'] = None
 
 
+def stop_intermission_thread():
+    if game_state.get('intermission_timer_thread'):
+        game_state['intermission_timer_thread'].cancel()
+        game_state['intermission_timer_thread'] = None
+
+
 def ensure_host_token():
     if not game_state.get('host_token'):
         game_state['host_token'] = secrets.token_urlsafe(6)
@@ -337,6 +343,31 @@ def handle_set_gamestate(data):
     if data.get('host_token') != game_state.get('host_token'):
         return
     state = data.get('state')
+    if state == 'lobby':
+        stop_timer_thread()
+        stop_intermission_thread()
+        game_state['current_question_index'] = -1
+        game_state['current_question'] = None
+        game_state['current_answers'] = {}
+        game_state['answers_processed'] = False
+        game_state['intermission_active'] = False
+        game_state['end_time'] = None
+        game_state['duration'] = None
+        set_gamestate('lobby', broadcast=True)
+        socketio.emit('clear_question')
+        return
+    if state == 'question':
+        if not is_game_started():
+            start_game()
+        else:
+            set_gamestate('question', broadcast=True)
+        return
+    if state == 'answer':
+        if game_state.get('current_question') and not game_state.get('answers_processed'):
+            process_answers()
+        else:
+            set_gamestate('answer', broadcast=True)
+        return
     set_gamestate(state, broadcast=True)
 
 

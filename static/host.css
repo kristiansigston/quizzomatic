@@ -78,6 +78,35 @@ h1 { color: var(--primary); }
 
 .hidden { display: none !important; }
 
+/* Gamestate Overlays */
+.state-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: clamp(2.6rem, 6vw, 5.4rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.6),
+    0 12px 24px rgba(0, 0, 0, 0.55);
+  background: rgba(12, 8, 26, 0.6);
+  z-index: 2500;
+}
+
+body[data-gamestate="leaderboard"] .state-overlay {
+  display: flex;
+}
+
+body[data-gamestate="leaderboard"] #spectator-view,
+body[data-gamestate="leaderboard"] #player-view,
+body[data-gamestate="leaderboard"] #game-over-overlay {
+  display: none !important;
+}
+
 /* Spectator View Styles */
 #spectator-view .host-controls {
   border-top: 1px solid #eee;
