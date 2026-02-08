@@ -620,6 +620,12 @@
          const myResult = data.player_answers[myUsername];
          if (myResult.is_correct) {
             fireConfetti();
+         } else {
+            const area = document.getElementById('player-question-area');
+            if (area) {
+              area.classList.add('sad');
+              setTimeout(() => area.classList.remove('sad'), 1600);
+            }
          }
       }
 

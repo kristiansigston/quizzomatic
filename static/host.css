@@ -619,3 +619,26 @@ h1 { color: var(--primary); }
 #player-question-area {
   position: relative;
 }
+
+#player-question-area.sad {
+  animation: sad-shake 0.5s ease, sad-fade 1.6s ease;
+}
+
+#player-question-area.sad .answer-btn.selected {
+  filter: grayscale(0.2) brightness(0.85);
+}
+
+@keyframes sad-shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes sad-fade {
+  0% { filter: grayscale(0) saturate(1); }
+  60% { filter: grayscale(0.45) saturate(0.7); }
+  100% { filter: grayscale(0) saturate(1); }
+}
