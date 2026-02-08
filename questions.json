@@ -957,6 +957,666 @@
         "8"
       ],
       "iq": 79
+    },
+    {
+      "question": "Pac-Man originally called?",
+      "answers": [
+        "Puck Man",
+        "Poke Man",
+        "Pizza Man",
+        "Munch Man",
+        "Ghost Eater"
+      ],
+      "iq": 95
+    },
+    {
+      "question": "Mario's first profession?",
+      "answers": [
+        "Carpenter",
+        "Plumber",
+        "Doctor",
+        "Pilot",
+        "Chef"
+      ],
+      "iq": 88
+    },
+    {
+      "question": "Sonic the Hedgehog's speed?",
+      "answers": [
+        "Speed of sound",
+        "Speed of light",
+        "Mach 10",
+        "100 mph",
+        "500 mph"
+      ],
+      "iq": 75
+    },
+    {
+      "question": "First console in space?",
+      "answers": [
+        "Game Boy",
+        "NES",
+        "Sega Genesis",
+        "Atari 2600",
+        "PlayStation"
+      ],
+      "iq": 92
+    },
+    {
+      "question": "Best selling console ever?",
+      "answers": [
+        "PlayStation 2",
+        "Nintendo Switch",
+        "DS",
+        "Wii",
+        "PS4"
+      ],
+      "iq": 98
+    },
+    {
+      "question": "Legend of Zelda protagonist?",
+      "answers": [
+        "Link",
+        "Zelda",
+        "Ganon",
+        "Sheik",
+        "Epona"
+      ],
+      "iq": 65
+    },
+    {
+      "question": "Space Invaders aliens move?",
+      "answers": [
+        "Faster as they die",
+        "Slower",
+        "Same speed",
+        "Randomly",
+        "Backwards"
+      ],
+      "iq": 85
+    },
+    {
+      "question": "Which game caused a coin shortage?",
+      "answers": [
+        "Space Invaders",
+        "Pac-Man",
+        "Pong",
+        "Tetris",
+        "Galaga"
+      ],
+      "iq": 95
+    },
+    {
+      "question": "Contra famous code?",
+      "answers": [
+        "Konami Code",
+        "Cheat Code",
+        "God Mode",
+        "IDDQD",
+        "Up Down Left Right"
+      ],
+      "iq": 90
+    },
+    {
+      "question": "Year Game Boy released?",
+      "answers": [
+        "1989",
+        "1990",
+        "1985",
+        "1995",
+        "1988"
+      ],
+      "iq": 105
+    },
+    {
+      "question": "First YouTube video?",
+      "answers": [
+        "Me at the zoo",
+        "My cat",
+        "Hello World",
+        "Skateboarding dog",
+        "Charlie bit me"
+      ],
+      "iq": 85
+    },
+    {
+      "question": "Character limit of original Tweet?",
+      "answers": [
+        "140",
+        "280",
+        "100",
+        "160",
+        "200"
+      ],
+      "iq": 70
+    },
+    {
+      "question": "Doge meme features a?",
+      "answers": [
+        "Shiba Inu",
+        "Pug",
+        "Corgi",
+        "Husky",
+        "Golden Retriever"
+      ],
+      "iq": 60
+    },
+    {
+      "question": "\"Rickrolling\" involves?",
+      "answers": [
+        "Rick Astley",
+        "Rick Ross",
+        "Rick James",
+        "Rick Grimes",
+        "Rick Sanchez"
+      ],
+      "iq": 65
+    },
+    {
+      "question": "Amazon originally sold?",
+      "answers": [
+        "Books",
+        "CDs",
+        "Electronics",
+        "Toys",
+        "Clothes"
+      ],
+      "iq": 75
+    },
+    {
+      "question": "Founder of Facebook?",
+      "answers": [
+        "Zuckerberg",
+        "Gates",
+        "Jobs",
+        "Musk",
+        "Bezos"
+      ],
+      "iq": 60
+    },
+    {
+      "question": "Most liked Instagram photo originally?",
+      "answers": [
+        "Egg",
+        "Jenner",
+        "Messi",
+        "Ronaldo",
+        "Beyonce"
+      ],
+      "iq": 80
+    },
+    {
+      "question": "\"Gangnam Style\" artist?",
+      "answers": [
+        "PSY",
+        "BTS",
+        "BLACKPINK",
+        "EXO",
+        "Big Bang"
+      ],
+      "iq": 70
+    },
+    {
+      "question": "Inventor of the World Wide Web?",
+      "answers": [
+        "Tim Berners-Lee",
+        "Al Gore",
+        "Bill Gates",
+        "Steve Jobs",
+        "Vint Cerf"
+      ],
+      "iq": 95
+    },
+    {
+      "question": "What does \"LOL\" stand for?",
+      "answers": [
+        "Laugh Out Loud",
+        "Lots Of Love",
+        "League Of Legends",
+        "Little Old Lady",
+        "Living On Luck"
+      ],
+      "iq": 50
+    },
+    {
+      "question": "\"Shake It Off\" singer?",
+      "answers": [
+        "Taylor Swift",
+        "Katy Perry",
+        "Ariana Grande",
+        "Lady Gaga",
+        "Miley Cyrus"
+      ],
+      "iq": 60
+    },
+    {
+      "question": "Billie Eilish's brother/producer?",
+      "answers": [
+        "Finneas",
+        "Phineas",
+        "Ferb",
+        "Felix",
+        "Frank"
+      ],
+      "iq": 85
+    },
+    {
+      "question": "\"Old Town Road\" artist?",
+      "answers": [
+        "Lil Nas X",
+        "Drake",
+        "Post Malone",
+        "The Weeknd",
+        "Billy Ray Cyrus"
+      ],
+      "iq": 65
+    },
+    {
+      "question": "Beyonce's fanbase name?",
+      "answers": [
+        "Beyhive",
+        "Swifties",
+        "A.R.M.Y",
+        "Beliebers",
+        "Monsters"
+      ],
+      "iq": 60
+    },
+    {
+      "question": "Rapper with alter ego Slim Shady?",
+      "answers": [
+        "Eminem",
+        "Dr. Dre",
+        "Snoop Dogg",
+        "Jay-Z",
+        "50 Cent"
+      ],
+      "iq": 65
+    },
+    {
+      "question": "\"Blinding Lights\" artist?",
+      "answers": [
+        "The Weeknd",
+        "Bruno Mars",
+        "Harry Styles",
+        "Ed Sheeran",
+        "Justin Bieber"
+      ],
+      "iq": 70
+    },
+    {
+      "question": "K-Pop group with \"Dynamite\"?",
+      "answers": [
+        "BTS",
+        "BLACKPINK",
+        "TWICE",
+        "EXO",
+        "Red Velvet"
+      ],
+      "iq": 65
+    },
+    {
+      "question": "Adele's album naming convention?",
+      "answers": [
+        "Ages",
+        "Years",
+        "Cities",
+        "Colors",
+        "Ex-boyfriends"
+      ],
+      "iq": 80
+    },
+    {
+      "question": "\"Uptown Funk\" features?",
+      "answers": [
+        "Bruno Mars",
+        "Pharrell",
+        "Timberlake",
+        "Usher",
+        "Ne-Yo"
+      ],
+      "iq": 75
+    },
+    {
+      "question": "Drake is from?",
+      "answers": [
+        "Canada",
+        "USA",
+        "UK",
+        "Australia",
+        "France"
+      ],
+      "iq": 70
+    },
+    {
+      "question": "Highest waterfall?",
+      "answers": [
+        "Angel Falls",
+        "Niagara",
+        "Victoria",
+        "Iguazu",
+        "Yosemite"
+      ],
+      "iq": 95
+    },
+    {
+      "question": "Deepest ocean trench?",
+      "answers": [
+        "Mariana",
+        "Tonga",
+        "Philippine",
+        "Puerto Rico",
+        "Java"
+      ],
+      "iq": 90
+    },
+    {
+      "question": "Largest coral reef system?",
+      "answers": [
+        "Great Barrier Reef",
+        "Belize Barrier",
+        "Red Sea",
+        "Florida Reef",
+        "New Caledonia"
+      ],
+      "iq": 80
+    },
+    {
+      "question": "Mount Everest is in?",
+      "answers": [
+        "Nepal/China",
+        "India",
+        "Pakistan",
+        "Bhutan",
+        "Tibet"
+      ],
+      "iq": 85
+    },
+    {
+      "question": "Aurora Borealis is also?",
+      "answers": [
+        "Northern Lights",
+        "Southern Lights",
+        "Solar Flare",
+        "Milky Way",
+        "Stardust"
+      ],
+      "iq": 75
+    },
+    {
+      "question": "Grand Canyon carved by?",
+      "answers": [
+        "Colorado River",
+        "Mississippi River",
+        "Nile",
+        "Amazon",
+        "Rio Grande"
+      ],
+      "iq": 80
+    },
+    {
+      "question": "Largest rainforest?",
+      "answers": [
+        "Amazon",
+        "Congo",
+        "Daintree",
+        "Valdivian",
+        "Tongass"
+      ],
+      "iq": 75
+    },
+    {
+      "question": "Victoria Falls is in?",
+      "answers": [
+        "Africa",
+        "South America",
+        "North America",
+        "Asia",
+        "Europe"
+      ],
+      "iq": 85
+    },
+    {
+      "question": "\"Old Faithful\" is a?",
+      "answers": [
+        "Geyser",
+        "Volcano",
+        "Waterfall",
+        "Glacier",
+        "Mountain"
+      ],
+      "iq": 70
+    },
+    {
+      "question": "Dead Sea known for?",
+      "answers": [
+        "High salt",
+        "No water",
+        "Sharks",
+        "Coral",
+        "Oil"
+      ],
+      "iq": 75
+    },
+    {
+      "question": "Telephone inventor?",
+      "answers": [
+        "Bell",
+        "Edison",
+        "Tesla",
+        "Morse",
+        "Marconi"
+      ],
+      "iq": 80
+    },
+    {
+      "question": "Lightbulb popularizer?",
+      "answers": [
+        "Edison",
+        "Tesla",
+        "Franklin",
+        "Watt",
+        "Faraday"
+      ],
+      "iq": 75
+    },
+    {
+      "question": "Wright brothers invented?",
+      "answers": [
+        "Airplane",
+        "Car",
+        "Train",
+        "Submarine",
+        "Bicycle"
+      ],
+      "iq": 65
+    },
+    {
+      "question": "Printing press inventor?",
+      "answers": [
+        "Gutenberg",
+        "Da Vinci",
+        "Newton",
+        "Galileo",
+        "Luther"
+      ],
+      "iq": 90
+    },
+    {
+      "question": "Penicillin discoverer?",
+      "answers": [
+        "Fleming",
+        "Pasteur",
+        "Curie",
+        "Salk",
+        "Jenner"
+      ],
+      "iq": 92
+    },
+    {
+      "question": "Dynamite inventor?",
+      "answers": [
+        "Nobel",
+        "Einstein",
+        "Oppenheimer",
+        "Newton",
+        "Ford"
+      ],
+      "iq": 88
+    },
+    {
+      "question": "Radio pioneer?",
+      "answers": [
+        "Marconi",
+        "Bell",
+        "Baird",
+        "Zworykin",
+        "Farnsworth"
+      ],
+      "iq": 95
+    },
+    {
+      "question": "Apple I creator?",
+      "answers": [
+        "Wozniak",
+        "Jobs",
+        "Gates",
+        "Allen",
+        "Musk"
+      ],
+      "iq": 90
+    },
+    {
+      "question": "Polio vaccine creator?",
+      "answers": [
+        "Salk",
+        "Sabin",
+        "Pasteur",
+        "Fleming",
+        "Lister"
+      ],
+      "iq": 98
+    },
+    {
+      "question": "Model T creator?",
+      "answers": [
+        "Ford",
+        "Chevrolet",
+        "Dodge",
+        "Chrysler",
+        "Benz"
+      ],
+      "iq": 75
+    },
+    {
+      "question": "\"Stranger Things\" setting?",
+      "answers": [
+        "Hawkins",
+        "Riverdale",
+        "Smallville",
+        "Sunnydale",
+        "Westeros"
+      ],
+      "iq": 70
+    },
+    {
+      "question": "\"Squid Game\" origin country?",
+      "answers": [
+        "South Korea",
+        "Japan",
+        "China",
+        "Thailand",
+        "Vietnam"
+      ],
+      "iq": 65
+    },
+    {
+      "question": "\"The Crown\" is about?",
+      "answers": [
+        "British Royals",
+        "French Revolution",
+        "Roman Empire",
+        "Russian Tsars",
+        "Spanish Civil War"
+      ],
+      "iq": 70
+    },
+    {
+      "question": "\"Tiger King\" name?",
+      "answers": [
+        "Joe Exotic",
+        "Carole Baskin",
+        "Doc Antle",
+        "Jeff Lowe",
+        "Travis Maldonado"
+      ],
+      "iq": 60
+    },
+    {
+      "question": "\"Wednesday\" is from which family?",
+      "answers": [
+        "Addams",
+        "Munsters",
+        "Simpsons",
+        "Griffins",
+        "Jetsons"
+      ],
+      "iq": 60
+    },
+    {
+      "question": "\"The Mandalorian\" protects?",
+      "answers": [
+        "Grogu",
+        "Yoda",
+        "Luke",
+        "Leia",
+        "Han"
+      ],
+      "iq": 65
+    },
+    {
+      "question": "\"Bridgerton\" era?",
+      "answers": [
+        "Regency",
+        "Victorian",
+        "Edwardian",
+        "Tudor",
+        "Stuart"
+      ],
+      "iq": 85
+    },
+    {
+      "question": "\"Black Mirror\" genre?",
+      "answers": [
+        "Sci-Fi Anthology",
+        "Comedy",
+        "Documentary",
+        "Reality",
+        "Soap Opera"
+      ],
+      "iq": 75
+    },
+    {
+      "question": "\"The Queen's Gambit\" sport?",
+      "answers": [
+        "Chess",
+        "Poker",
+        "Tennis",
+        "Golf",
+        "Checkers"
+      ],
+      "iq": 70
+    },
+    {
+      "question": "\"Ted Lasso\" coaches?",
+      "answers": [
+        "Soccer",
+        "Football",
+        "Basketball",
+        "Baseball",
+        "Hockey"
+      ],
+      "iq": 65
     }
   ]
 }
