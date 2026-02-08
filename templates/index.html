@@ -28,7 +28,21 @@
             <div id="qr-container">
                 <img id="qr-code" src="/static/qr.png" alt="Scan to Join">
                 <p>Scan to play!</p>
-                <button id="btn-restart" class="btn btn-danger btn-mini">DEBUG RESET</button>
+                <details id="debug-panel">
+                    <summary>Debug</summary>
+                    <div class="debug-panel-body">
+                        <div class="debug-states">
+                            <label><input type="radio" name="gamestate" value="lobby"> Lobby</label>
+                            <label><input type="radio" name="gamestate" value="question"> Question</label>
+                            <label><input type="radio" name="gamestate" value="anticipation"> Anticipation</label>
+                            <label><input type="radio" name="gamestate" value="answer"> Answer</label>
+                            <label><input type="radio" name="gamestate" value="leaderboard"> Leaderboard</label>
+                            <label><input type="radio" name="gamestate" value="epilogue"> Epilogue</label>
+                        </div>
+                        <button id="btn-restart" class="btn btn-danger btn-mini">DEBUG RESET</button>
+                        <button id="btn-confetti" class="btn btn-success btn-mini" type="button">Fire Confetti</button>
+                    </div>
+                </details>
             </div>
             <div id="spectator-top-row">
                 <div id="scoreboard">
@@ -708,6 +722,16 @@
       requestTimeSync();
     });
 
+    socket.on('gamestate', (data) => {
+      const state = data && data.state;
+      if (!state) return;
+      document.body.dataset.gamestate = state;
+      const radios = document.querySelectorAll('input[name="gamestate"]');
+      radios.forEach((radio) => {
+        radio.checked = radio.value === state;
+      });
+    });
+
     socket.on('time_pong', (data) => {
       const clientSent = data.client_ts;
       const serverTs = data.server_ts;
@@ -749,6 +773,18 @@
     document.getElementById('btn-restart').onclick = () => {
       socket.emit('reset_all');
     };
+    const btnConfetti = document.getElementById('btn-confetti');
+    if (btnConfetti) {
+      btnConfetti.onclick = () => fireConfetti();
+    }
+    const gamestateRadios = document.querySelectorAll('input[name="gamestate"]');
+    gamestateRadios.forEach((radio) => {
+      radio.addEventListener('change', () => {
+        if (!radio.checked) return;
+        if (!hostToken) return;
+        socket.emit('set_gamestate', { state: radio.value, host_token: hostToken });
+      });
+    });
     if (btnNewGame) {
       btnNewGame.onclick = () => socket.emit('reset_all');
     }

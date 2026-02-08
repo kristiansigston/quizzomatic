@@ -10,6 +10,14 @@ import time
 
 app = Flask(__name__)
 socketio = SocketIO(app)
+GAMESTATES = {
+    'lobby',
+    'question',
+    'anticipation',
+    'answer',
+    'leaderboard',
+    'epilogue',
+}
 
 
 def is_game_started():
@@ -54,6 +62,14 @@ def ensure_host_token():
     if not game_state.get('host_token'):
         game_state['host_token'] = secrets.token_urlsafe(6)
     return game_state['host_token']
+
+
+def set_gamestate(state, broadcast=True):
+    if state not in GAMESTATES:
+        return
+    game_state['gamestate'] = state
+    if broadcast:
+        socketio.emit('gamestate', {'state': state})
 
 
 def broadcast_host_session():
@@ -188,6 +204,7 @@ def add_scores_for_correct_answers():
             game_state['players'][username]['score'] += (100 + time_left)
 
     socketio.emit('round_results', results)
+    set_gamestate('answer')
     send_player_details()
 
 
@@ -202,6 +219,7 @@ def process_answers():
     game_state['current_answers'] = {}
 
     # Start intermission timer
+    set_gamestate('anticipation')
     duration = game_state.get('intermission_duration', 20)
     game_state['intermission_active'] = True
     game_state['intermission_timer_thread'] = threading.Timer(
@@ -243,6 +261,8 @@ def test_connect():
     print('Client connected')
     emit('host_session', {'token': ensure_host_token()})
     send_player_details()
+    if game_state.get('gamestate'):
+        emit('gamestate', {'state': game_state['gamestate']})
     if is_game_started():
         index = game_state['current_question_index']
         question_data = game_state.get('current_question')
@@ -312,6 +332,14 @@ def handle_join(data):
         })
 
 
+@socketio.on('set_gamestate')
+def handle_set_gamestate(data):
+    if data.get('host_token') != game_state.get('host_token'):
+        return
+    state = data.get('state')
+    set_gamestate(state, broadcast=True)
+
+
 @socketio.on('typing_username')
 def handle_typing(data):
     username = data.get('username', '').strip()
@@ -333,6 +361,7 @@ def reset_game():
     game_state['timer_thread'] = None
     game_state['end_time'] = None
     game_state['duration'] = None
+    set_gamestate('lobby')
     for player in game_state['players']:
         game_state['players'][player]['score'] = 0  # Reset scores
 
@@ -342,6 +371,7 @@ def reset_game():
 @socketio.on('start_game')
 def start_game():
     socketio.emit('game_started')
+    set_gamestate('question')
     next_question(0)
 
 
@@ -416,6 +446,7 @@ def next_question(question_index):
 
     if next_q is None:
         game_state['game_started'] = False
+        set_gamestate('epilogue')
         socketio.emit('game_over', game_state['players'])
         print('Game over!')
         return
@@ -448,6 +479,7 @@ def next_question(question_index):
     socketio.emit(
         'question', {
             **question_data, 'index': game_state['current_question_index']})
+    set_gamestate('question')
 
     duration = 25
     game_state['duration'] = duration
