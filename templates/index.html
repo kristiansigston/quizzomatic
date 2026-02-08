@@ -96,7 +96,6 @@
                 <div id="player-iq" class="iq-badge hidden"></div>
                 <h3 id="player-question-text">Waiting for game to start...</h3>
                 <div id="player-buttons"></div>
-                <div id="player-result-msg"></div>
             </div>
         </div>
         <!-- Floating Action Button to Join -->
@@ -515,7 +514,6 @@
           playerIq.textContent = `${data.iq ?? '—'} IQ`;
           playerIq.classList.toggle('hidden', data.iq === undefined || data.iq === null);
         }
-        document.getElementById('player-result-msg').textContent = '';
         const btnContainer = document.getElementById('player-buttons');
         btnContainer.innerHTML = '';
         
@@ -529,7 +527,6 @@
           btn.onclick = () => {
             if (playerAnswered) return;
             socket.emit('answer', { username: myUsername, answer_index: idx });
-            document.getElementById('player-result-msg').textContent = "Answer Submitted!";
             document.querySelectorAll('.answer-btn').forEach(b => {
               b.disabled = true;
               b.classList.add('dimmed');
@@ -615,13 +612,9 @@
       // Player: Show personal result
       if (isPlayer && data.player_answers[myUsername]) {
          const myResult = data.player_answers[myUsername];
-         const msg = myResult.is_correct ? "✅ Correct!" : `❌ Wrong! It was: ${fullCorrectText}`;
-         document.getElementById('player-result-msg').textContent = msg;
          if (myResult.is_correct) {
             fireConfetti();
          }
-      } else if (isPlayer) {
-         document.getElementById('player-result-msg').textContent = `Time's up! Answer: ${fullCorrectText}`;
       }
 
       lastRoundByPlayer = {};
