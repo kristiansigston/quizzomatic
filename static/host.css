@@ -183,7 +183,7 @@ h1 { color: var(--primary); }
   position: absolute;
   width: 68%;
   height: 68%;
-  transform: rotate(-90deg);
+  transform: rotate(90deg) scaleX(-1);
   z-index: 1;
 }
 
