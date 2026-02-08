@@ -539,6 +539,12 @@ body[data-gamestate="leaderboard"] #game-over-overlay {
   margin-right: auto;
 }
 
+@media (min-width: 900px) {
+  #join-section {
+    display: none;
+  }
+}
+
 .join-input-group {
   display: flex;
   gap: 16px;

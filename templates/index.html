@@ -128,6 +128,15 @@
         <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
         <script>
     const socket = io();
+
+    function formatChallengeLabel(iqValue) {
+      if (iqValue === undefined || iqValue === null) return null;
+      const iq = Number(iqValue);
+      if (!Number.isFinite(iq)) return null;
+      if (iq >= 150) return "Expert";
+      if (iq >= 130) return "Tough";
+      return null;
+    }
     
     // Confetti
     function fireConfetti() {
@@ -500,8 +509,9 @@
       document.getElementById('spectator-question').innerHTML = data.question;
       const spectatorIq = document.getElementById('spectator-iq');
       if (spectatorIq) {
-        spectatorIq.textContent = `${data.iq ?? '—'} IQ`;
-        spectatorIq.classList.toggle('hidden', data.iq === undefined || data.iq === null);
+        const label = formatChallengeLabel(data.iq);
+        spectatorIq.textContent = label || "";
+        spectatorIq.classList.toggle('hidden', !label);
         spectatorIq.classList.remove('iq-pop');
         void spectatorIq.offsetWidth;
         spectatorIq.classList.add('iq-pop');
@@ -529,8 +539,9 @@
         document.getElementById('player-question-text').innerHTML = data.question;
         const playerIq = document.getElementById('player-iq');
         if (playerIq) {
-          playerIq.textContent = `${data.iq ?? '—'} IQ`;
-          playerIq.classList.toggle('hidden', data.iq === undefined || data.iq === null);
+          const label = formatChallengeLabel(data.iq);
+          playerIq.textContent = label || "";
+          playerIq.classList.toggle('hidden', !label);
           playerIq.classList.remove('iq-pop');
           void playerIq.offsetWidth;
           playerIq.classList.add('iq-pop');
@@ -616,19 +627,13 @@
       
       // Spectator: Show detailed results
       const specList = document.getElementById('spectator-answers');
-      specList.innerHTML = '';
-      const resultLi = document.createElement('li');
-      const resultDiv = document.createElement('button');
-      resultDiv.type = 'button';
-      resultDiv.className = 'answer-btn non-interactive';
-      // Use the green tint (2nd child style) or just default, 
-      // but maybe mark it specially? 
-      // For now, let's just make it look like a button but perhaps highlight it.
-      resultDiv.style.border = '2px solid #28a745'; 
-      resultDiv.style.cursor = 'default';
-      resultDiv.innerHTML = `Correct Answer: <strong>${fullCorrectText}</strong>`;
-      resultLi.appendChild(resultDiv);
-      specList.appendChild(resultLi);
+      const specButtons = specList.querySelectorAll('.answer-btn');
+      if (specButtons.length === data.answers.length) {
+        specButtons.forEach((btn, idx) => {
+          btn.classList.toggle('correct', idx === data.correct_index);
+          btn.classList.toggle('incorrect', idx !== data.correct_index);
+        });
+      }
       
       // Player: Show personal result
       if (isPlayer && data.player_answers[myUsername]) {
@@ -647,6 +652,13 @@
               correctBtn.classList.add('flash-correct');
               setTimeout(() => correctBtn.classList.remove('flash-correct'), 1800);
             }
+         }
+         const playerButtons = document.querySelectorAll('#player-buttons .answer-btn');
+         if (playerButtons.length === data.answers.length) {
+           playerButtons.forEach((btn, idx) => {
+             btn.classList.toggle('correct', idx === data.correct_index);
+             btn.classList.toggle('incorrect', idx !== data.correct_index);
+           });
          }
       }
 
