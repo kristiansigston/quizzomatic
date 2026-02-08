@@ -626,6 +626,12 @@
               area.classList.add('sad');
               setTimeout(() => area.classList.remove('sad'), 1600);
             }
+            const buttons = document.querySelectorAll('#player-buttons .answer-btn');
+            const correctBtn = buttons[data.correct_index];
+            if (correctBtn) {
+              correctBtn.classList.add('flash-correct');
+              setTimeout(() => correctBtn.classList.remove('flash-correct'), 1800);
+            }
          }
       }
 

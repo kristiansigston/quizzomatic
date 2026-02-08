@@ -30,6 +30,11 @@ Enable GPT-5.2-Codex for all clients
 Start game needs a loading indicator and it needs idemptotnet
 
 Restart Game is for debugging
+tell pesople when others have joined
+
+main screen should say whos locked in
+
+sopunds for anwers
 
 \to test isolation run tow apps and confirm no cross talk
 
