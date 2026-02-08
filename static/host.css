@@ -565,3 +565,16 @@ h1 { color: var(--primary); }
   font-weight: bold;
   margin-top: 15px;
 }
+
+.iq-badge {
+  display: inline-block;
+  margin: 0 auto 8px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(20, 12, 40, 0.78);
+  color: #ffd36a;
+  font-family: "Bungee", system-ui, sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+}

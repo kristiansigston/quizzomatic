@@ -55,6 +55,7 @@
                 </div>
             </div>
             <div id="game-board">
+                <div id="spectator-iq" class="iq-badge hidden"></div>
                 <h2 id="spectator-question">Waiting for players to join...</h2>
                 <ul id="spectator-answers" class="spectator-answers">
                 </ul>
@@ -92,6 +93,7 @@
                 </div>
             </div>
             <div id="player-question-area">
+                <div id="player-iq" class="iq-badge hidden"></div>
                 <h3 id="player-question-text">Waiting for game to start...</h3>
                 <div id="player-buttons"></div>
                 <div id="player-result-msg"></div>
@@ -131,6 +133,7 @@
     let playerAnswered = false;
     let hostToken = null;
     let lastHostPingAt = 0;
+    let serverTimeOffsetMs = 0;
     let timerTotalSeconds = 30;
     let specRingLength = 0;
     let playerRingLength = 0;
@@ -157,6 +160,13 @@
     // Initial Load
     showView('spectator');
     if (myUsername) inputUsername.value = myUsername;
+
+    const nowWithOffsetMs = () => Date.now() + serverTimeOffsetMs;
+    const nowWithOffsetSeconds = () => nowWithOffsetMs() / 1000;
+
+    const requestTimeSync = () => {
+      socket.emit('time_ping', { client_ts: Date.now() });
+    };
 
     // Join Flow
     // Removed separate join view logic
@@ -217,6 +227,7 @@
       lastHostPingAt = Date.now();
       if (hostToken) setJoinStatus('', false);
       tryPendingJoin();
+      requestTimeSync();
     });
 
     socket.on('host_ping', (data) => {
@@ -225,6 +236,7 @@
         lastHostPingAt = Date.now();
         if (hostToken) setJoinStatus('', false);
         tryPendingJoin();
+        requestTimeSync();
       }
     });
 
@@ -319,7 +331,7 @@
       document.getElementById('player-timer').classList.remove('hidden');
 
       const updateTimer = () => {
-        const now = Date.now() / 1000;
+        const now = nowWithOffsetSeconds();
         const remaining = Math.max(0, Math.ceil(endTime - now));
         
         const specQuestion = document.getElementById('spectator-question').textContent;
@@ -373,6 +385,11 @@
       
       // Spectator View
       document.getElementById('spectator-question').textContent = data.question;
+      const spectatorIq = document.getElementById('spectator-iq');
+      if (spectatorIq) {
+        spectatorIq.textContent = `IQ ${data.iq ?? '—'}`;
+        spectatorIq.classList.toggle('hidden', data.iq === undefined || data.iq === null);
+      }
       const specList = document.getElementById('spectator-answers');
       specList.innerHTML = '';
       data.answers.forEach((ans, idx) => {
@@ -388,6 +405,11 @@
       // Player View
       if (isPlayer) {
         document.getElementById('player-question-text').textContent = data.question;
+        const playerIq = document.getElementById('player-iq');
+        if (playerIq) {
+          playerIq.textContent = `IQ ${data.iq ?? '—'}`;
+          playerIq.classList.toggle('hidden', data.iq === undefined || data.iq === null);
+        }
         document.getElementById('player-result-msg').textContent = '';
         const btnContainer = document.getElementById('player-buttons');
         btnContainer.innerHTML = '';
@@ -435,7 +457,7 @@
       
       if (data.next_question_time) {
           const updateCountdown = () => {
-              const secondsLeft = Math.ceil(data.next_question_time - Date.now() / 1000);
+              const secondsLeft = Math.ceil(data.next_question_time - nowWithOffsetSeconds());
               if (secondsLeft > 0) {
                   btnNext.textContent = `Next Question in ${secondsLeft}`;
                   if (playerCountdown) {
@@ -529,9 +551,13 @@
     socket.on('clear_question', () => {
       if (timerInterval) clearInterval(timerInterval);
       document.getElementById('spectator-question').textContent = "Waiting for game to start...";
+      const spectatorIq = document.getElementById('spectator-iq');
+      if (spectatorIq) spectatorIq.classList.add('hidden');
       document.getElementById('spectator-answers').innerHTML = "";
       document.getElementById('spectator-time').textContent = "";
       document.getElementById('player-question-text').textContent = "Waiting for game to start...";
+      const playerIq = document.getElementById('player-iq');
+      if (playerIq) playerIq.classList.add('hidden');
       document.getElementById('player-buttons').innerHTML = "";
       document.getElementById('player-time').textContent = "";
       setRingProgress('spectator-ring', specRingLength, 0);
@@ -543,6 +569,20 @@
       lastRoundByPlayer = {};
       document.getElementById('scoreboard').classList.remove('hidden');
       if (gameOverOverlay) gameOverOverlay.classList.add('hidden');
+    });
+
+    socket.on('connect', () => {
+      requestTimeSync();
+    });
+
+    socket.on('time_pong', (data) => {
+      const clientSent = data.client_ts;
+      const serverTs = data.server_ts;
+      if (typeof clientSent !== 'number' || typeof serverTs !== 'number') return;
+      const now = Date.now();
+      const rtt = now - clientSent;
+      const estimatedServerAtReceive = serverTs * 1000 + (rtt / 2);
+      serverTimeOffsetMs = estimatedServerAtReceive - now;
     });
 
     socket.on('error', (err) => setJoinStatus(err.message || 'Connection error', true));

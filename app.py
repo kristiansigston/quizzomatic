@@ -224,6 +224,12 @@ def test_connect():
     send_player_details()
 
 
+@socketio.on('time_ping')
+def time_ping(data):
+    client_ts = data.get('client_ts')
+    emit('time_pong', {'client_ts': client_ts, 'server_ts': time.time()})
+
+
 @socketio.on('disconnect')
 def test_disconnect():
     print('Client disconnected')
