@@ -470,7 +470,7 @@
       }, 200);
       
       // Spectator View
-      document.getElementById('spectator-question').textContent = data.question;
+      document.getElementById('spectator-question').innerHTML = data.question;
       const spectatorIq = document.getElementById('spectator-iq');
       if (spectatorIq) {
         spectatorIq.textContent = `IQ ${data.iq ?? '—'}`;
@@ -484,7 +484,7 @@
         div.className = 'answer-btn non-interactive';
         div.style.cursor = 'default';
         const letter = String.fromCharCode(65 + idx);
-        div.textContent = `${letter}: ${ans}`;
+        div.innerHTML = `${letter}: ${ans}`;
         li.appendChild(div);
         specList.appendChild(li);
       });
@@ -494,7 +494,7 @@
 
       // Player View
       if (isPlayer) {
-        document.getElementById('player-question-text').textContent = data.question;
+        document.getElementById('player-question-text').innerHTML = data.question;
         const playerIq = document.getElementById('player-iq');
         if (playerIq) {
           playerIq.textContent = `IQ ${data.iq ?? '—'}`;
@@ -509,7 +509,7 @@
           btn.className = 'answer-btn';
           const letter = String.fromCharCode(65 + idx);
           const span = document.createElement('span');
-          span.textContent = `${letter}: ${ans}`;
+          span.innerHTML = `${letter}: ${ans}`;
           btn.appendChild(span);
           btn.onclick = () => {
             socket.emit('answer', { username: myUsername, answer_index: idx });

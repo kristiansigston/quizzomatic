@@ -58,9 +58,9 @@
     {
       "question": "Einstein's famous equation?",
       "answers": [
-        "E=mc^2",
+        "E=mc<sup>2</sup>",
         "F=ma",
-        "a^2 + b^2 = c^2",
+        "a<sup>2</sup> + b<sup>2</sup> = c<sup>2</sup>",
         "PV=nRT",
         "x=vt"
       ],
@@ -730,11 +730,11 @@
     {
       "question": "Platform to catch Hogwarts Express?",
       "answers": [
-        "9 3/4",
-        "9 1/2",
+        "9 <sup>3</sup>/<sub>4</sub>",
+        "9 <sup>1</sup>/<sub>2</sub>",
         "10",
         "7",
-        "8 1/4"
+        "8 <sup>1</sup>/<sub>4</sub>"
       ],
       "iq": 72
     },
@@ -849,23 +849,23 @@
       "iq": 116
     },
     {
-      "question": "Derivative of x^3?",
+      "question": "Derivative of x<sup>3</sup>?",
       "answers": [
-        "3x^2",
-        "x^2",
+        "3x<sup>2</sup>",
+        "x<sup>2</sup>",
         "2x",
         "3x",
-        "x^3"
+        "x<sup>3</sup>"
       ],
       "iq": 134
     },
     {
       "question": "Integral of 2x dx?",
       "answers": [
-        "x^2 + C",
+        "x<sup>2</sup> + C",
         "2x + C",
         "x + C",
-        "2x^2 + C",
+        "2x<sup>2</sup> + C",
         "ln x + C"
       ],
       "iq": 134
@@ -992,7 +992,7 @@
       "iq": 121
     },
     {
-      "question": "What is 2^10?",
+      "question": "What is 2<sup>10</sup>?",
       "answers": [
         "1024",
         "512",
@@ -1038,11 +1038,11 @@
     {
       "question": "What is 0.125 as a fraction?",
       "answers": [
-        "1/8",
-        "1/4",
-        "1/16",
-        "3/8",
-        "1/6"
+        "<sup>1</sup>/<sub>8</sub>",
+        "<sup>1</sup>/<sub>4</sub>",
+        "<sup>1</sup>/<sub>16</sub>",
+        "<sup>3</sup>/<sub>8</sub>",
+        "<sup>1</sup>/<sub>6</sub>"
       ],
       "iq": 93
     },
@@ -1050,15 +1050,15 @@
       "question": "Which is an irrational number?",
       "answers": [
         "\u221a2",
-        "3/4",
+        "<sup>3</sup>/<sub>4</sub>",
         "1.5",
         "2",
-        "5/3"
+        "<sup>5</sup>/<sub>3</sub>"
       ],
       "iq": 113
     },
     {
-      "question": "Solve: 2x^2=8",
+      "question": "Solve: 2x<sup>2</sup>=8",
       "answers": [
         "\u00b12",
         "\u00b14",
@@ -1075,18 +1075,18 @@
         "1",
         "0",
         "-3",
-        "1/3"
+        "<sup>1</sup>/<sub>3</sub>"
       ],
       "iq": 106
     },
     {
       "question": "Convert 0.2 to fraction",
       "answers": [
-        "1/5",
-        "1/4",
-        "1/3",
-        "2/5",
-        "1/2"
+        "<sup>1</sup>/<sub>5</sub>",
+        "<sup>1</sup>/<sub>4</sub>",
+        "<sup>1</sup>/<sub>3</sub>",
+        "<sup>2</sup>/<sub>5</sub>",
+        "<sup>1</sup>/<sub>2</sub>"
       ],
       "iq": 99
     },
@@ -1124,7 +1124,7 @@
       "iq": 144
     },
     {
-      "question": "Solve: x^2-9=0",
+      "question": "Solve: x<sup>2</sup>-9=0",
       "answers": [
         "\u00b13",
         "3",
@@ -1168,7 +1168,7 @@
       "iq": 121
     },
     {
-      "question": "What is 1/3 as a decimal (2 dp)?",
+      "question": "What is <sup>1</sup>/<sub>3</sub> as a decimal (2 dp)?",
       "answers": [
         "0.33",
         "0.30",
@@ -1212,13 +1212,13 @@
       "iq": 145
     },
     {
-      "question": "Simplify: (x^2)(x^3)",
+      "question": "Simplify: (x<sup>2</sup>)(x<sup>3</sup>)",
       "answers": [
-        "x^5",
-        "x^6",
-        "x^9",
-        "x^3",
-        "x^2"
+        "x<sup>5</sup>",
+        "x<sup>6</sup>",
+        "x<sup>9</sup>",
+        "x<sup>3</sup>",
+        "x<sup>2</sup>"
       ],
       "iq": 100
     },
@@ -1256,7 +1256,7 @@
       "iq": 144
     },
     {
-      "question": "If x=2, evaluate 3x^2+2x+1",
+      "question": "If x=2, evaluate 3x<sup>2</sup>+2x+1",
       "answers": [
         "17",
         "13",
@@ -1291,11 +1291,11 @@
     {
       "question": "What is the probability of heads on fair coin?",
       "answers": [
-        "1/2",
-        "1/3",
-        "1/4",
-        "2/3",
-        "3/4"
+        "<sup>1</sup>/<sub>2</sub>",
+        "<sup>1</sup>/<sub>3</sub>",
+        "<sup>1</sup>/<sub>4</sub>",
+        "<sup>2</sup>/<sub>3</sub>",
+        "<sup>3</sup>/<sub>4</sub>"
       ],
       "iq": 67
     },
