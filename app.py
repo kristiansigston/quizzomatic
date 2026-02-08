@@ -452,15 +452,21 @@ def next_question(question_index):
 
 
 if __name__ == '__main__':
-    generate_qr.generate_qr()
+    # TODO we should not change prod code for tests
+    is_pytest = os.getenv('PYTEST_CURRENT_TEST') is not None
+    if not is_pytest:
+        generate_qr.generate_qr()
     reset_all()
     port = int(os.getenv('PORT', '9145'))
     debug = os.getenv('DEBUG', '1') == '1'
     use_reloader = os.getenv('USE_RELOADER', '1') == '1'
+    host = os.getenv('HOST')
+    if not host:
+        host = '127.0.0.1' if is_pytest else '0.0.0.0'
     socketio.run(
         app,
         debug=debug,
-        host='0.0.0.0',
+        host=host,
         port=port,
         allow_unsafe_werkzeug=True,
         use_reloader=use_reloader)

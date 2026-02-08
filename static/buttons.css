@@ -214,11 +214,38 @@
   transform: translateY(-2px);
 }
 
+.answer-btn:disabled {
+  pointer-events: none;
+  filter: grayscale(0.15) brightness(0.9);
+  cursor: default;
+}
+
+.answer-btn.dimmed {
+  filter: grayscale(0.9) brightness(0.6);
+  opacity: 0.75;
+}
+
+.answer-btn.selected {
+  filter: none;
+  opacity: 1;
+}
+
+.answer-btn.selected,
+.answer-btn.selected:hover,
+.answer-btn.selected:active,
+.answer-btn:disabled,
+.answer-btn:disabled:hover,
+.answer-btn:disabled:active {
+  background:
+    radial-gradient(120% 140% at 50% 10%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 55%),
+    linear-gradient(to bottom, var(--g0) 0%, var(--g1) 18%, var(--g2) 55%, var(--g3) 100%);
+}
+
 .answer-btn:active {
   transform: translateY(10px);
   background:
     radial-gradient(120% 140% at 50% 10%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 58%),
-    linear-gradient(to bottom, #5bb2ff 0%, #217bff 22%, #123fdb 60%, #071255 100%);
+    linear-gradient(to bottom, var(--g0) 0%, var(--g1) 18%, var(--g2) 55%, var(--g3) 100%);
   box-shadow:
     0 4px 0 rgba(0, 0, 0, 0.28),
     0 10px 16px rgba(0, 0, 0, 0.3),
