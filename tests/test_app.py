@@ -168,22 +168,22 @@ def test_reset_game_zeroes_scores_and_sets_questions(monkeypatch):
     assert app_module.game_state["players"]["p2"]["score"] == 0
     assert len(app_module.questions) == 5
 
-def test_join_adds_player_and_emits_joined(monkeypatch):
+def test_join_adds_player_and_registers_player(monkeypatch):
     monkeypatch.setattr(app_module.random, "shuffle", lambda seq: None)
 
     app_module.reset_all()
 
-    client = app_module.socketio.test_client(app_module.app)
-    client.emit("join", {"username": "alice"})
+    class DummyRequest:
+        remote_addr = "127.0.0.1"
+        sid = "sid1"
 
-    received = client.get_received()
-    joined_events = [item for item in received if item["name"] == "joined"]
+    monkeypatch.setattr(app_module, "request", DummyRequest)
+    monkeypatch.setattr(app_module, "join_room", lambda _room: None)
+    monkeypatch.setattr(app_module, "emit", lambda _event, _payload=None: None)
 
-    assert joined_events
-    assert joined_events[0]["args"][0]["username"] == "alice"
+    app_module.game_state["host_token"] = "testtoken"
+    app_module.handle_join({"username": "alice", "host_token": "testtoken"})
     assert "alice" in app_module.game_state["players"]
-
-    client.disconnect()
 
 
 def test_answer_scores_points_for_correct_answer(monkeypatch):

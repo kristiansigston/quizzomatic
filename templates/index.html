@@ -22,6 +22,7 @@
                 </div>
                 <div id="join-status" class="hidden"></div>
             </div>
+            <button id="qr-toggle" class="btn btn-mini hidden" type="button">Show QR</button>
             <div id="qr-container">
                 <img id="qr-code" src="/static/qr.png" alt="Scan to Join">
                 <p>Scan to play!</p>
@@ -38,7 +39,7 @@
                     </ul>
                 </div>
             </div>
-            <div id="spectator-timer" class="timer-clock hidden">
+            <div id="spectator-timer" class="timer-clock">
                 <svg class="timer-svg" viewBox="0 0 120 120" aria-hidden="true">
                     <defs>
                     <linearGradient id="timer-grad-spec" x1="0" y1="0" x2="1" y2="1">
@@ -53,6 +54,7 @@
                 <div class="timer-center" id="spectator-time">
                     <span class="timer-int">30</span><span class="timer-dec">.0</span>
                 </div>
+                <div class="timer-label" id="spectator-timer-label">Time Remaining</div>
             </div>
             <div id="game-board">
                 <div id="spectator-iq" class="iq-badge hidden"></div>
@@ -75,8 +77,9 @@
             <div id="my-player-name-container">
                 <h2 id="my-player-name">Player</h2>
                 <div id="my-player-score" class="player-score-floating">Score: 0</div>
+                <div id="player-result-msg"></div>
             </div>
-            <div id="player-timer" class="timer-clock hidden">
+            <div id="player-timer" class="timer-clock">
                 <svg class="timer-svg" viewBox="0 0 120 120" aria-hidden="true">
                     <defs>
                     <linearGradient id="timer-grad-player" x1="0" y1="0" x2="1" y2="1">
@@ -91,13 +94,12 @@
                 <div class="timer-center" id="player-time">
                     <span class="timer-int">30</span><span class="timer-dec">.0</span>
                 </div>
+                <div class="timer-label" id="player-timer-label">Time Remaining</div>
             </div>
             <div id="player-question-area">
                 <div id="player-iq" class="iq-badge hidden"></div>
                 <h3 id="player-question-text">Waiting for game to start...</h3>
                 <div id="player-buttons"></div>
-                <div id="player-result-msg"></div>
-                <button id="player-next-countdown" class="btn hidden" disabled>Next Question in 3</button>
             </div>
         </div>
         <!-- Floating Action Button to Join -->
@@ -134,9 +136,15 @@
     let hostToken = null;
     let lastHostPingAt = 0;
     let serverTimeOffsetMs = 0;
+    let hasTimeSync = false;
+    let lastTimeSyncAt = 0;
     let timerTotalSeconds = 30;
     let specRingLength = 0;
     let playerRingLength = 0;
+    let timerEndServerSeconds = null;
+    let timerStartLocalMs = 0;
+    let lastTimerEventAt = 0;
+    let timerMode = 'question';
 
     // Elements
     const views = {
@@ -260,9 +268,23 @@
     socket.on('player_list', (data) => {
       const list = document.getElementById('player-list');
       list.innerHTML = '';
+
+      const entries = Object.entries(data.players);
+      const rankMap = {};
+      let lastScore = null;
+      let lastRank = 0;
+      entries.forEach(([name, stats], index) => {
+        if (lastScore === stats.score) {
+          rankMap[name] = lastRank;
+        } else {
+          lastRank = index + 1;
+          rankMap[name] = lastRank;
+          lastScore = stats.score;
+        }
+      });
       
       // Update Spectator Board
-      for (const [name, stats] of Object.entries(data.players)) {
+      for (const [name, stats] of entries) {
         const li = document.createElement('li');
         let nameHtml = `<span class="player-name">${name}</span>`;
         if (data.winning_players && data.winning_players.includes(name) && stats.score > 0) nameHtml += ' 👑';
@@ -277,6 +299,8 @@
       if (isPlayer) {
         const myStats = data.players[myUsername];
         const myScore = myStats ? myStats.score : 0;
+        const myRank = rankMap[myUsername];
+        const rankLabel = Number.isFinite(myRank) ? ` · #${myRank}` : '';
         const hasScore = myScore > 0;
         const isWinning = hasScore && data.winning_players && data.winning_players.includes(myUsername);
 
@@ -289,7 +313,7 @@
           const step = (now) => {
             const progress = Math.min(1, (now - start) / durationMs);
             const value = Math.round(from + (to - from) * progress);
-            scoreEl.textContent = `Score: ${value}`;
+            scoreEl.textContent = `Score: ${value}${rankLabel}`;
             if (progress < 1) requestAnimationFrame(step);
           };
           requestAnimationFrame(step);
@@ -301,7 +325,7 @@
           animateScore(startScore, endScore, duration);
           myScoreDisplayed = endScore;
         } else {
-          scoreEl.textContent = `Score: ${endScore}`;
+          scoreEl.textContent = `Score: ${endScore}${rankLabel}`;
         }
 
         document.getElementById('winning-banner').classList.toggle('hidden', !isWinning);
@@ -323,29 +347,42 @@
     });
 
 
-    // 2. Game Flow: Timer
-    socket.on('timer', (endTime) => {
+    const startCountdown = (endTimeSeconds, durationSeconds) => {
       if (timerInterval) clearInterval(timerInterval);
-      timerTotalSeconds = Math.max(1, Math.round(endTime - Date.now() / 1000));
+      timerEndServerSeconds = endTimeSeconds;
+      timerStartLocalMs = Date.now();
+      if (!hasTimeSync) {
+        requestTimeSync();
+      }
+      if (Number.isFinite(durationSeconds)) {
+        timerTotalSeconds = Math.round(durationSeconds);
+      } else if (Number.isFinite(endTimeSeconds)) {
+        timerTotalSeconds = Math.round(endTimeSeconds - nowWithOffsetSeconds());
+      } else {
+        timerTotalSeconds = 30;
+      }
+      if (!Number.isFinite(timerTotalSeconds) || timerTotalSeconds <= 1 || timerTotalSeconds > 120) {
+        timerTotalSeconds = 30;
+      }
+      setTimerLabel("Time Remaining");
+      setTimerMode("question");
       document.getElementById('spectator-timer').classList.remove('hidden');
       document.getElementById('player-timer').classList.remove('hidden');
+      const nextTimer = document.getElementById('next-question-timer');
+      if (nextTimer) nextTimer.classList.add('hidden');
 
       const updateTimer = () => {
         const now = nowWithOffsetSeconds();
-        const remaining = Math.max(0, Math.ceil(endTime - now));
+        const elapsedLocalSeconds = (Date.now() - timerStartLocalMs) / 1000;
+        const remainingLocalRaw = timerTotalSeconds - elapsedLocalSeconds;
+        const remainingServerRaw = Number.isFinite(timerEndServerSeconds)
+          ? (timerEndServerSeconds - now)
+          : NaN;
+        const remainingLocal = Math.max(0, remainingLocalRaw);
+        const remainingServer = Math.max(0, remainingServerRaw);
+        const useServer = hasTimeSync && Number.isFinite(remainingServer) && remainingServer <= 120;
+        const remaining = useServer ? remainingServer : remainingLocal;
         
-        const specQuestion = document.getElementById('spectator-question').textContent;
-        if (specQuestion.includes("Waiting for")) {
-          document.getElementById('spectator-time').textContent = "";
-          document.getElementById('player-time').textContent = "";
-          setRingProgress('spectator-ring', specRingLength, 0);
-          setRingProgress('player-ring', playerRingLength, 0);
-          document.getElementById('spectator-timer').classList.add('hidden');
-          document.getElementById('player-timer').classList.add('hidden');
-          clearInterval(timerInterval);
-          return;
-        }
-
         if (remaining <= 0) {
           clearInterval(timerInterval);
           if (isPlayer) {
@@ -353,26 +390,28 @@
           }
         }
 
-        const ratio = Math.max(0, Math.min(1, (endTime - now) / timerTotalSeconds));
+        const ratio = Math.max(0, Math.min(1, remaining / timerTotalSeconds));
         setRingProgress('spectator-ring', specRingLength, ratio);
         if (!playerAnswered) {
           setRingProgress('player-ring', playerRingLength, ratio);
         }
-        const urgent = remaining > 0 && remaining <= 5;
+        const urgent = timerMode === 'question' && remaining > 0 && remaining <= 5;
         document.getElementById('spectator-timer').classList.toggle('urgent', urgent);
         document.getElementById('player-timer').classList.toggle('urgent', urgent);
 
-        const decimalRemaining = Math.max(0, endTime - now);
-        const intPart = Math.max(0, Math.floor(decimalRemaining));
-        const decPart = Math.floor((decimalRemaining - intPart) * 10);
-        document.getElementById('spectator-time').innerHTML = `<span class="timer-int">${intPart}</span><span class="timer-dec">.${decPart}</span>`;
-        if (!playerAnswered) {
-          document.getElementById('player-time').innerHTML = `<span class="timer-int">${intPart}</span><span class="timer-dec">.${decPart}</span>`;
-        }
+        const decimalRemaining = Math.max(0, remaining);
+        setTimerDisplay(decimalRemaining);
       };
 
-      updateTimer(); // Initial call
+      updateTimer();
       timerInterval = setInterval(updateTimer, 100);
+    };
+
+    // 2. Game Flow: Timer
+    socket.on('timer', (endTime) => {
+      lastTimerEventAt = Date.now();
+      const durationSeconds = Number.isFinite(endTime) ? (endTime - nowWithOffsetSeconds()) : 30;
+      startCountdown(endTime, durationSeconds);
     });
 
 
@@ -382,6 +421,15 @@
       playerAnswered = false;
       current_question_index = data.index;
       document.getElementById('scoreboard').classList.add('hidden');
+
+      const questionReceivedAt = Date.now();
+      setTimeout(() => {
+        if (!lastTimerEventAt || lastTimerEventAt < questionReceivedAt) {
+          startCountdown(null, 30);
+          setTimerLabel("Time Remaining");
+          setTimerMode("question");
+        }
+      }, 200);
       
       // Spectator View
       document.getElementById('spectator-question').textContent = data.question;
@@ -435,14 +483,11 @@
     // 4. Game Flow: Results
     socket.on('round_results', (data) => {
       document.getElementById('scoreboard').classList.remove('hidden');
-      // Clear timer display when results are shown
       if (timerInterval) clearInterval(timerInterval);
-      document.getElementById('spectator-time').textContent = "";
-      document.getElementById('player-time').textContent = "";
       setRingProgress('spectator-ring', specRingLength, 0);
       setRingProgress('player-ring', playerRingLength, 0);
-      document.getElementById('spectator-timer').classList.add('hidden');
-      document.getElementById('player-timer').classList.add('hidden');
+      document.getElementById('spectator-timer').classList.remove('hidden');
+      document.getElementById('player-timer').classList.remove('hidden');
 
       const correctText = data.answers[data.correct_index];
       const correctLetter = String.fromCharCode(65 + data.correct_index);
@@ -452,32 +497,20 @@
       const btnNext = document.getElementById('btn-next');
       btnNext.classList.remove('hidden');
       btnNext.onclick = () => socket.emit('next_question', current_question_index + 1);
-      const playerCountdown = document.getElementById('player-next-countdown');
-      if (playerCountdown) playerCountdown.classList.remove('hidden');
       
       if (data.next_question_time) {
-          const updateCountdown = () => {
-              const secondsLeft = Math.ceil(data.next_question_time - nowWithOffsetSeconds());
-              if (secondsLeft > 0) {
-                  btnNext.textContent = `Next Question in ${secondsLeft}`;
-                  if (playerCountdown) {
-                    playerCountdown.textContent = `Next Question in ${secondsLeft}`;
-                  }
-              } else {
-                  btnNext.textContent = "Loading Next Question...";
-                  if (playerCountdown) {
-                    playerCountdown.textContent = "Loading Next Question...";
-                  }
-                  if (intermissionInterval) clearInterval(intermissionInterval);
-              }
-          };
-          updateCountdown();
-          intermissionInterval = setInterval(updateCountdown, 1000);
+          const durationSeconds = data.next_question_time - nowWithOffsetSeconds();
+          startCountdown(data.next_question_time, durationSeconds);
+          setTimerLabel("Next Question");
+          setTimerMode("intermission");
+          btnNext.textContent = "Next Question";
       } else {
           btnNext.textContent = "Next Question";
-          if (playerCountdown) {
-            playerCountdown.textContent = "Next Question";
-          }
+          setTimerDisplay(0);
+          setRingProgress('spectator-ring', specRingLength, 0);
+          setRingProgress('player-ring', playerRingLength, 0);
+          setTimerLabel("Time Remaining");
+          setTimerMode("question");
       }
       
       // Spectator: Show detailed results
@@ -507,8 +540,6 @@
       document.getElementById('btn-start').classList.add('hidden');
       document.getElementById('btn-next').classList.add('hidden');
       lastRoundByPlayer = {};
-      const playerCountdown = document.getElementById('player-next-countdown');
-      if (playerCountdown) playerCountdown.classList.add('hidden');
       document.getElementById('scoreboard').classList.add('hidden');
       if (gameOverOverlay) gameOverOverlay.classList.add('hidden');
     });
@@ -521,14 +552,13 @@
        if (timerInterval) clearInterval(timerInterval);
        document.getElementById('btn-next').classList.add('hidden');
        document.getElementById('btn-start').classList.remove('hidden');
-       document.getElementById('spectator-time').textContent = "";
-       document.getElementById('player-time').textContent = "";
+       setTimerDisplay(0);
        setRingProgress('spectator-ring', specRingLength, 0);
        setRingProgress('player-ring', playerRingLength, 0);
-       document.getElementById('spectator-timer').classList.add('hidden');
-       document.getElementById('player-timer').classList.add('hidden');
-       const playerCountdown = document.getElementById('player-next-countdown');
-       if (playerCountdown) playerCountdown.classList.add('hidden');
+       document.getElementById('spectator-timer').classList.remove('hidden');
+       document.getElementById('player-timer').classList.remove('hidden');
+       setTimerLabel("Time Remaining");
+       setTimerMode("question");
        document.getElementById('scoreboard').classList.remove('hidden');
 
        if (gameOverOverlay && finalLeaderboard) {
@@ -554,18 +584,18 @@
       const spectatorIq = document.getElementById('spectator-iq');
       if (spectatorIq) spectatorIq.classList.add('hidden');
       document.getElementById('spectator-answers').innerHTML = "";
-      document.getElementById('spectator-time').textContent = "";
+      setTimerDisplay(0);
       document.getElementById('player-question-text').textContent = "Waiting for game to start...";
       const playerIq = document.getElementById('player-iq');
       if (playerIq) playerIq.classList.add('hidden');
       document.getElementById('player-buttons').innerHTML = "";
-      document.getElementById('player-time').textContent = "";
+      setTimerDisplay(0);
       setRingProgress('spectator-ring', specRingLength, 0);
       setRingProgress('player-ring', playerRingLength, 0);
-      document.getElementById('spectator-timer').classList.add('hidden');
-      document.getElementById('player-timer').classList.add('hidden');
-      const playerCountdown = document.getElementById('player-next-countdown');
-      if (playerCountdown) playerCountdown.classList.add('hidden');
+      document.getElementById('spectator-timer').classList.remove('hidden');
+      document.getElementById('player-timer').classList.remove('hidden');
+      setTimerLabel("Time Remaining");
+      setTimerMode("question");
       lastRoundByPlayer = {};
       document.getElementById('scoreboard').classList.remove('hidden');
       if (gameOverOverlay) gameOverOverlay.classList.add('hidden');
@@ -583,15 +613,29 @@
       const rtt = now - clientSent;
       const estimatedServerAtReceive = serverTs * 1000 + (rtt / 2);
       serverTimeOffsetMs = estimatedServerAtReceive - now;
+      hasTimeSync = true;
+      lastTimeSyncAt = now;
+      if (!Number.isFinite(timerTotalSeconds) || timerTotalSeconds <= 1 || timerTotalSeconds > 120) {
+        if (Number.isFinite(timerEndServerSeconds)) {
+          timerTotalSeconds = Math.max(1, Math.round(timerEndServerSeconds - nowWithOffsetSeconds()));
+        }
+      }
     });
 
     socket.on('error', (err) => setJoinStatus(err.message || 'Connection error', true));
 
     // --- QR Toggle ---
     const qrContainer = document.getElementById('qr-container');
+    const qrToggle = document.getElementById('qr-toggle');
     if (qrContainer) {
       qrContainer.addEventListener('click', () => {
         qrContainer.classList.toggle('qr-large');
+      });
+    }
+    if (qrToggle && qrContainer) {
+      qrToggle.addEventListener('click', () => {
+        const isShown = qrContainer.classList.toggle('show-on-small');
+        qrToggle.textContent = isShown ? 'Hide QR' : 'Show QR';
       });
     }
 
@@ -613,6 +657,35 @@
       ring.style.strokeDashoffset = `${length * (1 - clamped)}`;
     };
 
+    const setTimerDisplay = (seconds) => {
+      const safeSeconds = Math.max(0, Number.isFinite(seconds) ? seconds : 0);
+      const intPart = Math.floor(safeSeconds);
+      const decPart = Math.floor((safeSeconds - intPart) * 10);
+      const intText = String(intPart);
+      const markup = `<span class="timer-int">${intText}</span><span class="timer-dec">.${decPart}</span>`;
+      const spec = document.getElementById('spectator-time');
+      const player = document.getElementById('player-time');
+      if (spec) spec.innerHTML = markup;
+      if (player) player.innerHTML = markup;
+    };
+
+    const setTimerLabel = (text) => {
+      const spec = document.getElementById('spectator-timer-label');
+      const player = document.getElementById('player-timer-label');
+      if (spec) spec.textContent = text;
+      if (player) player.textContent = text;
+    };
+
+    const setTimerMode = (mode) => {
+      timerMode = mode;
+      const specTimer = document.getElementById('spectator-timer');
+      const playerTimer = document.getElementById('player-timer');
+      [specTimer, playerTimer].forEach((el) => {
+        if (!el) return;
+        el.classList.toggle('intermission', mode === 'intermission');
+      });
+    };
+
     const initRings = () => {
       const specRing = document.getElementById('spectator-ring');
       const playerRing = document.getElementById('player-ring');
@@ -629,6 +702,8 @@
     };
 
     initRings();
+    setTimerDisplay(0);
+    setTimerLabel("Time Remaining");
 
         </script>
     </body>
