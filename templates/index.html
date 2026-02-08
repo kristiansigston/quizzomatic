@@ -470,6 +470,8 @@
       playerAnswered = false;
       current_question_index = data.index;
       document.getElementById('scoreboard').classList.add('hidden');
+      document.getElementById('btn-start').classList.add('hidden');
+      document.getElementById('btn-next').classList.add('hidden');
 
       const questionReceivedAt = Date.now();
       setTimeout(() => {
