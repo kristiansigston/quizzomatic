@@ -410,9 +410,13 @@ def next_question(question_index):
 if __name__ == '__main__':
     generate_qr.generate_qr()
     reset_all()
+    port = int(os.getenv('PORT', '9145'))
+    debug = os.getenv('DEBUG', '1') == '1'
+    use_reloader = os.getenv('USE_RELOADER', '1') == '1'
     socketio.run(
         app,
-        debug=True,
+        debug=debug,
         host='0.0.0.0',
-        port=9145,
-        allow_unsafe_werkzeug=True)
+        port=port,
+        allow_unsafe_werkzeug=True,
+        use_reloader=use_reloader)
