@@ -123,7 +123,7 @@
       "iq": 73
     },
     {
-      "question": "H2O is?",
+      "question": "H<sub>2</sub>O is?",
       "answers": [
         "Water",
         "Hydrogen",
@@ -180,9 +180,9 @@
     {
       "question": "Chemical symbol for water?",
       "answers": [
-        "H2O",
-        "CO2",
-        "O2",
+        "H<sub>2</sub>O",
+        "CO<sub>2</sub>",
+        "O<sub>2</sub>",
         "NaCl",
         "He"
       ],
@@ -242,17 +242,6 @@
         "Flute"
       ],
       "iq": 108
-    },
-    {
-      "question": "Smallest prime number?",
-      "answers": [
-        "2",
-        "1",
-        "3",
-        "5",
-        "7"
-      ],
-      "iq": 114
     },
     {
       "question": "Largest mammal?",
@@ -783,94 +772,6 @@
       "iq": 93
     },
     {
-      "question": "What is the value of the golden ratio (approx.)?",
-      "answers": [
-        "1.618",
-        "1.414",
-        "2.718",
-        "1.732",
-        "3.142"
-      ],
-      "iq": 134
-    },
-    {
-      "question": "In base-2, 101101 equals what in base-10?",
-      "answers": [
-        "45",
-        "41",
-        "37",
-        "53",
-        "29"
-      ],
-      "iq": 117
-    },
-    {
-      "question": "Which number is a Mersenne prime?",
-      "answers": [
-        "31",
-        "27",
-        "35",
-        "39",
-        "45"
-      ],
-      "iq": 142
-    },
-    {
-      "question": "If f(x)=2x+3, what is f(f(2))?",
-      "answers": [
-        "11",
-        "9",
-        "13",
-        "7",
-        "15"
-      ],
-      "iq": 118
-    },
-    {
-      "question": "What is the sum of interior angles of a hexagon?",
-      "answers": [
-        "720",
-        "540",
-        "360",
-        "900",
-        "1080"
-      ],
-      "iq": 122
-    },
-    {
-      "question": "Which is a prime number?",
-      "answers": [
-        "97",
-        "99",
-        "91",
-        "93",
-        "95"
-      ],
-      "iq": 116
-    },
-    {
-      "question": "Derivative of x<sup>3</sup>?",
-      "answers": [
-        "3x<sup>2</sup>",
-        "x<sup>2</sup>",
-        "2x",
-        "3x",
-        "x<sup>3</sup>"
-      ],
-      "iq": 134
-    },
-    {
-      "question": "Integral of 2x dx?",
-      "answers": [
-        "x<sup>2</sup> + C",
-        "2x + C",
-        "x + C",
-        "2x<sup>2</sup> + C",
-        "ln x + C"
-      ],
-      "iq": 134
-    },
-    {
       "question": "If A\u2282B and B\u2282C, then A\u2282?",
       "answers": [
         "C",
@@ -904,72 +805,6 @@
       "iq": 74
     },
     {
-      "question": "How many permutations of 4 items?",
-      "answers": [
-        "24",
-        "12",
-        "16",
-        "8",
-        "32"
-      ],
-      "iq": 133
-    },
-    {
-      "question": "Matrix 2x2 identity trace?",
-      "answers": [
-        "2",
-        "1",
-        "0",
-        "4",
-        "-1"
-      ],
-      "iq": 141
-    },
-    {
-      "question": "Log10(1000) equals?",
-      "answers": [
-        "3",
-        "2",
-        "4",
-        "1",
-        "10"
-      ],
-      "iq": 116
-    },
-    {
-      "question": "If p\u2192q is false, p is?",
-      "answers": [
-        "True",
-        "False",
-        "Either",
-        "Both",
-        "Undetermined"
-      ],
-      "iq": 101
-    },
-    {
-      "question": "Number of subsets of a 5-element set?",
-      "answers": [
-        "32",
-        "16",
-        "20",
-        "25",
-        "30"
-      ],
-      "iq": 144
-    },
-    {
-      "question": "Which is a Fibonacci number?",
-      "answers": [
-        "55",
-        "54",
-        "56",
-        "58",
-        "57"
-      ],
-      "iq": 113
-    },
-    {
       "question": "Solve: 3x-7=11",
       "answers": [
         "6",
@@ -979,17 +814,6 @@
         "8"
       ],
       "iq": 72
-    },
-    {
-      "question": "If angles are 30-60-90, hypotenuse relative to short side?",
-      "answers": [
-        "2x",
-        "\u221a2 x",
-        "3x",
-        "1.5x",
-        "\u221a3 x"
-      ],
-      "iq": 121
     },
     {
       "question": "What is 2<sup>10</sup>?",
@@ -1003,17 +827,6 @@
       "iq": 83
     },
     {
-      "question": "Sum of first 10 positive integers?",
-      "answers": [
-        "55",
-        "45",
-        "50",
-        "60",
-        "40"
-      ],
-      "iq": 112
-    },
-    {
       "question": "If x/y=2 and y=3, x=?",
       "answers": [
         "6",
@@ -1023,17 +836,6 @@
         "2"
       ],
       "iq": 95
-    },
-    {
-      "question": "What is the determinant of [[1,2],[3,4]]?",
-      "answers": [
-        "-2",
-        "2",
-        "-1",
-        "1",
-        "0"
-      ],
-      "iq": 147
     },
     {
       "question": "What is 0.125 as a fraction?",
@@ -1047,17 +849,6 @@
       "iq": 93
     },
     {
-      "question": "Which is an irrational number?",
-      "answers": [
-        "\u221a2",
-        "<sup>3</sup>/<sub>4</sub>",
-        "1.5",
-        "2",
-        "<sup>5</sup>/<sub>3</sub>"
-      ],
-      "iq": 113
-    },
-    {
       "question": "Solve: 2x<sup>2</sup>=8",
       "answers": [
         "\u00b12",
@@ -1067,17 +858,6 @@
         "\u00b1\u221a2"
       ],
       "iq": 81
-    },
-    {
-      "question": "What is the slope of y=3x+1?",
-      "answers": [
-        "3",
-        "1",
-        "0",
-        "-3",
-        "<sup>1</sup>/<sub>3</sub>"
-      ],
-      "iq": 106
     },
     {
       "question": "Convert 0.2 to fraction",
@@ -1102,28 +882,6 @@
       "iq": 15
     },
     {
-      "question": "What is 15% of 200?",
-      "answers": [
-        "30",
-        "20",
-        "25",
-        "35",
-        "40"
-      ],
-      "iq": 104
-    },
-    {
-      "question": "Number of degrees in a radian?",
-      "answers": [
-        "~57.3",
-        "~90",
-        "~45",
-        "~180",
-        "~30"
-      ],
-      "iq": 144
-    },
-    {
       "question": "Solve: x<sup>2</sup>-9=0",
       "answers": [
         "\u00b13",
@@ -1133,17 +891,6 @@
         "9"
       ],
       "iq": 87
-    },
-    {
-      "question": "If P(A)=0.2, odds against A?",
-      "answers": [
-        "4:1",
-        "1:4",
-        "2:1",
-        "3:2",
-        "5:1"
-      ],
-      "iq": 134
     },
     {
       "question": "What is the mean of 2,4,8,16?",
@@ -1157,61 +904,6 @@
       "iq": 97
     },
     {
-      "question": "How many edges does a cube have?",
-      "answers": [
-        "12",
-        "8",
-        "6",
-        "10",
-        "14"
-      ],
-      "iq": 121
-    },
-    {
-      "question": "What is <sup>1</sup>/<sub>3</sub> as a decimal (2 dp)?",
-      "answers": [
-        "0.33",
-        "0.30",
-        "0.34",
-        "0.35",
-        "0.36"
-      ],
-      "iq": 119
-    },
-    {
-      "question": "If sin(30\u00b0)=?",
-      "answers": [
-        "0.5",
-        "0.866",
-        "1",
-        "0",
-        "0.707"
-      ],
-      "iq": 110
-    },
-    {
-      "question": "What is the next prime after 47?",
-      "answers": [
-        "53",
-        "49",
-        "51",
-        "55",
-        "57"
-      ],
-      "iq": 111
-    },
-    {
-      "question": "Value of log2(8)?",
-      "answers": [
-        "3",
-        "2",
-        "4",
-        "1",
-        "5"
-      ],
-      "iq": 145
-    },
-    {
       "question": "Simplify: (x<sup>2</sup>)(x<sup>3</sup>)",
       "answers": [
         "x<sup>5</sup>",
@@ -1223,39 +915,6 @@
       "iq": 100
     },
     {
-      "question": "What is 1001 in binary?",
-      "answers": [
-        "1111101001",
-        "1111100101",
-        "1111101101",
-        "1111100001",
-        "1111110001"
-      ],
-      "iq": 145
-    },
-    {
-      "question": "How many diagonals in a pentagon?",
-      "answers": [
-        "5",
-        "4",
-        "6",
-        "7",
-        "8"
-      ],
-      "iq": 143
-    },
-    {
-      "question": "What is the median of 1,2,100,101,102?",
-      "answers": [
-        "100",
-        "2",
-        "101",
-        "1",
-        "102"
-      ],
-      "iq": 144
-    },
-    {
       "question": "If x=2, evaluate 3x<sup>2</sup>+2x+1",
       "answers": [
         "17",
@@ -1265,28 +924,6 @@
         "21"
       ],
       "iq": 99
-    },
-    {
-      "question": "What is the mode of 1,2,2,3,3,3,4?",
-      "answers": [
-        "3",
-        "2",
-        "1",
-        "4",
-        "No mode"
-      ],
-      "iq": 136
-    },
-    {
-      "question": "If a circle radius is 3, area?",
-      "answers": [
-        "9\u03c0",
-        "6\u03c0",
-        "12\u03c0",
-        "3\u03c0",
-        "18\u03c0"
-      ],
-      "iq": 109
     },
     {
       "question": "What is the probability of heads on fair coin?",
@@ -1311,18 +948,7 @@
       "iq": 66
     },
     {
-      "question": "What is the GCD of 24 and 36?",
-      "answers": [
-        "12",
-        "6",
-        "18",
-        "24",
-        "36"
-      ],
-      "iq": 109
-    },
-    {
-      "question": "If 2^x=32, x=?",
+      "question": "If 2<sup>x</sup>=32, x=?",
       "answers": [
         "5",
         "4",
@@ -1331,17 +957,6 @@
         "8"
       ],
       "iq": 79
-    },
-    {
-      "question": "What is the next term: 2,4,8,16,?",
-      "answers": [
-        "32",
-        "24",
-        "28",
-        "30",
-        "36"
-      ],
-      "iq": 107
     }
   ]
 }
