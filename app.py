@@ -251,7 +251,7 @@ def test_connect():
     if game_state.get('end_time') and game_state['end_time'] > time.time():
         emit('timer', {
             'end_time': game_state['end_time'],
-            'duration': game_state.get('duration', 30)
+            'duration': game_state['duration'],
         })
 
 
@@ -308,7 +308,7 @@ def handle_join(data):
     if game_state.get('end_time') and game_state['end_time'] > time.time():
         emit('timer', {
             'end_time': game_state['end_time'],
-            'duration': game_state.get('duration', 30)
+            'duration': game_state['duration'],
         })
 
 
@@ -449,7 +449,7 @@ def next_question(question_index):
         'question', {
             **question_data, 'index': game_state['current_question_index']})
 
-    duration = 30
+    duration = 25
     game_state['duration'] = duration
     game_state['end_time'] = time.time() + duration
     game_state['timer_thread'] = threading.Timer(duration, process_answers)
