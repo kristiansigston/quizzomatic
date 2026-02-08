@@ -507,7 +507,9 @@
           const btn = document.createElement('button');
           btn.className = 'answer-btn';
           const letter = String.fromCharCode(65 + idx);
-          btn.textContent = `${letter}: ${ans}`;
+          const span = document.createElement('span');
+          span.textContent = `${letter}: ${ans}`;
+          btn.appendChild(span);
           btn.onclick = () => {
             socket.emit('answer', { username: myUsername, answer_index: idx });
             document.getElementById('player-result-msg').textContent = "Answer Submitted!";
