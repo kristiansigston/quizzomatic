@@ -527,10 +527,15 @@
           span.innerHTML = `${letter}: ${ans}`;
           btn.appendChild(span);
           btn.onclick = () => {
+            if (playerAnswered) return;
             socket.emit('answer', { username: myUsername, answer_index: idx });
             document.getElementById('player-result-msg').textContent = "Answer Submitted!";
-            document.querySelectorAll('.answer-btn').forEach(b => b.disabled = true);
+            document.querySelectorAll('.answer-btn').forEach(b => {
+              b.disabled = true;
+              b.classList.add('dimmed');
+            });
             btn.classList.add('selected');
+            btn.classList.remove('dimmed');
             playerAnswered = true;
           };
           btnContainer.appendChild(btn);
