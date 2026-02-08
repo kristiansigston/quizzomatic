@@ -439,9 +439,7 @@
 
         const ratio = Math.max(0, Math.min(1, remaining / timerTotalSeconds));
         setRingProgress('spectator-ring', specRingLength, ratio);
-        if (!playerAnswered) {
-          setRingProgress('player-ring', playerRingLength, ratio);
-        }
+        setRingProgress('player-ring', playerRingLength, ratio);
         const urgent = timerMode === 'question' && remaining > 0 && remaining <= 5;
         document.getElementById('spectator-timer').classList.toggle('urgent', urgent);
         document.getElementById('player-timer').classList.toggle('urgent', urgent);
@@ -487,6 +485,9 @@
       if (spectatorIq) {
         spectatorIq.textContent = `${data.iq ?? '—'} IQ`;
         spectatorIq.classList.toggle('hidden', data.iq === undefined || data.iq === null);
+        spectatorIq.classList.remove('iq-pop');
+        void spectatorIq.offsetWidth;
+        spectatorIq.classList.add('iq-pop');
       }
       const specList = document.getElementById('spectator-answers');
       specList.innerHTML = '';
@@ -497,7 +498,7 @@
         div.className = 'answer-btn non-interactive';
         const letter = String.fromCharCode(65 + idx);
         const span = document.createElement('span');
-        span.innerHTML = `${letter}: ${ans}`;
+        span.innerHTML = `${letter}:&nbsp;&nbsp;${ans}`;
         div.appendChild(span);
         li.appendChild(div);
         specList.appendChild(li);
@@ -513,6 +514,9 @@
         if (playerIq) {
           playerIq.textContent = `${data.iq ?? '—'} IQ`;
           playerIq.classList.toggle('hidden', data.iq === undefined || data.iq === null);
+          playerIq.classList.remove('iq-pop');
+          void playerIq.offsetWidth;
+          playerIq.classList.add('iq-pop');
         }
         const btnContainer = document.getElementById('player-buttons');
         btnContainer.innerHTML = '';
@@ -522,7 +526,7 @@
           btn.className = 'answer-btn';
           const letter = String.fromCharCode(65 + idx);
           const span = document.createElement('span');
-          span.innerHTML = `${letter}: ${ans}`;
+          span.innerHTML = `${letter}:&nbsp;&nbsp;${ans}`;
           btn.appendChild(span);
           btn.onclick = () => {
             if (playerAnswered) return;
