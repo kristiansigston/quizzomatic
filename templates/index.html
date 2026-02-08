@@ -10,6 +10,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Orbitron:wght@600;800&display=swap"
               rel="stylesheet">
         <link href="/static/host.css" rel="stylesheet">
+        <link href="/static/buttons.css" rel="stylesheet">
     </head>
     <body>
         <div id="banner"></div>
@@ -492,7 +493,8 @@
       specList.innerHTML = '';
       data.answers.forEach((ans, idx) => {
         const li = document.createElement('li');
-        const div = document.createElement('div');
+        const div = document.createElement('button');
+        div.type = 'button';
         div.className = 'answer-btn non-interactive';
         const letter = String.fromCharCode(65 + idx);
         const span = document.createElement('span');
@@ -593,7 +595,8 @@
       const specList = document.getElementById('spectator-answers');
       specList.innerHTML = '';
       const resultLi = document.createElement('li');
-      const resultDiv = document.createElement('div');
+      const resultDiv = document.createElement('button');
+      resultDiv.type = 'button';
       resultDiv.className = 'answer-btn non-interactive';
       // Use the green tint (2nd child style) or just default, 
       // but maybe mark it specially? 

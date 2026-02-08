@@ -13,7 +13,12 @@ socketio = SocketIO(app)
 
 
 def is_game_started():
-    return game_state.get('current_question') is not None
+    if not game_state:
+        return False
+    if game_state.get('current_question') is not None:
+        return True
+    idx = game_state.get('current_question_index')
+    return isinstance(idx, int) and 0 <= idx < len(questions)
 
 
 # Load questions from JSON file
@@ -25,6 +30,7 @@ for q in all_questions:
     q['correct'] = 0
 
 QUESTIONS_LOG_PATH = 'questions_asked.jsonl'
+questions = []
 
 
 @app.route('/')
@@ -127,10 +133,27 @@ def log_question_asked(question_text):
         pass
 
 
+def init_questions(count=5):
+    global questions
+    questions = list(all_questions)
+    random.shuffle(questions)
+    questions = questions[:count]
+    for q in questions:
+        answers = q.get('answers') or []
+        if not answers:
+            q['correct'] = 0
+        elif not (0 <= q.get('correct', 0) < len(answers)):
+            q['correct'] = 0
+
+
 def add_scores_for_correct_answers():
     current_q = game_state.get('current_question')
     if not current_q:
-        return
+        idx = game_state.get('current_question_index')
+        if isinstance(idx, int) and 0 <= idx < len(questions):
+            current_q = questions[idx]
+        else:
+            return
     correct_answer_index = current_q['correct']
 
     # Set intermission duration: 5s if 1 player, else 10s
@@ -269,8 +292,9 @@ def handle_join(data):
     if is_game_started():
         index = game_state['current_question_index']
         question_data = game_state.get('current_question')
-        # Send index to allow frontend to track it
-        emit('question', {**question_data, 'index': index})
+        if question_data:
+            # Send index to allow frontend to track it
+            emit('question', {**question_data, 'index': index})
     if game_state.get('end_time') and game_state['end_time'] > time.time():
         emit('timer', {
             'end_time': game_state['end_time'],
@@ -293,11 +317,16 @@ def reset_game():
     game_state['current_question_index'] = -1  # Reset for first question
     game_state['current_answers'] = {}
     game_state['current_question'] = None
+    game_state['answers_processed'] = False
+    game_state['intermission_active'] = False
+    game_state['intermission_timer_thread'] = None
+    game_state['timer_thread'] = None
+    game_state['end_time'] = None
+    game_state['duration'] = None
     for player in game_state['players']:
         game_state['players'][player]['score'] = 0  # Reset scores
 
-    global questions
-    questions = []
+    init_questions()
 
 
 @socketio.on('start_game')
@@ -315,6 +344,8 @@ def reset_all():
 
     if game_state is None:
         game_state = {}
+    else:
+        game_state.clear()
 
     stop_timer_thread()
     stop_host_ping_thread()

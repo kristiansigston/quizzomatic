@@ -1,6 +1,9 @@
-import qrcode
 import socket
 import os
+try:
+    import qrcode
+except Exception:
+    qrcode = None
 
 
 def get_ip():
@@ -17,6 +20,9 @@ def get_ip():
 
 
 def generate_qr():
+    if qrcode is None:
+        print("QR generation skipped: qrcode dependency is missing.")
+        return
     ip = get_ip()
     url = f"http://{ip}:9145"
     print(f"Generating QR code for: {url}")
