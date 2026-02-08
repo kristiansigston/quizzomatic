@@ -118,6 +118,7 @@ h1 { color: var(--primary); }
   padding-top: 20px;
 }
 #spectator-view .btn {
+  --hue-adjust: 0deg;
   font-family: "Bungee", system-ui, sans-serif;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -125,7 +126,7 @@ h1 { color: var(--primary); }
     linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 45%),
     linear-gradient(135deg, rgba(255, 106, 213, 0.35), rgba(106, 243, 255, 0.35));
   background-color: rgba(20, 12, 40, 0.7);
-  border: 2px solid rgba(255, 255, 255, 0.35);
+  border: none;
   border-radius: 12px;
   box-shadow:
     0 8px 18px rgba(0, 0, 0, 0.35),
@@ -134,6 +135,7 @@ h1 { color: var(--primary); }
     0 2px 0 rgba(0, 0, 0, 0.35),
     0 6px 10px rgba(0, 0, 0, 0.35);
   transition: transform 0.12s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  filter: hue-rotate(var(--hue-adjust));
 }
 #spectator-view .btn:hover {
   opacity: 1;
@@ -144,26 +146,9 @@ h1 { color: var(--primary); }
   transform: translateY(1px) scale(0.99);
   filter: brightness(0.96);
 }
-#spectator-view .btn-success {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 45%),
-    linear-gradient(135deg, rgba(255, 106, 213, 0.35), rgba(106, 243, 255, 0.35));
-  background-color: rgba(20, 12, 40, 0.7);
-  border-color: rgba(255, 255, 255, 0.35);
-  box-shadow:
-    0 8px 18px rgba(0, 0, 0, 0.35),
-    inset 0 0 0 2px rgba(0, 0, 0, 0.25);
-}
-#spectator-view .btn-danger {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 45%),
-    linear-gradient(135deg, rgba(255, 106, 213, 0.35), rgba(106, 243, 255, 0.35));
-  background-color: rgba(20, 12, 40, 0.7);
-  border-color: rgba(255, 255, 255, 0.35);
-  box-shadow:
-    0 8px 18px rgba(0, 0, 0, 0.35),
-    inset 0 0 0 2px rgba(0, 0, 0, 0.25);
-}
+#spectator-view .host-controls .btn:nth-child(2) { --hue-adjust: -120deg; }
+#spectator-view .host-controls .btn:nth-child(3) { --hue-adjust: 150deg; }
+#spectator-view .host-controls .btn:nth-child(4) { --hue-adjust: 120deg; }
 #spectator-view .btn-mini {
   font-size: 0.7rem;
   padding: 6px 12px;
@@ -354,11 +339,15 @@ h1 { color: var(--primary); }
 }
 
 #spectator-question { font-size: 1.5rem; text-align: center; margin: 20px 0; }
-.spectator-answers { padding: 0; list-style: none; }
-.spectator-answers li {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
+.spectator-answers {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.spectator-answers .answer-btn {
+  list-style: none;
+  cursor: default;
+  display: block;
 }
 
 #spectator-top-row {
@@ -397,6 +386,16 @@ h1 { color: var(--primary); }
   padding: 0 28px;
   height: var(--h);
   min-width: 260px;
+  --hue-adjust: 0deg;
+  padding: 18px 20px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 45%),
+    linear-gradient(135deg, rgba(255, 106, 213, 0.35), rgba(106, 243, 255, 0.35));
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  background-color: rgba(20, 12, 40, 0.7);
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  outline: none;
   width: 100%;
   border-radius: calc(var(--h) / 2);
   cursor: pointer;

@@ -31,6 +31,8 @@ Start game needs a loading indicator and it needs idemptotnet
 
 Restart Game is for debugging
 
+\to test isolation run tow apps and confirm no cross talk
+
 Add countdown on client
 Great job is not for wrongers - done
 Timer should stop counting down when you answer

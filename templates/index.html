@@ -480,9 +480,7 @@
       specList.innerHTML = '';
       data.answers.forEach((ans, idx) => {
         const li = document.createElement('li');
-        const div = document.createElement('div');
-        div.className = 'answer-btn non-interactive';
-        div.style.cursor = 'default';
+        li.className = 'answer-btn non-interactive';
         const letter = String.fromCharCode(65 + idx);
         div.innerHTML = `${letter}: ${ans}`;
         li.appendChild(div);
