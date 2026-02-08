@@ -243,6 +243,16 @@ def test_connect():
     print('Client connected')
     emit('host_session', {'token': ensure_host_token()})
     send_player_details()
+    if is_game_started():
+        index = game_state['current_question_index']
+        question_data = game_state.get('current_question')
+        if question_data:
+            emit('question', {**question_data, 'index': index})
+    if game_state.get('end_time') and game_state['end_time'] > time.time():
+        emit('timer', {
+            'end_time': game_state['end_time'],
+            'duration': game_state.get('duration', 30)
+        })
 
 
 @socketio.on('time_ping')
