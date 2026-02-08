@@ -72,7 +72,6 @@
         <div id="player-view" class="container hidden">
             <div id="player-status-area">
                 <div id="winning-banner" class="hidden">👑 WINNING! 👑</div>
-                <div id="participation-msg" class="hidden">Great Job!</div>
             </div>
             <div id="my-player-name-container">
                 <h2 id="my-player-name">Player</h2>
@@ -129,7 +128,6 @@
     let timerInterval;
     let current_question_index = -1;
     let myScoreDisplayed = 0;
-    let lastAnswerCorrect = null;
     let lastRoundByPlayer = {};
     let playerAnswered = false;
     let hostToken = null;
@@ -328,9 +326,6 @@
         }
 
         document.getElementById('winning-banner').classList.toggle('hidden', !isWinning);
-        if (lastAnswerCorrect !== true) {
-          document.getElementById('participation-msg').classList.add('hidden');
-        }
       }
     });
 
@@ -386,6 +381,9 @@
           if (isPlayer) {
             document.querySelectorAll('.answer-btn').forEach(b => b.disabled = true);
           }
+          document.getElementById('spectator-timer').classList.add('hidden');
+          document.getElementById('player-timer').classList.add('hidden');
+          return;
         }
 
         const ratio = Math.max(0, Math.min(1, remaining / timerTotalSeconds));
@@ -406,9 +404,13 @@
     };
 
     // 2. Game Flow: Timer
-    socket.on('timer', (endTime) => {
+    socket.on('timer', (payload) => {
       lastTimerEventAt = Date.now();
-      const durationSeconds = Number.isFinite(endTime) ? (endTime - nowWithOffsetSeconds()) : 30;
+      const endTime = payload.end_time;
+      const durationSeconds = payload.duration;
+      if (!Number.isFinite(endTime) || !Number.isFinite(durationSeconds)) {
+        return;
+      }
       startCountdown(endTime, durationSeconds);
     });
 
@@ -485,10 +487,13 @@
     socket.on('round_results', (data) => {
       document.getElementById('scoreboard').classList.remove('hidden');
       if (timerInterval) clearInterval(timerInterval);
+      if (intermissionInterval) clearInterval(intermissionInterval);
       setRingProgress('spectator-ring', specRingLength, 0);
       setRingProgress('player-ring', playerRingLength, 0);
-      document.getElementById('spectator-timer').classList.remove('hidden');
-      document.getElementById('player-timer').classList.remove('hidden');
+      document.getElementById('spectator-timer').classList.add('hidden');
+      document.getElementById('player-timer').classList.add('hidden');
+      setTimerDisplay(0);
+      setTimerMode("question");
 
       const correctText = data.answers[data.correct_index];
       const correctLetter = String.fromCharCode(65 + data.correct_index);
@@ -498,14 +503,32 @@
       const btnNext = document.getElementById('btn-next');
       btnNext.classList.remove('hidden');
       btnNext.onclick = () => socket.emit('next_question', current_question_index + 1);
+      const playerCountdown = document.getElementById('player-next-countdown');
+      if (playerCountdown) playerCountdown.classList.remove('hidden');
       
       if (data.next_question_time) {
-          const durationSeconds = data.next_question_time - nowWithOffsetSeconds();
-          startCountdown(data.next_question_time, durationSeconds);
-          setTimerMode("intermission");
-          btnNext.textContent = "Next Question";
+          const updateCountdown = () => {
+              const secondsLeft = Math.ceil(data.next_question_time - nowWithOffsetSeconds());
+              if (secondsLeft > 0) {
+                  btnNext.textContent = `Next question in ${secondsLeft} seconds`;
+                  if (playerCountdown) {
+                    playerCountdown.textContent = `Next question in ${secondsLeft} seconds`;
+                  }
+              } else {
+                  btnNext.textContent = "Loading Next Question...";
+                  if (playerCountdown) {
+                    playerCountdown.textContent = "Loading Next Question...";
+                  }
+                  if (intermissionInterval) clearInterval(intermissionInterval);
+              }
+          };
+          updateCountdown();
+          intermissionInterval = setInterval(updateCountdown, 1000);
       } else {
-          btnNext.textContent = "Next Question";
+          btnNext.textContent = "Next question";
+          if (playerCountdown) {
+            playerCountdown.textContent = "Next question";
+          }
           setTimerDisplay(0);
           setRingProgress('spectator-ring', specRingLength, 0);
           setRingProgress('player-ring', playerRingLength, 0);
@@ -532,12 +555,8 @@
          const myResult = data.player_answers[myUsername];
          const msg = myResult.is_correct ? "✅ Correct!" : `❌ Wrong! It was: ${fullCorrectText}`;
          document.getElementById('player-result-msg').textContent = msg;
-         lastAnswerCorrect = myResult.is_correct;
-         document.getElementById('participation-msg').classList.toggle('hidden', !myResult.is_correct);
       } else if (isPlayer) {
          document.getElementById('player-result-msg').textContent = `Time's up! Answer: ${fullCorrectText}`;
-         lastAnswerCorrect = false;
-         document.getElementById('participation-msg').classList.add('hidden');
       }
 
       lastRoundByPlayer = {};

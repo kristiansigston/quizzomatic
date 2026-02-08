@@ -143,6 +143,7 @@ def add_scores_for_correct_answers():
     # Prepare results for host screen
     results = {
         'next_question_time': time.time() + intermission_duration,
+        'intermission_duration': intermission_duration,
         'question': current_q['question'],
         'answers': current_q['answers'],
         'correct_index': correct_answer_index,
@@ -271,8 +272,11 @@ def handle_join(data):
         question_data = questions[index]
         # Send index to allow frontend to track it
         emit('question', {**question_data, 'index': index})
-        if game_state.get('end_time') and game_state['end_time'] > time.time():
-            emit('timer', game_state['end_time'])
+    if game_state.get('end_time') and game_state['end_time'] > time.time():
+        emit('timer', {
+            'end_time': game_state['end_time'],
+            'duration': game_state.get('duration', 30)
+        })
 
 
 @socketio.on('typing_username')
@@ -396,10 +400,15 @@ def next_question(question_index):
             'question', {
                 **question_data, 'index': game_state['current_question_index']})
 
-        game_state['end_time'] = time.time() + 30
-        game_state['timer_thread'] = threading.Timer(30, process_answers)
+        duration = 30
+        game_state['duration'] = duration
+        game_state['end_time'] = time.time() + duration
+        game_state['timer_thread'] = threading.Timer(duration, process_answers)
         game_state['timer_thread'].start()
-        socketio.emit('timer', game_state['end_time'])
+        socketio.emit('timer', {
+            'end_time': game_state['end_time'],
+            'duration': duration
+        })
         print(f'Question {game_state["current_question_index"] + 1} started.')
     else:
         game_state['game_started'] = False  # End game
