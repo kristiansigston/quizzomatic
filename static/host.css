@@ -263,7 +263,7 @@ h1 { color: var(--primary); }
 }
 
 #spectator-question {
-  font-size: 1.5rem;
+  font-size: 1.875rem;
   text-align: center;
   margin: 20px 0;
   color: #ffffff;
@@ -552,6 +552,7 @@ h1 { color: var(--primary); }
   text-shadow:
     0 3px 0 rgba(0, 0, 0, 0.55),
     0 6px 12px rgba(0, 0, 0, 0.6);
+  font-size: 1.875rem;
 }
 
 #player-result-msg {
@@ -563,16 +564,16 @@ h1 { color: var(--primary); }
 
 .iq-badge {
   position: absolute;
-  top: -50px;
+  top: -62px;
   right: -28px;
   transform: rotate(30deg);
   transform-origin: left center;
-  padding: 4px 10px;
+  padding: 5px 13px;
   border-radius: 999px;
   background: rgba(20, 12, 40, 0.78);
   color: #ffd36a;
   font-family: "Orbitron", system-ui, sans-serif;
-  font-size: 0.9rem;
+  font-size: 1.125rem;
   letter-spacing: 0.5px;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
 }
