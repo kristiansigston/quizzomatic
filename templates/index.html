@@ -7,7 +7,7 @@
         <title>Trivia Vibe</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap"
+        <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Orbitron:wght@600;800&display=swap"
               rel="stylesheet">
         <link href="/static/host.css" rel="stylesheet">
     </head>
@@ -346,7 +346,12 @@
           const step = (now) => {
             const progress = Math.min(1, (now - start) / durationMs);
             const value = Math.round(from + (to - from) * progress);
-            scoreEl.innerHTML = rankLabel ? `${value}<br>${rankLabel}` : `${value}`;
+            const rankHtml = rankLabel ? `${rankLabel}${isWinning ? ' 👑' : ''}` : '';
+            scoreEl.innerHTML = `${value}`;
+            const nameEl = document.getElementById('my-player-name');
+            if (nameEl) {
+              nameEl.innerHTML = rankLabel ? `${rankHtml}<br>${myUsername}` : myUsername;
+            }
             if (progress < 1) requestAnimationFrame(step);
           };
           requestAnimationFrame(step);
@@ -358,12 +363,19 @@
           animateScore(startScore, endScore, duration);
           myScoreDisplayed = endScore;
         } else {
-          scoreEl.innerHTML = rankLabel ? `${endScore}<br>${rankLabel}` : `${endScore}`;
+          const rankHtml = rankLabel ? `${rankLabel}${isWinning ? ' 👑' : ''}` : '';
+          scoreEl.innerHTML = `${endScore}`;
+          const nameEl = document.getElementById('my-player-name');
+          if (nameEl) {
+            nameEl.innerHTML = rankLabel ? `${rankHtml}<br>${myUsername}` : myUsername;
+          }
         }
 
-        const nameEl = document.getElementById('my-player-name');
-        if (nameEl) {
-          nameEl.textContent = `${myUsername}${isWinning ? ' 👑' : ''}`;
+        if (!rankLabel) {
+          const nameEl = document.getElementById('my-player-name');
+          if (nameEl) {
+            nameEl.textContent = myUsername;
+          }
         }
       }
     });
@@ -473,16 +485,19 @@
       document.getElementById('spectator-question').innerHTML = data.question;
       const spectatorIq = document.getElementById('spectator-iq');
       if (spectatorIq) {
-        spectatorIq.textContent = `IQ ${data.iq ?? '—'}`;
+        spectatorIq.textContent = `${data.iq ?? '—'} IQ`;
         spectatorIq.classList.toggle('hidden', data.iq === undefined || data.iq === null);
       }
       const specList = document.getElementById('spectator-answers');
       specList.innerHTML = '';
       data.answers.forEach((ans, idx) => {
         const li = document.createElement('li');
-        li.className = 'answer-btn non-interactive';
+        const div = document.createElement('div');
+        div.className = 'answer-btn non-interactive';
         const letter = String.fromCharCode(65 + idx);
-        div.innerHTML = `${letter}: ${ans}`;
+        const span = document.createElement('span');
+        span.innerHTML = `${letter}: ${ans}`;
+        div.appendChild(span);
         li.appendChild(div);
         specList.appendChild(li);
       });
@@ -495,7 +510,7 @@
         document.getElementById('player-question-text').innerHTML = data.question;
         const playerIq = document.getElementById('player-iq');
         if (playerIq) {
-          playerIq.textContent = `IQ ${data.iq ?? '—'}`;
+          playerIq.textContent = `${data.iq ?? '—'} IQ`;
           playerIq.classList.toggle('hidden', data.iq === undefined || data.iq === null);
         }
         document.getElementById('player-result-msg').textContent = '';
