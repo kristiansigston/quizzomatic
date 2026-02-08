@@ -2,7 +2,8 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <title>Trivia Vibe</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,7 +55,6 @@
                 <div class="timer-center" id="spectator-time">
                     <span class="timer-int">30</span><span class="timer-dec">.0</span>
                 </div>
-                <div class="timer-label" id="spectator-timer-label">Time Remaining</div>
             </div>
             <div id="game-board">
                 <div id="spectator-iq" class="iq-badge hidden"></div>
@@ -94,7 +94,6 @@
                 <div class="timer-center" id="player-time">
                     <span class="timer-int">30</span><span class="timer-dec">.0</span>
                 </div>
-                <div class="timer-label" id="player-timer-label">Time Remaining</div>
             </div>
             <div id="player-question-area">
                 <div id="player-iq" class="iq-badge hidden"></div>
@@ -364,7 +363,6 @@
       if (!Number.isFinite(timerTotalSeconds) || timerTotalSeconds <= 1 || timerTotalSeconds > 120) {
         timerTotalSeconds = 30;
       }
-      setTimerLabel("Time Remaining");
       setTimerMode("question");
       document.getElementById('spectator-timer').classList.remove('hidden');
       document.getElementById('player-timer').classList.remove('hidden');
@@ -426,7 +424,6 @@
       setTimeout(() => {
         if (!lastTimerEventAt || lastTimerEventAt < questionReceivedAt) {
           startCountdown(null, 30);
-          setTimerLabel("Time Remaining");
           setTimerMode("question");
         }
       }, 200);
@@ -442,15 +439,12 @@
       specList.innerHTML = '';
       data.answers.forEach((ans, idx) => {
         const li = document.createElement('li');
+        const div = document.createElement('div');
+        div.className = 'answer-btn non-interactive';
+        div.style.cursor = 'default';
         const letter = String.fromCharCode(65 + idx);
-        const letterSpan = document.createElement('span');
-        letterSpan.className = 'answer-letter';
-        letterSpan.textContent = `${letter}:`;
-        const textSpan = document.createElement('span');
-        textSpan.className = 'answer-text';
-        textSpan.textContent = ans;
-        li.appendChild(letterSpan);
-        li.appendChild(textSpan);
+        div.textContent = `${letter}: ${ans}`;
+        li.appendChild(div);
         specList.appendChild(li);
       });
       
@@ -508,7 +502,6 @@
       if (data.next_question_time) {
           const durationSeconds = data.next_question_time - nowWithOffsetSeconds();
           startCountdown(data.next_question_time, durationSeconds);
-          setTimerLabel("Next Question");
           setTimerMode("intermission");
           btnNext.textContent = "Next Question";
       } else {
@@ -516,13 +509,23 @@
           setTimerDisplay(0);
           setRingProgress('spectator-ring', specRingLength, 0);
           setRingProgress('player-ring', playerRingLength, 0);
-          setTimerLabel("Time Remaining");
           setTimerMode("question");
       }
       
       // Spectator: Show detailed results
       const specList = document.getElementById('spectator-answers');
-      specList.innerHTML = `<li>Correct Answer: <strong>${fullCorrectText}</strong></li>`;
+      specList.innerHTML = '';
+      const resultLi = document.createElement('li');
+      const resultDiv = document.createElement('div');
+      resultDiv.className = 'answer-btn non-interactive';
+      // Use the green tint (2nd child style) or just default, 
+      // but maybe mark it specially? 
+      // For now, let's just make it look like a button but perhaps highlight it.
+      resultDiv.style.border = '2px solid #28a745'; 
+      resultDiv.style.cursor = 'default';
+      resultDiv.innerHTML = `Correct Answer: <strong>${fullCorrectText}</strong>`;
+      resultLi.appendChild(resultDiv);
+      specList.appendChild(resultLi);
       
       // Player: Show personal result
       if (isPlayer && data.player_answers[myUsername]) {
@@ -564,7 +567,6 @@
        setRingProgress('player-ring', playerRingLength, 0);
        document.getElementById('spectator-timer').classList.remove('hidden');
        document.getElementById('player-timer').classList.remove('hidden');
-       setTimerLabel("Time Remaining");
        setTimerMode("question");
        document.getElementById('scoreboard').classList.remove('hidden');
 
@@ -601,7 +603,6 @@
       setRingProgress('player-ring', playerRingLength, 0);
       document.getElementById('spectator-timer').classList.remove('hidden');
       document.getElementById('player-timer').classList.remove('hidden');
-      setTimerLabel("Time Remaining");
       setTimerMode("question");
       lastRoundByPlayer = {};
       document.getElementById('scoreboard').classList.remove('hidden');
@@ -676,13 +677,6 @@
       if (player) player.innerHTML = markup;
     };
 
-    const setTimerLabel = (text) => {
-      const spec = document.getElementById('spectator-timer-label');
-      const player = document.getElementById('player-timer-label');
-      if (spec) spec.textContent = text;
-      if (player) player.textContent = text;
-    };
-
     const setTimerMode = (mode) => {
       timerMode = mode;
       const specTimer = document.getElementById('spectator-timer');
@@ -710,7 +704,6 @@
 
     initRings();
     setTimerDisplay(0);
-    setTimerLabel("Time Remaining");
 
         </script>
     </body>
