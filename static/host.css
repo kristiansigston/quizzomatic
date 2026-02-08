@@ -265,7 +265,19 @@ h1 { color: var(--primary); }
 #spectator-question {
   font-size: 1.875rem;
   text-align: center;
-  margin: 20px 0;
+  margin: 16px auto 22px;
+  padding: 14px 22px;
+  display: block;
+  width: fit-content;
+  max-width: min(85vw, 820px);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 60%),
+    linear-gradient(135deg, rgba(30, 18, 68, 0.95), rgba(12, 8, 26, 0.95));
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.45),
+    inset 0 0 18px rgba(255, 255, 255, 0.05);
+  clip-path: polygon(6% 0%, 94% 0%, 100% 50%, 94% 100%, 6% 100%, 0% 50%);
   color: #ffffff;
   text-shadow:
     0 3px 0 rgba(0, 0, 0, 0.55),
@@ -514,6 +526,8 @@ h1 { color: var(--primary); }
 }
 
 .player-info-floating #my-player-score {
+  text-align: center;
+  width: 100%;
   font-size: 2.2rem;
   line-height: 1.1;
   color: #ffffff;
@@ -553,6 +567,26 @@ h1 { color: var(--primary); }
     0 3px 0 rgba(0, 0, 0, 0.55),
     0 6px 12px rgba(0, 0, 0, 0.6);
   font-size: 1.875rem;
+  padding: 14px 22px;
+  display: block;
+  width: fit-content;
+  max-width: min(85vw, 820px);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 60%),
+    linear-gradient(135deg, rgba(30, 18, 68, 0.95), rgba(12, 8, 26, 0.95));
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.45),
+    inset 0 0 18px rgba(255, 255, 255, 0.05);
+  clip-path: polygon(6% 0%, 94% 0%, 100% 50%, 94% 100%, 6% 100%, 0% 50%);
+}
+
+@supports not (clip-path: polygon(0 0)) {
+  #spectator-question,
+  #player-question-text {
+    clip-path: none;
+    border-radius: 16px;
+  }
 }
 
 .iq-badge {
