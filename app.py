@@ -253,6 +253,7 @@ def handle_join(data):
         }
         join_room(username)
         emit('joined', {'username': username})  # Emit to the joining player
+        socketio.emit('player_joined', {'username': username})
         print(f'{username} joined the game from {client_ip}.')
     else:
         # Check if it's the same user re-joining
@@ -260,6 +261,7 @@ def handle_join(data):
             game_state['players'][username]['sid'] = request.sid
             join_room(username)
             emit('joined', {'username': username})
+            socketio.emit('player_joined', {'username': username})
             print(f'{username} re-joined the game from {client_ip}.')
         else:
             emit('error', {'message': 'Username already taken.'})

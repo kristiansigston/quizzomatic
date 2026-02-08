@@ -103,12 +103,6 @@
         <!-- Floating Action Button to Join -->
         <button id="fab-join" title="Join Game" class="hidden">+</button>
         <div id="game-over-overlay" class="hidden">
-            <div class="confetti"></div>
-            <div class="confetti"></div>
-            <div class="confetti"></div>
-            <div class="confetti"></div>
-            <div class="confetti"></div>
-            <div class="confetti"></div>
             <div class="game-over-card">
                 <h2>Game Over</h2>
                 <p class="game-over-subtitle">Final Leaderboard</p>
@@ -118,9 +112,47 @@
             </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
         <script>
     const socket = io();
     
+    // Confetti
+    function fireConfetti() {
+      var count = 200;
+      var defaults = {
+        origin: { y: 0.7 }
+      };
+
+      function fire(particleRatio, opts) {
+        confetti(Object.assign({}, defaults, opts, {
+          particleCount: Math.floor(count * particleRatio)
+        }));
+      }
+
+      fire(0.25, {
+        spread: 26,
+        startVelocity: 55,
+      });
+      fire(0.2, {
+        spread: 60,
+      });
+      fire(0.35, {
+        spread: 100,
+        decay: 0.91,
+        scalar: 0.8
+      });
+      fire(0.1, {
+        spread: 120,
+        startVelocity: 25,
+        decay: 0.92,
+        scalar: 1.2
+      });
+      fire(0.1, {
+        spread: 120,
+        startVelocity: 45,
+      });
+    }
+
     // State
     let myUsername = localStorage.getItem('triviaUsername') || '';
     let isPlayer = false;
@@ -190,6 +222,8 @@
 
     let pendingJoinName = null;
 
+    // Add test confetti button logic if it exists (we will add it to DOM in a moment if not present, but for now let's just expose function)
+
     document.getElementById('btn-confirm-join').onclick = () => {
       const name = inputUsername.value.trim();
       if (!name) return setJoinStatus('Please enter a name.', true);
@@ -210,6 +244,10 @@
         document.getElementById('my-player-name').textContent = myUsername;
         showView('player');
       }
+    });
+
+    socket.on('player_joined', (data) => {
+      fireConfetti();
     });
 
     if (joinStatus) {
@@ -555,6 +593,9 @@
          const myResult = data.player_answers[myUsername];
          const msg = myResult.is_correct ? "✅ Correct!" : `❌ Wrong! It was: ${fullCorrectText}`;
          document.getElementById('player-result-msg').textContent = msg;
+         if (myResult.is_correct) {
+            fireConfetti();
+         }
       } else if (isPlayer) {
          document.getElementById('player-result-msg').textContent = `Time's up! Answer: ${fullCorrectText}`;
       }
