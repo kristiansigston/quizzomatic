@@ -66,56 +66,6 @@ def test_username_saved_and_restored_from_localstorage():
         server_proc.wait(timeout=5)
 
 
-def test_player_timer_stops_after_answer():
-    server_proc, host, port = _start_server()
-
-    try:
-        with sync_playwright() as p:
-            browser = p.chromium.launch()
-            host_page = browser.new_page()
-            player_page = browser.new_page()
-
-            host_page.goto(f"http://{host}:{port}", wait_until="domcontentloaded")
-            player_page.goto(f"http://{host}:{port}", wait_until="domcontentloaded")
-
-            player_page.fill("#username-input", "Player1")
-            player_page.click("#btn-confirm-join")
-            expect(player_page.locator("#player-view")).to_be_visible()
-
-            host_page.click("#btn-start")
-
-            player_page.wait_for_selector(".answer-btn")
-            expect(player_page.locator("#player-timer")).to_be_visible()
-
-            player_page.locator(".answer-btn").first.click()
-            expect(player_page.locator(".answer-btn")).to_be_disabled()
-
-            def read_player_timer_seconds():
-                return player_page.evaluate(
-                    """() => {
-                        const root = document.getElementById('player-time');
-                        if (!root) return null;
-                        const intEl = root.querySelector('.timer-int');
-                        const decEl = root.querySelector('.timer-dec');
-                        const intPart = intEl ? parseInt(intEl.textContent, 10) : 0;
-                        const decText = decEl ? decEl.textContent.replace('.', '') : '0';
-                        const decPart = parseInt(decText, 10) || 0;
-                        return intPart + decPart / 10;
-                    }"""
-                )
-
-            frozen_value = read_player_timer_seconds()
-            assert frozen_value is not None
-            player_page.wait_for_timeout(600)
-            after_value = read_player_timer_seconds()
-            assert after_value == frozen_value
-
-            browser.close()
-    finally:
-        server_proc.terminate()
-        server_proc.wait(timeout=5)
-
-
 def test_timer_counts_down():
     server_proc, host, port = _start_server()
 

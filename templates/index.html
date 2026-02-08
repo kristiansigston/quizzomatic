@@ -443,7 +443,14 @@
       data.answers.forEach((ans, idx) => {
         const li = document.createElement('li');
         const letter = String.fromCharCode(65 + idx);
-        li.textContent = `${letter}: ${ans}`;
+        const letterSpan = document.createElement('span');
+        letterSpan.className = 'answer-letter';
+        letterSpan.textContent = `${letter}:`;
+        const textSpan = document.createElement('span');
+        textSpan.className = 'answer-text';
+        textSpan.textContent = ans;
+        li.appendChild(letterSpan);
+        li.appendChild(textSpan);
         specList.appendChild(li);
       });
       
