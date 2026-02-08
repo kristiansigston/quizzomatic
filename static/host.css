@@ -122,14 +122,14 @@ h1 { color: var(--primary); }
   letter-spacing: 0.5px;
   text-transform: uppercase;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent 55%),
-    linear-gradient(135deg, rgba(255, 106, 213, 0.4), rgba(106, 243, 255, 0.35));
-  background-color: rgba(24, 14, 46, 0.75);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 45%),
+    linear-gradient(135deg, rgba(255, 106, 213, 0.35), rgba(106, 243, 255, 0.35));
+  background-color: rgba(20, 12, 40, 0.7);
   border: 2px solid rgba(255, 255, 255, 0.35);
   border-radius: 12px;
   box-shadow:
-    0 8px 16px rgba(0, 0, 0, 0.3),
-    0 0 18px rgba(255, 106, 213, 0.35);
+    0 8px 18px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 2px rgba(0, 0, 0, 0.25);
   text-shadow:
     0 2px 0 rgba(0, 0, 0, 0.35),
     0 6px 10px rgba(0, 0, 0, 0.35);
@@ -137,11 +137,8 @@ h1 { color: var(--primary); }
 }
 #spectator-view .btn:hover {
   opacity: 1;
-  transform: translateY(-1px);
-  box-shadow:
-    0 10px 20px rgba(0, 0, 0, 0.35),
-    0 0 22px rgba(255, 210, 106, 0.45);
-  filter: brightness(1.08);
+  transform: scale(1.01);
+  filter: brightness(1.1);
 }
 #spectator-view .btn:active {
   transform: translateY(1px) scale(0.99);
@@ -149,23 +146,23 @@ h1 { color: var(--primary); }
 }
 #spectator-view .btn-success {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 55%),
-    linear-gradient(135deg, rgba(36, 227, 167, 0.5), rgba(106, 243, 255, 0.35));
-  background-color: rgba(14, 46, 40, 0.8);
-  border-color: rgba(90, 255, 210, 0.45);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 45%),
+    linear-gradient(135deg, rgba(255, 106, 213, 0.35), rgba(106, 243, 255, 0.35));
+  background-color: rgba(20, 12, 40, 0.7);
+  border-color: rgba(255, 255, 255, 0.35);
   box-shadow:
-    0 8px 16px rgba(0, 0, 0, 0.3),
-    0 0 18px rgba(36, 227, 167, 0.4);
+    0 8px 18px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 2px rgba(0, 0, 0, 0.25);
 }
 #spectator-view .btn-danger {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 55%),
-    linear-gradient(135deg, rgba(255, 72, 88, 0.5), rgba(255, 154, 106, 0.35));
-  background-color: rgba(56, 12, 18, 0.85);
-  border-color: rgba(255, 120, 140, 0.45);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 45%),
+    linear-gradient(135deg, rgba(255, 106, 213, 0.35), rgba(106, 243, 255, 0.35));
+  background-color: rgba(20, 12, 40, 0.7);
+  border-color: rgba(255, 255, 255, 0.35);
   box-shadow:
-    0 8px 16px rgba(0, 0, 0, 0.3),
-    0 0 18px rgba(255, 90, 110, 0.45);
+    0 8px 18px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 2px rgba(0, 0, 0, 0.25);
 }
 #spectator-view .btn-mini {
   font-size: 0.7rem;
